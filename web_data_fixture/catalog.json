@@ -1,0 +1,145 @@
+{
+ "schema_version": "1.0.0",
+ "variables": [
+  {
+   "caveats": [
+    "Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.",
+    "Land only, between 60 degrees south and the North Pole; there are no values over the ocean or Antarctica.",
+    "Each value is an average over a 2 x 2 degree cell (about 220 km wide); cells that are mostly ocean are left out."
+   ],
+   "definition": "How much water moves from the land into the air, by evaporating from soil and water and by plants releasing it through their leaves, as an average amount per day.",
+   "id": "evap",
+   "increase_means": "An increase means more water went from the land into the air.",
+   "land_only": true,
+   "long_name": "evapotranspiration, monthly mean",
+   "name": "Water leaving the land (evapotranspiration)",
+   "period": [
+    "2001-01",
+    "2025-09"
+   ],
+   "product": {
+    "citation": "not found",
+    "doi": "not found",
+    "name": "not found",
+    "short_name": "FIXTURE",
+    "source_variable": "evap",
+    "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "public_unit": "mm/day",
+   "units": "mm day-1"
+  },
+  {
+   "caveats": [
+    "Comes from GPM IMERG, an estimate from satellites combined with rain gauges, not a direct measurement everywhere.",
+    "The satellites that feed IMERG changed during the record, which can affect long-term trends.",
+    "Each value is an average over a 2 x 2 degree cell (about 220 km wide)."
+   ],
+   "definition": "How much water falls from the sky as rain or snow, given as the average amount per day in each month.",
+   "id": "precip",
+   "increase_means": "An increase means more rain or snow fell on average.",
+   "land_only": false,
+   "long_name": "precipitation rate, monthly mean",
+   "name": "Rain and snow (precipitation)",
+   "period": [
+    "2001-01",
+    "2025-09"
+   ],
+   "product": {
+    "citation": "not found",
+    "doi": "not found",
+    "name": "not found",
+    "short_name": "FIXTURE",
+    "source_variable": "precip",
+    "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "public_unit": "mm/day",
+   "units": "mm day-1"
+  },
+  {
+   "caveats": [
+    "Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.",
+    "Land only, between 60 degrees south and the North Pole.",
+    "Surface runoff happens in short bursts after heavy rain or snowmelt, so monthly values are small in many places."
+   ],
+   "definition": "Rain or melted snow that flows over the ground instead of soaking into the soil, as an average amount per day.",
+   "id": "runoff_surface",
+   "increase_means": "An increase means more water ran off over the ground surface.",
+   "land_only": true,
+   "long_name": "storm surface runoff, monthly mean",
+   "name": "Water running off the surface",
+   "period": [
+    "2001-01",
+    "2025-09"
+   ],
+   "product": {
+    "citation": "not found",
+    "doi": "not found",
+    "name": "not found",
+    "short_name": "FIXTURE",
+    "source_variable": "runoff_surface",
+    "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "public_unit": "mm/day",
+   "units": "mm day-1"
+  },
+  {
+   "caveats": [
+    "Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.",
+    "1 kg/m² of water is the same as a layer of water 1 mm deep.",
+    "Only the top 10 cm of soil; deeper soil can change differently.",
+    "Land only, between 60 degrees south and the North Pole."
+   ],
+   "definition": "How much water is held in the top 10 centimeters of soil.",
+   "id": "soil_moisture_0_10cm",
+   "increase_means": "An increase means the topsoil got wetter.",
+   "land_only": true,
+   "long_name": "soil moisture content in the 0-10 cm layer, monthly mean",
+   "name": "Water in the topsoil",
+   "period": [
+    "2001-01",
+    "2025-09"
+   ],
+   "product": {
+    "citation": "not found",
+    "doi": "not found",
+    "name": "not found",
+    "short_name": "FIXTURE",
+    "source_variable": "soil_moisture_0_10cm",
+    "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "public_unit": "kg/m²",
+   "units": "kg m-2"
+  },
+  {
+   "caveats": [
+    "Comes from MERRA-2, a reanalysis (a weather model combined with many observations), not from a thermometer in every place.",
+    "Each value is an average over a 2 x 2 degree cell (about 220 km wide), so local differences such as a single city are not visible."
+   ],
+   "definition": "How warm the air is about 2 meters above the ground or the sea, averaged over each month.",
+   "id": "t2m",
+   "increase_means": "An increase means the air near the surface got warmer.",
+   "land_only": false,
+   "long_name": "2 m air temperature, monthly mean",
+   "name": "Air temperature near the ground",
+   "period": [
+    "2001-01",
+    "2025-09"
+   ],
+   "product": {
+    "citation": "not found",
+    "doi": "not found",
+    "name": "not found",
+    "short_name": "FIXTURE",
+    "source_variable": "t2m",
+    "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "public_unit": "°C",
+   "units": "degC"
+  }
+ ]
+}

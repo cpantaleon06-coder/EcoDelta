@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.8569,
+   "cautions": [],
+   "ci_per_decade": [
+    0.2041,
+    0.3691
+   ],
+   "effect_size": 0.8569,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 5.018e-09,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in the Indian subcontinent changed by +0.287 °C per decade (95% confidence interval +0.204 to +0.369), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.708 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2872,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.1224,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.09158,
+    0.2403
+   ],
+   "effect_size": 0.1224,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.3881,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in the Indian subcontinent shows no statistically significant trend (p = 0.39): the estimate is +0.07 kg/m² per decade (95% confidence interval −0.09 to +0.24). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.07379,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.08629,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.008048,
+    0.003715
+   ],
+   "effect_size": -0.08629,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.4807,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water running off the surface in the Indian subcontinent shows no statistically significant trend (p = 0.48): the estimate is −0.0020 mm/day per decade (95% confidence interval −0.0080 to +0.0037). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.00198,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.01227,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01389,
+    0.01189
+   ],
+   "effect_size": -0.01227,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.9263,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Indian subcontinent shows no statistically significant trend (p = 0.93): the estimate is −0.001 mm/day per decade (95% confidence interval −0.014 to +0.012). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0005653,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.007336,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.0485,
+    0.04508
+   ],
+   "effect_size": -0.007336,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.9528,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Indian subcontinent shows no statistically significant trend (p = 0.95): the estimate is −0.001 mm/day per decade (95% confidence interval −0.049 to +0.045). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.001266,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/indian_subcontinent.json",
+ "region_id": "indian_subcontinent",
+ "schema_version": "1.0.0"
+}

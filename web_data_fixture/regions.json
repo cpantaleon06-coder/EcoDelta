@@ -1,0 +1,237 @@
+{
+ "note": "Regions are approximate latitude/longitude boxes, not political borders; some boxes overlap.",
+ "regions": [
+  {
+   "box": [
+    -90,
+    90,
+    -180,
+    180
+   ],
+   "id": "global",
+   "name": "Global",
+   "phrase": "the whole globe"
+  },
+  {
+   "box": [
+    14.5,
+    32.7,
+    -117.5,
+    -86.5
+   ],
+   "id": "mexico",
+   "name": "Mexico",
+   "phrase": "Mexico"
+  },
+  {
+   "box": [
+    7,
+    23,
+    -92,
+    -59
+   ],
+   "id": "central_america_caribbean",
+   "name": "Central America and Caribbean",
+   "phrase": "Central America and the Caribbean"
+  },
+  {
+   "box": [
+    -16,
+    5,
+    -80,
+    -45
+   ],
+   "id": "amazon_basin",
+   "name": "Amazon basin",
+   "phrase": "the Amazon basin"
+  },
+  {
+   "box": [
+    -56,
+    -20,
+    -76,
+    -48
+   ],
+   "id": "southern_south_america",
+   "name": "Southern South America",
+   "phrase": "Southern South America"
+  },
+  {
+   "box": [
+    31,
+    49,
+    -125,
+    -102
+   ],
+   "id": "western_us",
+   "name": "Western US",
+   "phrase": "the Western US"
+  },
+  {
+   "box": [
+    25,
+    49,
+    -102,
+    -67
+   ],
+   "id": "eastern_us",
+   "name": "Eastern US",
+   "phrase": "the Eastern US"
+  },
+  {
+   "box": [
+    42,
+    60,
+    -10,
+    15
+   ],
+   "id": "western_europe",
+   "name": "Western Europe",
+   "phrase": "Western Europe"
+  },
+  {
+   "box": [
+    30,
+    46,
+    -10,
+    37
+   ],
+   "id": "mediterranean",
+   "name": "Mediterranean",
+   "phrase": "the Mediterranean"
+  },
+  {
+   "box": [
+    10,
+    20,
+    -18,
+    40
+   ],
+   "id": "sahel",
+   "name": "Sahel",
+   "phrase": "the Sahel"
+  },
+  {
+   "box": [
+    -10,
+    10,
+    8,
+    32
+   ],
+   "id": "central_africa",
+   "name": "Central Africa",
+   "phrase": "Central Africa"
+  },
+  {
+   "box": [
+    -12,
+    15,
+    32,
+    52
+   ],
+   "id": "east_africa",
+   "name": "East Africa",
+   "phrase": "East Africa"
+  },
+  {
+   "box": [
+    -35,
+    -12,
+    10,
+    41
+   ],
+   "id": "southern_africa",
+   "name": "Southern Africa",
+   "phrase": "Southern Africa"
+  },
+  {
+   "box": [
+    12,
+    42,
+    34,
+    63
+   ],
+   "id": "middle_east",
+   "name": "Middle East",
+   "phrase": "the Middle East"
+  },
+  {
+   "box": [
+    6,
+    35,
+    66,
+    92
+   ],
+   "id": "indian_subcontinent",
+   "name": "Indian subcontinent",
+   "phrase": "the Indian subcontinent"
+  },
+  {
+   "box": [
+    -11,
+    28,
+    92,
+    141
+   ],
+   "id": "southeast_asia",
+   "name": "Southeast Asia",
+   "phrase": "Southeast Asia"
+  },
+  {
+   "box": [
+    20,
+    42,
+    105,
+    123
+   ],
+   "id": "east_china",
+   "name": "East China",
+   "phrase": "East China"
+  },
+  {
+   "box": [
+    50,
+    75,
+    60,
+    180
+   ],
+   "id": "siberia",
+   "name": "Siberia",
+   "phrase": "Siberia"
+  },
+  {
+   "box": [
+    66.5,
+    90,
+    -180,
+    180
+   ],
+   "id": "arctic",
+   "name": "Arctic (north of 66.5N)",
+   "phrase": "the Arctic (north of 66.5N)"
+  },
+  {
+   "box": [
+    -44,
+    -10,
+    112,
+    154
+   ],
+   "id": "australia",
+   "name": "Australia",
+   "phrase": "Australia"
+  },
+  {
+   "box": [
+    -90,
+    -60,
+    -180,
+    180
+   ],
+   "id": "antarctica",
+   "name": "Antarctica",
+   "phrase": "Antarctica"
+  }
+ ],
+ "schema_version": "1.0.0"
+}

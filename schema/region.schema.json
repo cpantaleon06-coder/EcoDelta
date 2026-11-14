@@ -1,0 +1,435 @@
+{
+ "$id": "ecodelta/region.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "dates": {
+   "items": {
+    "pattern": "^\\d{4}-\\d{2}$",
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "region": {
+   "additionalProperties": false,
+   "properties": {
+    "box": {
+     "items": {
+      "type": "number"
+     },
+     "maxItems": 4,
+     "minItems": 4,
+     "type": "array"
+    },
+    "id": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phrase": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "box",
+    "id",
+    "name",
+    "phrase"
+   ],
+   "type": "object"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  },
+  "variables": {
+   "additionalProperties": {
+    "additionalProperties": false,
+    "properties": {
+     "answers": {
+      "additionalProperties": false,
+      "properties": {
+       "data": {
+        "additionalProperties": false,
+        "properties": {
+         "n_months": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "n_valid_months": {
+          "type": [
+           "integer",
+           "null"
+          ]
+         },
+         "valid_fraction": {
+          "type": "number"
+         }
+        },
+        "required": [
+         "n_months",
+         "n_valid_months",
+         "valid_fraction"
+        ],
+        "type": "object"
+       },
+       "how_much": {
+        "additionalProperties": false,
+        "properties": {
+         "ci_level": {
+          "type": "number"
+         },
+         "ci_per_decade": {
+          "items": {
+           "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": [
+           "array",
+           "null"
+          ]
+         },
+         "period": {
+          "items": {
+           "pattern": "^\\d{4}-\\d{2}$",
+           "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+         },
+         "period_years": {
+          "type": "number"
+         },
+         "public_unit": {
+          "type": "string"
+         },
+         "slope_per_decade": {
+          "type": [
+           "number",
+           "null"
+          ]
+         },
+         "total_change": {
+          "type": [
+           "number",
+           "null"
+          ]
+         },
+         "total_change_ci": {
+          "items": {
+           "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": [
+           "array",
+           "null"
+          ]
+         },
+         "units": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "ci_level",
+         "ci_per_decade",
+         "period",
+         "period_years",
+         "public_unit",
+         "slope_per_decade",
+         "total_change",
+         "total_change_ci",
+         "units"
+        ],
+        "type": "object"
+       },
+       "significance": {
+        "additionalProperties": false,
+        "properties": {
+         "alpha": {
+          "type": "number"
+         },
+         "cells_significant_after_fdr_fraction": {
+          "type": [
+           "number",
+           "null"
+          ]
+         },
+         "explanation": {
+          "type": "string"
+         },
+         "pvalue": {
+          "type": [
+           "number",
+           "null"
+          ]
+         },
+         "qvalue": {
+          "type": "null"
+         },
+         "significant": {
+          "type": "boolean"
+         },
+         "test": {
+          "type": [
+           "string",
+           "null"
+          ]
+         },
+         "verdict": {
+          "enum": [
+           "increasing",
+           "decreasing",
+           "no significant trend",
+           "insufficient data"
+          ]
+         },
+         "warnings": {
+          "items": {
+           "type": "string"
+          },
+          "type": "array"
+         }
+        },
+        "required": [
+         "alpha",
+         "cells_significant_after_fdr_fraction",
+         "explanation",
+         "pvalue",
+         "qvalue",
+         "significant",
+         "test",
+         "verdict",
+         "warnings"
+        ],
+        "type": "object"
+       },
+       "what": {
+        "additionalProperties": false,
+        "properties": {
+         "direction": {
+          "enum": [
+           "increase",
+           "decrease",
+           "none detected"
+          ]
+         },
+         "name": {
+          "type": "string"
+         },
+         "variable": {
+          "type": "string"
+         },
+         "verdict": {
+          "enum": [
+           "increasing",
+           "decreasing",
+           "no significant trend",
+           "insufficient data"
+          ]
+         }
+        },
+        "required": [
+         "direction",
+         "name",
+         "variable",
+         "verdict"
+        ],
+        "type": "object"
+       },
+       "where": {
+        "additionalProperties": false,
+        "properties": {
+         "box": {
+          "items": {
+           "type": "number"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+         },
+         "covered_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+         },
+         "land_only": {
+          "type": "boolean"
+         },
+         "n_box_cells": {
+          "minimum": 0,
+          "type": "integer"
+         },
+         "n_valid_cells": {
+          "minimum": 0,
+          "type": "integer"
+         },
+         "name": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "box",
+         "covered_fraction",
+         "land_only",
+         "n_box_cells",
+         "n_valid_cells",
+         "name",
+         "region"
+        ],
+        "type": "object"
+       }
+      },
+      "required": [
+       "data",
+       "how_much",
+       "significance",
+       "what",
+       "where"
+      ],
+      "type": "object"
+     },
+     "cautions": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "rank": {
+      "minimum": 1,
+      "type": "integer"
+     },
+     "report": {
+      "properties": {
+       "verdict": {
+        "enum": [
+         "increasing",
+         "decreasing",
+         "no significant trend",
+         "insufficient data"
+        ]
+       }
+      },
+      "required": [
+       "slope_per_decade",
+       "ci_low_per_decade",
+       "ci_high_per_decade",
+       "pvalue",
+       "verdict",
+       "significant",
+       "n_valid",
+       "n_total",
+       "warnings"
+      ],
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "score": {
+      "additionalProperties": false,
+      "properties": {
+       "abs_effect_size": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "effect_size": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "pvalue": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "significant": {
+        "type": "boolean"
+       },
+       "tier": {
+        "enum": [
+         0,
+         1,
+         2
+        ]
+       }
+      },
+      "required": [
+       "abs_effect_size",
+       "effect_size",
+       "pvalue",
+       "significant",
+       "tier"
+      ],
+      "type": "object"
+     },
+     "sentence": {
+      "type": "string"
+     },
+     "series": {
+      "additionalProperties": false,
+      "properties": {
+       "anomaly": {
+        "items": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "type": "array"
+       },
+       "running_mean_12": {
+        "items": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "type": "array"
+       }
+      },
+      "required": [
+       "anomaly",
+       "running_mean_12"
+      ],
+      "type": [
+       "object",
+       "null"
+      ]
+     }
+    },
+    "required": [
+     "answers",
+     "cautions",
+     "rank",
+     "report",
+     "score",
+     "sentence",
+     "series"
+    ],
+    "type": "object"
+   },
+   "type": "object"
+  }
+ },
+ "required": [
+  "dates",
+  "region",
+  "schema_version",
+  "variables"
+ ],
+ "title": "EcoDelta region file",
+ "type": "object"
+}

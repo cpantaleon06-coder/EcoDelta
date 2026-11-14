@@ -1,0 +1,147 @@
+{
+ "$id": "ecodelta/grid.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "ci_high": {
+   "items": {
+    "type": [
+     "number",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "ci_low": {
+   "items": {
+    "type": [
+     "number",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "lat": {
+   "properties": {
+    "first": {
+     "type": "number"
+    },
+    "last": {
+     "type": "number"
+    },
+    "n": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "step": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "first",
+    "last",
+    "step",
+    "n"
+   ],
+   "type": "object"
+  },
+  "lon": {
+   "properties": {
+    "first": {
+     "type": "number"
+    },
+    "last": {
+     "type": "number"
+    },
+    "n": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "step": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "first",
+    "last",
+    "step",
+    "n"
+   ],
+   "type": "object"
+  },
+  "n_valid": {
+   "items": {
+    "minimum": 0,
+    "type": "integer"
+   },
+   "type": "array"
+  },
+  "order": {
+   "type": "string"
+  },
+  "p": {
+   "items": {
+    "type": [
+     "number",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "q": {
+   "items": {
+    "type": [
+     "number",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  },
+  "significant": {
+   "items": {
+    "enum": [
+     0,
+     1,
+     null
+    ]
+   },
+   "type": "array"
+  },
+  "slope": {
+   "items": {
+    "type": [
+     "number",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "slope_units": {
+   "type": "string"
+  },
+  "variable": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "ci_high",
+  "ci_low",
+  "lat",
+  "lon",
+  "n_valid",
+  "order",
+  "p",
+  "q",
+  "schema_version",
+  "significant",
+  "slope",
+  "slope_units",
+  "variable"
+ ],
+ "title": "EcoDelta grid file",
+ "type": "object"
+}

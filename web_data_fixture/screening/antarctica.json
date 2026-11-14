@@ -1,0 +1,93 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 1.027,
+   "cautions": [],
+   "ci_per_decade": [
+    0.195,
+    0.3042
+   ],
+   "effect_size": 1.027,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 6.165e-13,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in Antarctica changed by +0.249 °C per decade (95% confidence interval +0.195 to +0.304), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.615 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2494,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.0009581,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01757,
+    0.01673
+   ],
+   "effect_size": -0.0009581,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.9942,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Antarctica shows no statistically significant trend (p = 0.99): the estimate is 0.000 mm/day per decade (95% confidence interval −0.018 to +0.017). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -6.026e-05,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": null,
+   "cautions": [],
+   "ci_per_decade": null,
+   "effect_size": null,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": null,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, there is no trend estimate for water leaving the land (evapotranspiration) in Antarctica: this variable is only available over land, and no land cell in this region has enough data.",
+   "significant": false,
+   "slope_per_decade": null,
+   "tier": 2,
+   "variable": "evap",
+   "verdict": "insufficient data"
+  },
+  {
+   "abs_effect_size": null,
+   "cautions": [],
+   "ci_per_decade": null,
+   "effect_size": null,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": null,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, there is no trend estimate for water running off the surface in Antarctica: this variable is only available over land, and no land cell in this region has enough data.",
+   "significant": false,
+   "slope_per_decade": null,
+   "tier": 2,
+   "variable": "runoff_surface",
+   "verdict": "insufficient data"
+  },
+  {
+   "abs_effect_size": null,
+   "cautions": [],
+   "ci_per_decade": null,
+   "effect_size": null,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": null,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, there is no trend estimate for water in the topsoil in Antarctica: this variable is only available over land, and no land cell in this region has enough data.",
+   "significant": false,
+   "slope_per_decade": null,
+   "tier": 2,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "insufficient data"
+  }
+ ],
+ "region_file": "regions/antarctica.json",
+ "region_id": "antarctica",
+ "schema_version": "1.0.0"
+}

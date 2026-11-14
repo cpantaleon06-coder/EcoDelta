@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.9528,
+   "cautions": [],
+   "ci_per_decade": [
+    0.04899,
+    0.07245
+   ],
+   "effect_size": 0.9528,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 1.483e-16,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in East China changed by +0.061 mm/day per decade (95% confidence interval +0.049 to +0.072), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.150 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.06092,
+   "tier": 0,
+   "variable": "evap",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.6211,
+   "cautions": [],
+   "ci_per_decade": [
+    0.1436,
+    0.3155
+   ],
+   "effect_size": 0.6211,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 6.763e-07,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in East China changed by +0.229 °C per decade (95% confidence interval +0.144 to +0.316), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.566 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2294,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.1912,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.04017,
+    0.306
+   ],
+   "effect_size": 0.1912,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.1356,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in East China shows no statistically significant trend (p = 0.14): the estimate is +0.13 kg/m² per decade (95% confidence interval −0.04 to +0.31). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.128,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1942,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.0987,
+    0.01523
+   ],
+   "effect_size": -0.1942,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.1563,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in East China shows no statistically significant trend (p = 0.16): the estimate is −0.041 mm/day per decade (95% confidence interval −0.099 to +0.015). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.04122,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.02952,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.005703,
+    0.006923
+   ],
+   "effect_size": 0.02952,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.8132,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water running off the surface in East China shows no statistically significant trend (p = 0.81): the estimate is +0.0008 mm/day per decade (95% confidence interval −0.0057 to +0.0069). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.000773,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/east_china.json",
+ "region_id": "east_china",
+ "schema_version": "1.0.0"
+}

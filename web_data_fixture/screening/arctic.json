@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 1.351,
+   "cautions": [],
+   "ci_per_decade": [
+    0.806,
+    0.9097
+   ],
+   "effect_size": 1.351,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 1.791e-32,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in the Arctic (north of 66.5N) changed by +0.858 °C per decade (95% confidence interval +0.806 to +0.910), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 2.117 °C.",
+   "significant": true,
+   "slope_per_decade": 0.8582,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.09994,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.003214,
+    0.006632
+   ],
+   "effect_size": 0.09994,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.4987,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Arctic (north of 66.5N) shows no statistically significant trend (p = 0.50): the estimate is +0.0017 mm/day per decade (95% confidence interval −0.0032 to +0.0066). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.001709,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.07655,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01054,
+    0.02058
+   ],
+   "effect_size": 0.07655,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.5549,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Arctic (north of 66.5N) shows no statistically significant trend (p = 0.55): the estimate is +0.005 mm/day per decade (95% confidence interval −0.011 to +0.021). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.004549,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.06764,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.00203,
+    0.003161
+   ],
+   "effect_size": 0.06764,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.6432,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water running off the surface in the Arctic (north of 66.5N) shows no statistically significant trend (p = 0.64): the estimate is +0.0006 mm/day per decade (95% confidence interval −0.0020 to +0.0032). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.0006069,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.0173,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.0748,
+    0.06338
+   ],
+   "effect_size": -0.0173,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.9092,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in the Arctic (north of 66.5N) shows no statistically significant trend (p = 0.91): the estimate is −0.004 kg/m² per decade (95% confidence interval −0.075 to +0.063). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0041,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/arctic.json",
+ "region_id": "arctic",
+ "schema_version": "1.0.0"
+}

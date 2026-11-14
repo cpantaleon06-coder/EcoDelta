@@ -1,0 +1,113 @@
+{
+ "$id": "ecodelta/catalog.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  },
+  "variables": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "caveats": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "definition": {
+      "type": "string"
+     },
+     "id": {
+      "type": "string"
+     },
+     "increase_means": {
+      "type": "string"
+     },
+     "land_only": {
+      "type": "boolean"
+     },
+     "long_name": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "period": {
+      "items": {
+       "pattern": "^\\d{4}-\\d{2}$",
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "product": {
+      "additionalProperties": false,
+      "properties": {
+       "citation": {
+        "type": "string"
+       },
+       "doi": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       },
+       "short_name": {
+        "type": "string"
+       },
+       "source_variable": {
+        "type": "string"
+       },
+       "unit_conversion": {
+        "type": "string"
+       },
+       "version": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "citation",
+       "doi",
+       "name",
+       "short_name",
+       "source_variable",
+       "unit_conversion",
+       "version"
+      ],
+      "type": "object"
+     },
+     "public_unit": {
+      "type": "string"
+     },
+     "units": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "caveats",
+     "definition",
+     "id",
+     "increase_means",
+     "land_only",
+     "long_name",
+     "name",
+     "period",
+     "product",
+     "public_unit",
+     "units"
+    ],
+    "type": "object"
+   },
+   "minItems": 1,
+   "type": "array"
+  }
+ },
+ "required": [
+  "schema_version",
+  "variables"
+ ],
+ "title": "EcoDelta catalog file",
+ "type": "object"
+}

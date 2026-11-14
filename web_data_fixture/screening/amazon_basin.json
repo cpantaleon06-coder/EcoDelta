@@ -1,0 +1,104 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.7168,
+   "cautions": [],
+   "ci_per_decade": [
+    0.1243,
+    0.2556
+   ],
+   "effect_size": 0.7168,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 1.752e-07,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in the Amazon basin changed by +0.189 °C per decade (95% confidence interval +0.124 to +0.256), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.467 °C.",
+   "significant": true,
+   "slope_per_decade": 0.1895,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.309,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "ci_per_decade": [
+    0.008279,
+    0.1186
+   ],
+   "effect_size": 0.309,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.02333,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Amazon basin changed by +0.063 mm/day per decade (95% confidence interval +0.008 to +0.119), which is statistically significant (p = 0.02). Over the whole 24.7-year period that is an increase of about 0.155 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.06301,
+   "tier": 0,
+   "variable": "precip",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.1069,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.1021,
+    0.2392
+   ],
+   "effect_size": 0.1069,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.437,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in the Amazon basin shows no statistically significant trend (p = 0.44): the estimate is +0.07 kg/m² per decade (95% confidence interval −0.10 to +0.24). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.06716,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.09154,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.004895,
+    0.009608
+   ],
+   "effect_size": 0.09154,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.4889,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water running off the surface in the Amazon basin shows no statistically significant trend (p = 0.49): the estimate is +0.0024 mm/day per decade (95% confidence interval −0.0049 to +0.0096). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.002443,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.07858,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01927,
+    0.01036
+   ],
+   "effect_size": -0.07858,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.5952,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Amazon basin shows no statistically significant trend (p = 0.60): the estimate is −0.004 mm/day per decade (95% confidence interval −0.019 to +0.010). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.004114,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/amazon_basin.json",
+ "region_id": "amazon_basin",
+ "schema_version": "1.0.0"
+}

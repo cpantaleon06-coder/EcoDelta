@@ -1,0 +1,72 @@
+# Plain-language definitions for each variable, keyed like manifest.json "variable".
+# status: provisional. Written by the engine team; not yet reviewed by a teacher or a domain expert.
+# manifest_units must equal the units in manifest.json; the engine refuses to run if they differ.
+# plausible_range: [min, max] for any monthly cell value, in manifest units; values outside it
+# stop the build (it catches unit mistakes). These are our own loose bounds, not published limits.
+# public_unit is only a display label for the same numbers (no conversion happens here).
+# Product, version and DOI are NOT written here: they are read from nasa-data/docs/DATASETS.md.
+
+t2m:
+  plausible_range: [-90, 60]
+  name: Air temperature near the ground
+  definition: How warm the air is about 2 meters above the ground or the sea, averaged over each month.
+  manifest_units: degC
+  public_unit: "°C"
+  increase_means: An increase means the air near the surface got warmer.
+  land_only: false
+  caveats:
+    - Comes from MERRA-2, a reanalysis (a weather model combined with many observations), not from a thermometer in every place.
+    - Each value is an average over a 2 x 2 degree cell (about 220 km wide), so local differences such as a single city are not visible.
+
+precip:
+  plausible_range: [0, 100]
+  name: Rain and snow (precipitation)
+  definition: How much water falls from the sky as rain or snow, given as the average amount per day in each month.
+  manifest_units: mm day-1
+  public_unit: mm/day
+  increase_means: An increase means more rain or snow fell on average.
+  land_only: false
+  caveats:
+    - Comes from GPM IMERG, an estimate from satellites combined with rain gauges, not a direct measurement everywhere.
+    - The satellites that feed IMERG changed during the record, which can affect long-term trends.
+    - Each value is an average over a 2 x 2 degree cell (about 220 km wide).
+
+evap:
+  plausible_range: [-2, 20]
+  name: Water leaving the land (evapotranspiration)
+  definition: How much water moves from the land into the air, by evaporating from soil and water and by plants releasing it through their leaves, as an average amount per day.
+  manifest_units: mm day-1
+  public_unit: mm/day
+  increase_means: An increase means more water went from the land into the air.
+  land_only: true
+  caveats:
+    - Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.
+    - Land only, between 60 degrees south and the North Pole; there are no values over the ocean or Antarctica.
+    - Each value is an average over a 2 x 2 degree cell (about 220 km wide); cells that are mostly ocean are left out.
+
+runoff_surface:
+  plausible_range: [0, 100]
+  name: Water running off the surface
+  definition: Rain or melted snow that flows over the ground instead of soaking into the soil, as an average amount per day.
+  manifest_units: mm day-1
+  public_unit: mm/day
+  increase_means: An increase means more water ran off over the ground surface.
+  land_only: true
+  caveats:
+    - Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.
+    - Land only, between 60 degrees south and the North Pole.
+    - Surface runoff happens in short bursts after heavy rain or snowmelt, so monthly values are small in many places.
+
+soil_moisture_0_10cm:
+  plausible_range: [0, 100]
+  name: Water in the topsoil
+  definition: How much water is held in the top 10 centimeters of soil.
+  manifest_units: kg m-2
+  public_unit: "kg/m²"
+  increase_means: An increase means the topsoil got wetter.
+  land_only: true
+  caveats:
+    - Comes from GLDAS Noah, a computer model of the land surface driven by observations; it is not measured directly.
+    - 1 kg/m² of water is the same as a layer of water 1 mm deep.
+    - Only the top 10 cm of soil; deeper soil can change differently.
+    - Land only, between 60 degrees south and the North Pole.

@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.7838,
+   "cautions": [],
+   "ci_per_decade": [
+    0.1595,
+    0.2776
+   ],
+   "effect_size": 0.7838,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 1.767e-10,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in Australia changed by +0.219 °C per decade (95% confidence interval +0.160 to +0.278), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.540 °C.",
+   "significant": true,
+   "slope_per_decade": 0.219,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.194,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.2863,
+    0.05423
+   ],
+   "effect_size": -0.194,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.1828,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in Australia shows no statistically significant trend (p = 0.18): the estimate is −0.11 kg/m² per decade (95% confidence interval −0.29 to +0.05). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.1122,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1178,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01651,
+    0.006632
+   ],
+   "effect_size": -0.1178,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.4013,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Australia shows no statistically significant trend (p = 0.40): the estimate is −0.005 mm/day per decade (95% confidence interval −0.017 to +0.007). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.004871,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.03464,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.00679,
+    0.005331
+   ],
+   "effect_size": -0.03464,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.8138,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Australia shows no statistically significant trend (p = 0.81): the estimate is −0.0007 mm/day per decade (95% confidence interval −0.0068 to +0.0053). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0007327,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.007939,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.04475,
+    0.04269
+   ],
+   "effect_size": -0.007939,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.9626,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Australia shows no statistically significant trend (p = 0.96): the estimate is −0.001 mm/day per decade (95% confidence interval −0.045 to +0.043). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.001284,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/australia.json",
+ "region_id": "australia",
+ "schema_version": "1.0.0"
+}
