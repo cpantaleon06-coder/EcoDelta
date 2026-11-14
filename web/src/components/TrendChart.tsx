@@ -73,7 +73,7 @@ export function TrendChart({ dates, series, slopePerDecade, ciPerDecade, signifi
               formatter={(v, name) =>
                 Array.isArray(v) ? [`${fmtSigned(Number(v[0]))} to ${fmtSigned(Number(v[1]))}`, 'Slope range (95% CI)'] : [`${fmtSigned(Number(v))} ${unit}`, NAMES[String(name)] ?? name]
               }
-              contentStyle={{ background: INK.panel, border: 'none', borderRadius: 4, fontSize: 13, fontFamily: FONT, color: INK.text }}
+              contentStyle={{ background: INK.panel, border: 'none', borderRadius: 4, fontSize: 13, lineHeight: 1.5, fontFamily: FONT, color: INK.text }}
               labelStyle={{ color: INK.muted }}
               cursor={{ stroke: INK.axis }}
             />

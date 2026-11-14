@@ -15,7 +15,7 @@ body {
   min-width: 320px;
   background: var(--bg);
   color: var(--text);
-  font: 400 var(--fs-base) / 1.6 var(--font);
+  font: 400 var(--fs-base) / var(--leading-body) var(--font);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -38,7 +38,7 @@ h3,
 h4 {
   font-family: var(--font);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(--leading-tight);
   letter-spacing: -0.01em;
   margin: 0 0 var(--s3);
   text-wrap: balance;
@@ -432,7 +432,7 @@ select option {
 }
 .hero h1 {
   font-size: var(--fs-hero);
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.03em;
   max-width: 21ch;
   margin-bottom: var(--s3);
@@ -569,7 +569,7 @@ select option {
   border-radius: var(--radius-sm);
   box-shadow: 0 6px 20px rgb(0 6 10 / 50%);
   font-size: var(--fs-sm);
-  line-height: 1.45;
+  line-height: var(--leading-body);
   color: var(--text-2);
 }
 .tip p {
@@ -629,7 +629,7 @@ select option {
   margin: 4px 0 0;
   padding: 0;
   list-style: none;
-  font: 400 var(--fs-xs) / 1.5 var(--font);
+  font: 400 var(--fs-xs) / var(--leading-body) var(--font);
   color: var(--text-2);
 }
 .legend__ticks li {
@@ -736,7 +736,7 @@ select option {
 }
 .rank-row__name {
   font-weight: 700;
-  line-height: 1.35;
+  line-height: var(--leading-tight);
 }
 .rank-row--muted .rank-row__name {
   font-weight: 400;
@@ -891,7 +891,7 @@ select option {
 }
 .detail__sentence {
   font-size: var(--fs-md);
-  line-height: 1.6;
+  line-height: var(--leading-body);
   color: var(--text-2);
   max-width: 72ch;
 }
@@ -983,7 +983,7 @@ select option {
   font-family: var(--font);
   font-size: var(--fs-lg);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(--leading-tight);
   color: var(--text);
   margin-bottom: var(--s2);
 }

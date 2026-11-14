@@ -51,6 +51,8 @@
   --fs-hero: clamp(2rem, 1.2rem + 2.4vw, 3.1rem); /* the Explore hero headline */
   --fs-number: clamp(2rem, 1.6rem + 1.4vw, 2.6rem); /* big measurements */
   --tracking-label: 0.06em;
+  --leading-body: 1.5; /* every run of text: paragraphs, lists, table cells, helper text */
+  --leading-tight: 1.2; /* headings and big numbers */
 
   /* space, radius, depth */
   --s1: 4px;
