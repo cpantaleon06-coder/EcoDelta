@@ -1,0 +1,125 @@
+{
+ "$id": "ecodelta/screening.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "ranking": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "abs_effect_size": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "cautions": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "ci_per_decade": {
+      "items": {
+       "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": [
+       "array",
+       "null"
+      ]
+     },
+     "effect_size": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "name": {
+      "type": "string"
+     },
+     "public_unit": {
+      "type": "string"
+     },
+     "pvalue": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "rank": {
+      "minimum": 1,
+      "type": "integer"
+     },
+     "sentence": {
+      "type": "string"
+     },
+     "significant": {
+      "type": "boolean"
+     },
+     "slope_per_decade": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "tier": {
+      "enum": [
+       0,
+       1,
+       2
+      ]
+     },
+     "variable": {
+      "type": "string"
+     },
+     "verdict": {
+      "enum": [
+       "increasing",
+       "decreasing",
+       "no significant trend",
+       "insufficient data"
+      ]
+     }
+    },
+    "required": [
+     "abs_effect_size",
+     "cautions",
+     "ci_per_decade",
+     "effect_size",
+     "name",
+     "public_unit",
+     "pvalue",
+     "rank",
+     "sentence",
+     "significant",
+     "slope_per_decade",
+     "tier",
+     "variable",
+     "verdict"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "region_file": {
+   "type": "string"
+  },
+  "region_id": {
+   "type": "string"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  }
+ },
+ "required": [
+  "ranking",
+  "region_file",
+  "region_id",
+  "schema_version"
+ ],
+ "title": "EcoDelta screening file",
+ "type": "object"
+}

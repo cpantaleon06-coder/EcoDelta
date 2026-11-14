@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.9471,
+   "cautions": [],
+   "ci_per_decade": [
+    0.2253,
+    0.3472
+   ],
+   "effect_size": 0.9471,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 9.643e-14,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in East Africa changed by +0.285 °C per decade (95% confidence interval +0.225 to +0.347), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.704 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2854,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.2078,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.08247,
+    0.006306
+   ],
+   "effect_size": -0.2078,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.09125,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in East Africa shows no statistically significant trend (p = 0.09): the estimate is −0.038 mm/day per decade (95% confidence interval −0.082 to +0.006). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.03809,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1539,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01879,
+    0.004817
+   ],
+   "effect_size": -0.1539,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.2352,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in East Africa shows no statistically significant trend (p = 0.24): the estimate is −0.007 mm/day per decade (95% confidence interval −0.019 to +0.005). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.007297,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1199,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.1047,
+    0.2789
+   ],
+   "effect_size": 0.1199,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.3556,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in East Africa shows no statistically significant trend (p = 0.36): the estimate is +0.08 kg/m² per decade (95% confidence interval −0.10 to +0.28). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.08394,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.0339,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.006937,
+    0.005222
+   ],
+   "effect_size": -0.0339,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.7962,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water running off the surface in East Africa shows no statistically significant trend (p = 0.80): the estimate is −0.0008 mm/day per decade (95% confidence interval −0.0069 to +0.0052). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0008116,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/east_africa.json",
+ "region_id": "east_africa",
+ "schema_version": "1.0.0"
+}

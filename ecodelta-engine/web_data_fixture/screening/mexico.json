@@ -1,0 +1,104 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 0.5454,
+   "cautions": [],
+   "ci_per_decade": [
+    0.1049,
+    0.2994
+   ],
+   "effect_size": 0.5454,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 7.701e-05,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in Mexico changed by +0.203 °C per decade (95% confidence interval +0.105 to +0.299), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.500 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2029,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.2592,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "ci_per_decade": [
+    -0.3723,
+    -0.004618
+   ],
+   "effect_size": -0.2592,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.04486,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in Mexico changed by −0.19 kg/m² per decade (95% confidence interval −0.37 to 0.00), which is statistically significant (p = 0.04). Over the whole 24.7-year period that is a decrease of about 0.46 kg/m².",
+   "significant": true,
+   "slope_per_decade": -0.1869,
+   "tier": 0,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "decreasing"
+  },
+  {
+   "abs_effect_size": 0.141,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.02172,
+    0.08454
+   ],
+   "effect_size": 0.141,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.241,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Mexico shows no statistically significant trend (p = 0.24): the estimate is +0.032 mm/day per decade (95% confidence interval −0.022 to +0.085). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.03156,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1178,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01461,
+    0.007044
+   ],
+   "effect_size": -0.1178,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.4614,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Mexico shows no statistically significant trend (p = 0.46): the estimate is −0.004 mm/day per decade (95% confidence interval −0.015 to +0.007). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.00407,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.06774,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.01199,
+    0.02005
+   ],
+   "effect_size": 0.06774,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.6142,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Mexico shows no statistically significant trend (p = 0.61): the estimate is +0.004 mm/day per decade (95% confidence interval −0.012 to +0.020). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.00392,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/mexico.json",
+ "region_id": "mexico",
+ "schema_version": "1.0.0"
+}

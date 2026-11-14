@@ -1,0 +1,102 @@
+{
+ "ranking": [
+  {
+   "abs_effect_size": 1.348,
+   "cautions": [],
+   "ci_per_decade": [
+    0.2578,
+    0.2857
+   ],
+   "effect_size": 1.348,
+   "name": "Air temperature near the ground",
+   "public_unit": "°C",
+   "pvalue": 8.581e-39,
+   "rank": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in the whole globe changed by +0.272 °C per decade (95% confidence interval +0.258 to +0.286), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.670 °C.",
+   "significant": true,
+   "slope_per_decade": 0.2717,
+   "tier": 0,
+   "variable": "t2m",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.206,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.08095,
+    0.01887
+   ],
+   "effect_size": -0.206,
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.2092,
+   "rank": 2,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in the whole globe shows no statistically significant trend (p = 0.21): the estimate is −0.032 kg/m² per decade (95% confidence interval −0.081 to +0.019). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.03197,
+   "tier": 1,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1335,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.001159,
+    0.003648
+   ],
+   "effect_size": 0.1335,
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.2988,
+   "rank": 3,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the whole globe shows no statistically significant trend (p = 0.30): the estimate is +0.0013 mm/day per decade (95% confidence interval −0.0012 to +0.0036). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.001279,
+   "tier": 1,
+   "variable": "evap",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.1148,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.007503,
+    0.01515
+   ],
+   "effect_size": 0.1148,
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.4992,
+   "rank": 4,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the whole globe shows no statistically significant trend (p = 0.50): the estimate is +0.004 mm/day per decade (95% confidence interval −0.008 to +0.015). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.003963,
+   "tier": 1,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.0497,
+   "cautions": [],
+   "ci_per_decade": [
+    -0.001797,
+    0.001172
+   ],
+   "effect_size": -0.0497,
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.6958,
+   "rank": 5,
+   "sentence": "From January 2001 to September 2025, water running off the surface in the whole globe shows no statistically significant trend (p = 0.70): the estimate is −0.0003 mm/day per decade (95% confidence interval −0.0018 to +0.0012). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0002668,
+   "tier": 1,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/global.json",
+ "region_id": "global",
+ "schema_version": "1.0.0"
+}

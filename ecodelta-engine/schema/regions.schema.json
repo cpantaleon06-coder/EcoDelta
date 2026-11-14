@@ -1,0 +1,54 @@
+{
+ "$id": "ecodelta/regions.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "note": {
+   "type": "string"
+  },
+  "regions": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "box": {
+      "items": {
+       "type": "number"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+     },
+     "id": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "phrase": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "box",
+     "id",
+     "name",
+     "phrase"
+    ],
+    "type": "object"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  }
+ },
+ "required": [
+  "note",
+  "regions",
+  "schema_version"
+ ],
+ "title": "EcoDelta regions file",
+ "type": "object"
+}

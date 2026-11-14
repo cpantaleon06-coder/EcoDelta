@@ -1,0 +1,255 @@
+{
+ "$id": "ecodelta/meta.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "build_date": {
+   "type": "string"
+  },
+  "engine": {
+   "additionalProperties": true,
+   "properties": {
+    "commit": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "uncommitted_changes": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    }
+   },
+   "required": [
+    "commit",
+    "uncommitted_changes"
+   ],
+   "type": "object"
+  },
+  "grid": {
+   "additionalProperties": false,
+   "properties": {
+    "cell_reference": {
+     "type": "string"
+    },
+    "lat": {
+     "properties": {
+      "first": {
+       "type": "number"
+      },
+      "last": {
+       "type": "number"
+      },
+      "n": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "step": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "first",
+      "last",
+      "step",
+      "n"
+     ],
+     "type": "object"
+    },
+    "lon": {
+     "properties": {
+      "first": {
+       "type": "number"
+      },
+      "last": {
+       "type": "number"
+      },
+      "n": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "step": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "first",
+      "last",
+      "step",
+      "n"
+     ],
+     "type": "object"
+    },
+    "resolution_deg": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "cell_reference",
+    "lat",
+    "lon",
+    "resolution_deg"
+   ],
+   "type": "object"
+  },
+  "limitations": {
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "methods": {
+   "required": [
+    "autocorrelation_handling",
+    "alpha",
+    "fdr",
+    "climatology_base_period",
+    "rounding",
+    "ranking",
+    "display_series"
+   ],
+   "type": "object"
+  },
+  "period": {
+   "additionalProperties": false,
+   "properties": {
+    "end": {
+     "pattern": "^\\d{4}-\\d{2}$",
+     "type": "string"
+    },
+    "n_months": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "start": {
+     "pattern": "^\\d{4}-\\d{2}$",
+     "type": "string"
+    },
+    "years": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "end",
+    "n_months",
+    "start",
+    "years"
+   ],
+   "type": "object"
+  },
+  "products": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "citation": {
+      "type": "string"
+     },
+     "doi": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "short_name": {
+      "type": "string"
+     },
+     "variables": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "version": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "citation",
+     "doi",
+     "name",
+     "short_name",
+     "variables",
+     "version"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "sanity_checks": {
+   "type": "object"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  },
+  "source": {
+   "enum": [
+    "fixture",
+    "real"
+   ]
+  },
+  "synthetic": {
+   "type": "boolean"
+  },
+  "timing": {
+   "type": "object"
+  },
+  "trendkit": {
+   "additionalProperties": true,
+   "properties": {
+    "commit": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "uncommitted_changes": {
+     "type": [
+      "boolean",
+      "null"
+     ]
+    }
+   },
+   "required": [
+    "commit",
+    "uncommitted_changes"
+   ],
+   "type": "object"
+  },
+  "variables_included": {
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "variables_missing": {
+   "items": {
+    "type": "string"
+   },
+   "type": "array"
+  }
+ },
+ "required": [
+  "build_date",
+  "engine",
+  "grid",
+  "limitations",
+  "methods",
+  "period",
+  "products",
+  "sanity_checks",
+  "schema_version",
+  "source",
+  "synthetic",
+  "timing",
+  "trendkit",
+  "variables_included",
+  "variables_missing"
+ ],
+ "title": "EcoDelta meta file",
+ "type": "object"
+}
