@@ -125,7 +125,7 @@ def mann_kendall(y, method=DEFAULT_METHOD):
     return out
 
 
-def sens_slope(y, t, alpha=0.05):
+def sens_slope(y, t, alpha=0.05, var_s=None):
     """Theil-Sen slope with its non-parametric confidence interval (Sen 1968, Gilbert 1987).
 
     Formulas:
@@ -141,6 +141,9 @@ def sens_slope(y, t, alpha=0.05):
     y : array-like, shape (..., n). NaN = missing.
     t : array-like, shape (n,). Time in decimal years, strictly increasing.
     alpha : float. The CI has confidence level 1 - alpha.
+    var_s : array-like with shape y.shape[:-1], optional. Var(S) to build the CI from,
+        typically the autocorrelation-corrected `mann_kendall(y, method)["var_s"]`, so
+        the CI is consistent with that test. Default: the uncorrected Var(S).
 
     Returns
     -------
@@ -167,8 +170,10 @@ def sens_slope(y, t, alpha=0.05):
         k = np.clip(k, 0, np.maximum(m - 1, 0)).astype(int)
         return np.take_along_axis(slopes, k[..., None], axis=-1)[..., 0]
 
-    _, var, n = _s_and_var(y)
-    c = stats.norm.ppf(1 - alpha / 2) * np.sqrt(var)
+    n = (~np.isnan(y)).sum(-1)
+    if var_s is None:
+        _, var_s, _ = _s_and_var(y)
+    c = stats.norm.ppf(1 - alpha / 2) * np.sqrt(var_s)
     out = dict(slope=0.5 * (rank((m - 1) // 2) + rank(m // 2)),
                ci_low=rank(np.round((m - c) / 2) - 1),
                ci_high=rank(np.round((m + c) / 2)))

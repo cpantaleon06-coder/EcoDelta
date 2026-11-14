@@ -139,3 +139,17 @@ def test_corrected_methods_edge_cases_and_rows(method):
     batch = mann_kendall(Y, method)
     for k in range(3):
         np.testing.assert_allclose(batch["pvalue"][k], mann_kendall(Y[k], method)["pvalue"])
+
+
+def test_sen_ci_coverage_with_corrected_variance():
+    rng = np.random.default_rng(400)
+    t = np.arange(300) / 12
+    true_slope = 0.04  # per year
+    y = true_slope * t + _ar1(rng, 0.6, (1000, 300))
+    plain = sens_slope(y, t)
+    corrected = sens_slope(y, t, var_s=mann_kendall(y, "yue_wang")["var_s"])
+    cover = [np.mean((r["ci_low"] <= true_slope) & (true_slope <= r["ci_high"])) for r in (plain, corrected)]
+    print(f"\nSen 95% CI coverage, AR(1) phi=0.6, n=300, 1000 sims: "
+          f"uncorrected {cover[0]:.3f}, Yue-Wang corrected {cover[1]:.3f}")
+    assert cover[0] < 0.80
+    assert 0.92 <= cover[1] <= 0.97
