@@ -1,0 +1,70 @@
+/* EcoDelta design tokens (v4): one font, a cool blue-to-green palette. Every color, size and radius lives here. */
+@import '@fontsource/space-grotesk/latin-400.css';
+@import '@fontsource/space-grotesk/latin-500.css';
+@import '@fontsource/space-grotesk/latin-600.css';
+@import '@fontsource/space-grotesk/latin-700.css';
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces: deep blue-green ink, each step a little lighter. Separation comes from tone and space, not borders. */
+  --bg: #061015;
+  --surface: #0b1820;
+  --surface-2: #10212a;
+  --surface-3: #172c37;
+  --map-bg: #050d12;
+  --rule: #1b2f3a; /* hairline dividers */
+  --rule-strong: #2b4655;
+
+  /* text (contrast checked by .audit.mjs) */
+  --text: #e4f1ef;
+  --text-2: #b3cbcc;
+  --muted: #87a5ab;
+
+  /* accents: an analogous run from blue to yellow-green, each with a job */
+  --green: #3ddc97; /* primary action, the "Delta" of the wordmark, soil moisture */
+  --green-hover: #6ae8b0;
+  --lime: #a8e06c; /* temperature, the lit side of the globe */
+  --teal: #2ec4b6; /* evapotranspiration */
+  --sky: #5ccaf2; /* demo data notice, runoff */
+  --blue: #6b9af0; /* precipitation, the ocean of the globe */
+  --notice-bg: #0a2333; /* demo data band */
+  --focus: #ffffff; /* thick focus ring, brightest thing on the page */
+  --on-accent: #04130d; /* text on accent fills */
+
+  /* variable identity (kept in sync with VAR_COLORS in src/viz.ts) */
+  --var-t2m: var(--lime);
+  --var-precip: var(--blue);
+  --var-evap: var(--teal);
+  --var-runoff_surface: var(--sky);
+  --var-soil_moisture_0_10cm: var(--green);
+
+  /* type: one family; hierarchy comes from size and weight only */
+  --font: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 0.75rem; /* the smallest size anywhere: 12px */
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-display: clamp(1.9rem, 1.5rem + 1.2vw, 2.4rem); /* page titles */
+  --fs-hero: clamp(2rem, 1.2rem + 2.4vw, 3.1rem); /* the Explore hero headline */
+  --fs-number: clamp(2rem, 1.6rem + 1.4vw, 2.6rem); /* big measurements */
+  --tracking-label: 0.06em;
+
+  /* space, radius, depth */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --gutter: clamp(16px, 3vw, 32px);
+  --radius: 8px; /* cards */
+  --radius-sm: 6px; /* rows, controls, info cards */
+  --radius-pill: 999px; /* buttons, badges, nav, stepper */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 150ms;
+  --t-med: 260ms;
+}

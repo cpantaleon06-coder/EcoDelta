@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run sync-data -- ${ECODELTA_DATA_SOURCE:-fixture} && npm run build",
+  "outputDirectory": "dist",
+  "headers": [
+    { "source": "/web_data/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] }
+  ]
+}
