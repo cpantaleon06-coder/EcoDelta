@@ -292,6 +292,26 @@ grid_trends on 90x180 cells x 300 months: 52.6 s (308 cells/s), peak memory 0.59
 machine: AMD Ryzen 5 3600 6-Core Processor, 12 logical CPUs, Linux 7.0.0-43-generic, Python 3.14.4, numpy 2.5.4
 ```
 
+The full test suite passes on Python 3.14.4 and on Python 3.12.16 (58 tests each).
+
+## Real-data smoke test
+
+`scripts/smoke_power.py` fetches monthly 2 m air temperature (T2M) for one point from the
+NASA POWER API (no login needed) and runs `trend_report` on it. The monthly API output
+also contains an annual value for each year, stored as month "13"; the script drops it.
+For Mexico City (latitude 19.4, longitude -99.1), 1981-01 to 2025-12, 540 months, none missing:
+
+| | result |
+|---|---|
+| Sen's slope | +0.37 °C per decade (95% CI 0.29 to 0.45) |
+| Mann-Kendall p-value (Yue-Wang) | 1.2e-16 |
+| OLS cross-check | +0.38 °C per decade (95% CI 0.30 to 0.46), p = 3.5e-17 |
+| lag-1 autocorrelation of anomalies | 0.41 |
+| verdict | increasing, no warnings |
+
+This shows that the pipeline runs on real data and that the two slope estimates agree.
+We have not compared the value with published estimates for this location.
+
 ## Limits to keep in mind
 
 * All methods look for a **monotonic** (Mann-Kendall) or **linear** (OLS) change. A
