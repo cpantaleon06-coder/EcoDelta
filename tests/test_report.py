@@ -73,8 +73,12 @@ def test_edge_cases_do_not_crash_and_stay_json():
     for k in ("one_point", "two_points", "short"):
         assert out[k]["verdict"] == "insufficient data"
         assert any("years of valid data" in w for w in out[k]["warnings"])
-    assert out["short"]["slope_per_decade"] == pytest.approx(120.0, rel=1e-2)  # still reported
-    assert out["monotonic"]["verdict"] == "increasing" and out["monotonic"]["kendall_tau"] == 1
+    assert not any("constant" in w for w in out["two_points"]["warnings"])
+    short = trend_report(np.arange(60.0), MONTHS[:60], deseasonalize=False)
+    assert short["slope_per_decade"] == pytest.approx(120.0, rel=1e-2)  # still reported
+    assert out["monotonic"]["verdict"] == "increasing"
+    raw = trend_report(np.arange(300.0), MONTHS, deseasonalize=False)  # deseasonalizing a ramp makes yearly steps (ties)
+    assert raw["kendall_tau"] == 1
 
 
 def test_missing_values():

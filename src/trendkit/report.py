@@ -65,6 +65,7 @@ def trend_report(y, dates, method=DEFAULT_METHOD, alpha=0.05, deseasonalize=None
     step_days = float(np.median(np.diff(idx.values) / np.timedelta64(1, "D"))) if len(idx) > 1 else math.nan
     if deseasonalize is None:
         deseasonalize = 25 <= step_days <= 35
+    constant = bool(np.any(~np.isnan(y))) and np.nanmin(y) == np.nanmax(y)  # before anomalies, which are all 0 under a year
     if deseasonalize:
         y, _ = deseasonalize_monthly(y, idx)
 
@@ -92,7 +93,7 @@ def trend_report(y, dates, method=DEFAULT_METHOD, alpha=0.05, deseasonalize=None
     if valid_fraction < MIN_VALID_FRACTION:
         warnings.append(f"{100 * (1 - valid_fraction):.0f}% of values are missing (more than "
                         f"{100 * (1 - MIN_VALID_FRACTION):.0f}% allowed).")
-    if n_valid and np.nanmin(y) == np.nanmax(y):
+    if constant:
         warnings.append("The series is constant, so it has no trend.")
     r1 = ols["resid_lag1_autocorr"]
     if r1 >= 0.5:
