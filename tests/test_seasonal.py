@@ -41,3 +41,23 @@ def test_grid_input_matches_per_cell():
     a1, _ = deseasonalize_monthly(g[:, 2, 1], DATES)
     np.testing.assert_allclose(anom[:, 2, 1], a1)
     assert np.isnan(anom[:, 0, 0]).all()
+
+
+def test_seasonal_cycle_hides_trend_until_removed():
+    from trendkit.ols import ols_trend
+    from trendkit.timeutil import decimal_year
+
+    rng = np.random.default_rng(7)
+    dates = pd.date_range("2000-01-01", periods=300, freq="MS")
+    t = decimal_year(dates)
+    true_slope = 0.02  # per year: 0.5 units over 25 years against a +/-10 seasonal cycle
+    y = np.tile(CYCLE, 25) + true_slope * (t - t[0]) + rng.normal(0, 0.3, 300)
+    raw = ols_trend(y, t)
+    anom, _ = deseasonalize_monthly(y, dates)
+    fixed = ols_trend(anom, t)
+    print(f"\nraw:           slope {raw['slope']:+.4f}/yr, SE {raw['stderr']:.4f}, p {raw['pvalue']:.3f}"
+          f"\ndeseasonalized: slope {fixed['slope']:+.4f}/yr, SE {fixed['stderr']:.4f}, p {fixed['pvalue']:.2e}")
+    assert fixed["ci_low"] <= true_slope <= fixed["ci_high"]
+    assert fixed["pvalue"] < 1e-6
+    assert raw["pvalue"] > 0.05  # the cycle swamps the trend: not detected
+    assert raw["stderr"] > 10 * fixed["stderr"]
