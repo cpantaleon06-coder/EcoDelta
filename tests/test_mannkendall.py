@@ -95,3 +95,47 @@ def test_robust_to_outliers():
     y = 0.5 * t + rng.normal(size=100)
     y[::10] += 500  # 10% wild outliers
     assert sens_slope(y, t)["slope"] == pytest.approx(0.5, abs=0.05)
+
+
+def _ar1(rng, phi, shape):
+    """AR(1) noise with unit marginal variance, started from its stationary distribution."""
+    shape = np.atleast_1d(shape)
+    e = rng.normal(size=shape)
+    out = np.empty(shape)
+    out[..., 0] = e[..., 0]
+    for k in range(1, shape[-1]):
+        out[..., k] = phi * out[..., k - 1] + np.sqrt(1 - phi**2) * e[..., k]
+    return out
+
+
+@pytest.mark.parametrize("seed", range(4))
+def test_hamed_rao_and_tfpw_match_pymannkendall(seed):
+    rng = np.random.default_rng(200 + seed)
+    y = 0.003 * seed * np.arange(300) + _ar1(rng, 0.5, 300)
+    for ours, ref in ((mann_kendall(y, "hamed_rao"), pmk.hamed_rao_modification_test(y)),
+                      (mann_kendall(y, "tfpw"), pmk.trend_free_pre_whitening_modification_test(y))):
+        assert ours["s"] == ref.s
+        assert ours["var_s"] == pytest.approx(ref.var_s, rel=1e-9)
+        assert ours["pvalue"] == pytest.approx(ref.p, rel=1e-7, abs=1e-15)
+
+
+def test_yue_wang_ar1_factor_approaches_theory():
+    rng = np.random.default_rng(300)
+    y = _ar1(rng, 0.6, 5000)
+    factor = mann_kendall(y, "yue_wang")["var_factor"]
+    assert factor == pytest.approx((1 + 0.6) / (1 - 0.6), rel=0.1)  # large-n limit for AR(1)
+
+
+@pytest.mark.parametrize("method", ["hamed_rao", "yue_wang", "tfpw"])
+def test_corrected_methods_edge_cases_and_rows(method):
+    t = np.arange(40.0)
+    assert np.isnan(mann_kendall(np.full(40, np.nan), method)["pvalue"])
+    assert mann_kendall(np.full(40, 2.0), method)["pvalue"] == 1
+    assert mann_kendall(t, method)["pvalue"] < 1e-3
+    assert np.isnan(mann_kendall([1.0, 2.0], method)["pvalue"])
+    rng = np.random.default_rng(301)
+    Y = rng.normal(size=(3, 40)) + 0.05 * t
+    Y[1, [3, 4, 20]] = np.nan
+    batch = mann_kendall(Y, method)
+    for k in range(3):
+        np.testing.assert_allclose(batch["pvalue"][k], mann_kendall(Y[k], method)["pvalue"])

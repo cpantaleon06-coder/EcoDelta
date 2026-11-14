@@ -23,10 +23,27 @@ def _s_and_var(y):
     return s, var, n
 
 
-def mann_kendall(y):
-    """Mann-Kendall test for a monotonic trend (Mann 1945, Kendall 1975).
+def _acf(x):
+    """Biased sample autocorrelation rho_k = sum(d_i d_{i+k}) / sum(d_i^2), d = x - mean,
+    for lags 0..n-1 along the last axis. NaN are gaps: pairs that touch a gap are skipped,
+    and lags count array positions (time steps), not valid points."""
+    valid = ~np.isnan(x)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        d = np.where(valid, x - np.nansum(x, -1, keepdims=True) / valid.sum(-1, keepdims=True), 0.0)
+        nfft = 1 << (2 * x.shape[-1] - 1).bit_length()
+        f = np.fft.rfft(d, nfft)
+        acov = np.fft.irfft(f.real**2 + f.imag**2, nfft)[..., : x.shape[-1]]
+        return acov / acov[..., :1]
 
-    Formulas:
+
+METHODS = ("original", "hamed_rao", "yue_wang", "tfpw")
+
+
+def mann_kendall(y, method="original"):
+    """Mann-Kendall test for a monotonic trend (Mann 1945, Kendall 1975), with optional
+    corrections for autocorrelated data.
+
+    Formulas (original test):
         S      = sum over i < j of sign(y_j - y_i)
         Var(S) = [n(n-1)(2n+5) - sum over tie groups of t(t-1)(2t+5)] / 18
         Z      = (S - 1)/sqrt(Var(S)) if S > 0;  0 if S = 0;  (S + 1)/sqrt(Var(S)) if S < 0
@@ -34,29 +51,72 @@ def mann_kendall(y):
         tau    = S / (n(n-1)/2)               (Kendall tau-a)
     The +/-1 is the continuity correction.
 
+    Autocorrelation methods. Each first removes the trend with Sen's slope per time step,
+    x_i = y_i - b * i, so that the trend itself is not mistaken for autocorrelation:
+      "hamed_rao" (Hamed and Rao 1998): Var(S) *= n/n*, with
+          n/n* = 1 + 2 / (n(n-1)(n-2)) * sum_k (n-k)(n-k-1)(n-k-2) rho_k,
+          where rho_k is the autocorrelation of the ranks of x, and only lags with
+          |rho_k| > 1.96 / sqrt(n) (significant at 5%) are included.
+      "yue_wang" (Yue and Wang 2004 effective sample size):
+          Var(S) *= 1 + 2 sum_{k=1}^{n-1} (1 - k/n) rho_k,
+          with rho_k taken as r1^k (AR(1) model), r1 = lag-1 autocorrelation of x.
+          The AR(1) form is our choice; summing raw sample autocorrelations over all
+          lags is unstable.
+      "tfpw" (trend-free pre-whitening, Yue et al. 2002): run the original test on
+          w_i = x_i - r1 x_{i-1} + b * i, which has one point fewer.
+
     Parameters
     ----------
-    y : array-like, shape (..., n), in time order along the last axis; NaN = missing.
+    y : array-like, shape (..., n), in time order along the last axis, equally spaced
+        in time (the corrections count lags in array positions); NaN = missing.
+    method : one of "original", "hamed_rao", "yue_wang", "tfpw".
 
     Returns
     -------
     dict with shape y.shape[:-1] (NumPy scalars for 1-D input):
-        s, var_s, z, pvalue, tau (dimensionless), n (valid points).
+        s, var_s (corrected), var_factor (correction applied to Var(S), 1 for
+        "original" and "tfpw"), z, pvalue, tau (dimensionless), n (valid points in y).
     Float values are NaN when n < 3. A constant series gives z 0, p-value 1.
 
-    Assumptions: observations are independent (no autocorrelation) and n is
-    large enough for the normal approximation (roughly n >= 10). The test is
-    non-parametric: it needs no normality and is robust to outliers, but it
-    detects monotonic change, not its size (use `sens_slope` for that).
+    Assumptions: "original" assumes independent observations; the corrections assume
+    the dependence is short-range and well estimated from the series itself, which
+    is hard for short series. All use the normal approximation (roughly n >= 10).
+    The test is non-parametric: it needs no normality and is robust to outliers, but
+    it detects monotonic change, not its size (use `sens_slope` for that).
     """
+    if method not in METHODS:
+        raise ValueError(f"method must be one of {METHODS}, got {method!r}")
     y = np.asarray(y, dtype=float)
-    s, var, n = _s_and_var(y)
+    x = y
+    if method != "original":
+        step = np.arange(y.shape[-1], dtype=float)
+        b = np.asarray(sens_slope(y, step)["slope"])[..., None]
+        detrended = y - b * step
+    if method == "tfpw":
+        r1 = np.nan_to_num(_acf(detrended)[..., 1:2])  # constant series: 0/0, no autocorrelation
+        x = detrended[..., 1:] - r1 * detrended[..., :-1] + b * step[1:]
+    s, var, n = _s_and_var(x)
+
+    factor = np.ones_like(var)
     with np.errstate(divide="ignore", invalid="ignore"):
+        if method in ("hamed_rao", "yue_wang"):
+            nn = n[..., None]
+            k = np.arange(1, y.shape[-1])
+        if method == "hamed_rao":
+            rho = _acf(stats.rankdata(detrended, axis=-1, nan_policy="omit"))[..., 1:]
+            keep = np.abs(rho) > stats.norm.ppf(0.975) / np.sqrt(nn)
+            w = np.clip((nn - k) * (nn - k - 1) * (nn - k - 2), 0, None)
+            factor = 1 + 2 / (n * (n - 1) * (n - 2)) * np.where(keep, w * rho, 0).sum(-1)
+        elif method == "yue_wang":
+            r1 = _acf(detrended)[..., 1:2]
+            factor = 1 + 2 * (np.clip(1 - k / nn, 0, None) * r1**k).sum(-1)
+        factor = np.where(np.isfinite(factor), factor, 1.0)  # constant series: no autocorrelation defined
+        var = var * factor
         z = np.where(s > 0, (s - 1) / np.sqrt(var), np.where(s < 0, (s + 1) / np.sqrt(var), 0.0))
-        tau = s / (n * (n - 1) / 2)
-    out = dict(s=s, var_s=var, z=z, pvalue=2 * stats.norm.sf(np.abs(z)), tau=tau)
+        tau = s / (n * (n - 1) / 2)  # n counts the series actually tested (n - 1 for "tfpw")
+    out = dict(s=s, var_s=var, var_factor=factor, z=z, pvalue=2 * stats.norm.sf(np.abs(z)), tau=tau)
     out = {k: np.where(n < 3, np.nan, v)[()] for k, v in out.items()}
-    out["n"] = n.astype(int)[()]
+    out["n"] = (~np.isnan(y)).sum(-1)[()]
     return out
 
 
