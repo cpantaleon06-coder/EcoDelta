@@ -63,8 +63,8 @@
   --s6: 32px;
   --s7: 48px;
   --gutter: clamp(16px, 3vw, 32px);
-  --radius: 8px; /* cards */
-  --radius-sm: 6px; /* rows, controls, info cards */
+  --radius-card: 14px; /* every card and panel; map and chart frames clip to it */
+  --radius-sm: 8px; /* things nested in a card: selects, small buttons, chips, tooltips */
   --radius-pill: 999px; /* buttons, badges, nav, stepper */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --t-fast: 150ms;
