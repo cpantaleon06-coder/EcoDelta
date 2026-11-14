@@ -153,3 +153,9 @@ def test_sen_ci_coverage_with_corrected_variance():
           f"uncorrected {cover[0]:.3f}, Yue-Wang corrected {cover[1]:.3f}")
     assert cover[0] < 0.80
     assert 0.92 <= cover[1] <= 0.97
+
+
+def test_sens_slope_accepts_nan_variance():
+    nan = np.full(30, np.nan)
+    r = sens_slope(nan, np.arange(30.0), var_s=mann_kendall(nan)["var_s"])
+    assert np.isnan(r["slope"]) and np.isnan(r["ci_low"])

@@ -4,6 +4,7 @@ from .mannkendall import mann_kendall, sens_slope
 from .fdr import fdr_bh
 from .grid import area_weighted_mean, grid_trends
 from .ols import ols_trend
+from .report import trend_report
 from .seasonal import deseasonalize_monthly
 from .timeutil import decimal_year
 

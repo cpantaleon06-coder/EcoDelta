@@ -167,7 +167,7 @@ def sens_slope(y, t, alpha=0.05, var_s=None):
     m = (~np.isnan(slopes)).sum(-1)  # valid pairs
 
     def rank(k):  # 0-based index into the sorted valid slopes, clipped to range
-        k = np.clip(k, 0, np.maximum(m - 1, 0)).astype(int)
+        k = np.clip(np.nan_to_num(k), 0, np.maximum(m - 1, 0)).astype(int)  # NaN var_s: masked below
         return np.take_along_axis(slopes, k[..., None], axis=-1)[..., 0]
 
     n = (~np.isnan(y)).sum(-1)
