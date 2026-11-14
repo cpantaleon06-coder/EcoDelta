@@ -37,9 +37,10 @@ def _acf(x):
 
 
 METHODS = ("original", "hamed_rao", "yue_wang", "tfpw")
+DEFAULT_METHOD = "yue_wang"  # chosen from the Monte Carlo in tests/test_autocorr_montecarlo.py
 
 
-def mann_kendall(y, method="original"):
+def mann_kendall(y, method=DEFAULT_METHOD):
     """Mann-Kendall test for a monotonic trend (Mann 1945, Kendall 1975), with optional
     corrections for autocorrelated data.
 
@@ -59,9 +60,13 @@ def mann_kendall(y, method="original"):
           |rho_k| > 1.96 / sqrt(n) (significant at 5%) are included.
       "yue_wang" (Yue and Wang 2004 effective sample size):
           Var(S) *= 1 + 2 sum_{k=1}^{n-1} (1 - k/n) rho_k,
-          with rho_k taken as r1^k (AR(1) model), r1 = lag-1 autocorrelation of x.
-          The AR(1) form is our choice; summing raw sample autocorrelations over all
-          lags is unstable.
+          with rho_k taken as r1^k (AR(1) model), r1 = lag-1 autocorrelation of x,
+          and the factor floored at 1 (only positive autocorrelation is corrected).
+          Both the AR(1) form and the floor are our choices: summing raw sample
+          autocorrelations over all lags is unstable, and the floor halved false
+          alarms for short white-noise series in our Monte Carlo (docs/METHODS.md).
+          This is the default: it was the only variant that held the false-alarm
+          rate near 5% for n=300 at phi = 0, 0.3 and 0.6.
       "tfpw" (trend-free pre-whitening, Yue et al. 2002): run the original test on
           w_i = x_i - r1 x_{i-1} + b * i, which has one point fewer.
 
@@ -109,7 +114,7 @@ def mann_kendall(y, method="original"):
             factor = 1 + 2 / (n * (n - 1) * (n - 2)) * np.where(keep, w * rho, 0).sum(-1)
         elif method == "yue_wang":
             r1 = _acf(detrended)[..., 1:2]
-            factor = 1 + 2 * (np.clip(1 - k / nn, 0, None) * r1**k).sum(-1)
+            factor = np.maximum(1 + 2 * (np.clip(1 - k / nn, 0, None) * r1**k).sum(-1), 1.0)
         factor = np.where(np.isfinite(factor), factor, 1.0)  # constant series: no autocorrelation defined
         var = var * factor
         z = np.where(s > 0, (s - 1) / np.sqrt(var), np.where(s < 0, (s + 1) / np.sqrt(var), 0.0))

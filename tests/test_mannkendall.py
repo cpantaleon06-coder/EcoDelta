@@ -9,7 +9,7 @@ T = 2000 + np.arange(300) / 12
 
 
 def _check_against_pymannkendall(y):
-    ours = mann_kendall(y)
+    ours = mann_kendall(y, "original")
     ref = pmk.original_test(y)
     assert ours["s"] == ref.s
     assert ours["var_s"] == pytest.approx(ref.var_s, rel=1e-12)
@@ -58,9 +58,9 @@ def test_rows_match_one_series_at_a_time():
     Y[1, ::5] = np.nan
     Y[2] = np.nan
     t = np.arange(60.0)
-    mk, ss = mann_kendall(Y), sens_slope(Y, t)
+    mk, ss = mann_kendall(Y, "original"), sens_slope(Y, t)
     for k in range(4):
-        one_mk, one_ss = mann_kendall(Y[k]), sens_slope(Y[k], t)
+        one_mk, one_ss = mann_kendall(Y[k], "original"), sens_slope(Y[k], t)
         for key in ("s", "pvalue", "tau"):
             np.testing.assert_allclose(mk[key][k], one_mk[key])
         for key in ("slope", "ci_low", "ci_high"):
@@ -70,18 +70,18 @@ def test_rows_match_one_series_at_a_time():
 def test_edge_cases():
     t = np.arange(30.0)
     nan = np.full(30, np.nan)
-    assert np.isnan(mann_kendall(nan)["pvalue"]) and np.isnan(sens_slope(nan, t)["slope"])
-    assert np.isnan(mann_kendall([1.0, 2.0])["pvalue"])
+    assert np.isnan(mann_kendall(nan, "original")["pvalue"]) and np.isnan(sens_slope(nan, t)["slope"])
+    assert np.isnan(mann_kendall([1.0, 2.0], "original")["pvalue"])
     assert np.isnan(sens_slope([1.0, 2.0], [0.0, 1.0])["slope"])
     assert np.isnan(sens_slope([1.0], [0.0])["slope"])
 
     const = np.full(30, 4.2)
-    mk = mann_kendall(const)
+    mk = mann_kendall(const, "original")
     assert (mk["s"], mk["z"], mk["pvalue"]) == (0, 0, 1)
     ss = sens_slope(const, t)
     assert (ss["slope"], ss["ci_low"], ss["ci_high"]) == (0, 0, 0)
 
-    up = mann_kendall(t)  # perfectly monotonic
+    up = mann_kendall(t, "original")  # perfectly monotonic
     assert up["tau"] == 1 and up["pvalue"] < 1e-9
     assert sens_slope(3 * t, t)["slope"] == pytest.approx(3)
 
