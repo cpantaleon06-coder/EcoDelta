@@ -2,11 +2,13 @@ import { loadRegionDetail, type Meta, type Region, type Variable, type Verdict }
 import { useAsync } from '../useAsync';
 import { badgeFor, fmt, fmtP, fmtPercent, fmtSigned } from '../format';
 import { PALETTE } from '../mapScale';
-import { varColor, yearlyValues } from '../viz';
+import { varColor, yearlyValues, varIcon } from '../viz';
 import { Stripes } from './ui';
 import { ErrorBox, Loading } from './Status';
 import { TrendChart } from './TrendChart';
 import { MethodsList } from './MethodsList';
+import { Icon } from './Icon';
+import { StatusBadge } from './StatusBadge';
 
 const VERDICT_TEXT: Record<Verdict, string> = {
   increasing: 'It went up',
@@ -52,7 +54,8 @@ export function DetailView({ region, variable, meta }: Props) {
           Rank {v.rank} in {region.name} · {meta.period.start} to {meta.period.end}
         </p>
         <h2 id="detail-title">
-          {variable.name} across {region.phrase} <span className={`badge ${badge.cls}`}>{badge.text}</span>
+          {varIcon(variable.id) && <Icon name={varIcon(variable.id)!} size={28} className="title-icon" />}
+          {variable.name} across {region.phrase} <StatusBadge r={v.score} />
         </h2>
         <p className="detail__sentence">{v.sentence}</p>
         {v.cautions.length > 0 && (
@@ -81,12 +84,16 @@ export function DetailView({ region, variable, meta }: Props) {
 
       <section aria-label="Four questions" className="answers">
         <div className="answer">
-          <h3>What changed?</h3>
+          <h3>
+            <Icon name="q-what" size={16} /> What changed?
+          </h3>
           <p className="answer__big">{VERDICT_TEXT[what.verdict]}</p>
           <p>{what.name}</p>
         </div>
         <div className="answer">
-          <h3>Where?</h3>
+          <h3>
+            <Icon name="q-where" size={16} /> Where?
+          </h3>
           <p className="answer__big">{where.name}</p>
           <p>
             {where.n_valid_cells} of {where.n_box_cells} grid cells have enough data ({fmtPercent(where.covered_fraction)}{' '}
@@ -94,7 +101,9 @@ export function DetailView({ region, variable, meta }: Props) {
           </p>
         </div>
         <div className="answer answer--num">
-          <h3>How much?</h3>
+          <h3>
+            <Icon name="q-how-much" size={16} /> How much?
+          </h3>
           {how_much.slope_per_decade === null || !how_much.ci_per_decade ? (
             <p className="answer__big">No estimate</p>
           ) : (
@@ -116,7 +125,9 @@ export function DetailView({ region, variable, meta }: Props) {
           )}
         </div>
         <div className="answer">
-          <h3>Is it significant?</h3>
+          <h3>
+            <Icon name="q-trust" size={16} /> Is it significant?
+          </h3>
           <p className="answer__big">{badge.text}</p>
           <p>{significance.explanation}</p>
           <p className="experts">
@@ -129,7 +140,10 @@ export function DetailView({ region, variable, meta }: Props) {
       </section>
 
       <section className="about-var">
-        <h3>About this variable</h3>
+        <h3>
+          <Icon name="info" size={18} className="title-icon" />
+          About this variable
+        </h3>
         <p>{variable.definition}</p>
         <p>{variable.increase_means}</p>
         <ul>

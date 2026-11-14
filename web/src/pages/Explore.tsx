@@ -8,6 +8,8 @@ import { MapLegend } from '../components/MapLegend';
 import { RankingPanel } from '../components/RankingPanel';
 import { DetailView } from '../components/DetailView';
 import { AsciiGlobe } from '../hero/AsciiGlobe';
+import { Icon } from '../components/Icon';
+import { varColor, varIcon } from '../viz';
 import { PALETTE, gridToGeoJson, symmetricMax } from '../mapScale';
 
 // grids are cached by dataClient, so their GeoJSON can be cached by identity too: switching back costs nothing
@@ -71,10 +73,10 @@ export default function Explore() {
           </p>
           <div className="hero__actions">
             <button type="button" className="btn" onClick={toMap}>
-              Explore the map
+              Explore the map <Icon name="arrow-right" />
             </button>
             <Link className="btn btn--secondary" to="/guided">
-              Guided questions
+              Guided questions <Icon name="arrow-right" />
             </Link>
           </div>
         </div>
@@ -83,17 +85,21 @@ export default function Explore() {
       <div className="explore">
         <section id="map" className="explore__map" aria-label="Trend map">
           <div className="controls">
-            <div className="field">
+            <div className="field" style={{ '--var': varColor(varId) } as React.CSSProperties}>
               <label className="field__label" htmlFor="f-var">
                 Variable
               </label>
-              <select id="f-var" value={varId} onChange={(e) => set({ var: e.target.value })}>
-                {variables.map((v) => (
-                  <option key={v.id} value={v.id}>
-                    {v.name}
-                  </option>
-                ))}
-              </select>
+              {/* options cannot hold an SVG, so the selected variable's icon sits inside the closed select */}
+              <div className={varIcon(varId) ? 'field__control field__control--icon' : 'field__control'}>
+                {varIcon(varId) && <Icon name={varIcon(varId)!} className="field__icon" />}
+                <select id="f-var" value={varId} onChange={(e) => set({ var: e.target.value })}>
+                  {variables.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="field">
               <label className="field__label" htmlFor="f-region">
@@ -113,6 +119,7 @@ export default function Explore() {
               aria-pressed={globe}
               onClick={() => setGlobe((g) => !g)}
             >
+              <Icon name="globe" />
               Globe view
             </button>
           </div>

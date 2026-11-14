@@ -3,10 +3,20 @@ import { useAsync } from '../useAsync';
 import { ErrorBox, Loading } from '../components/Status';
 import { MethodsList } from '../components/MethodsList';
 import { EXPLAINERS } from '../copy';
+import { Icon } from '../components/Icon';
+import { varColor, varIcon } from '../viz';
 
 // Show DOIs exactly as exported; link only values that look like a DOI.
 const Doi = ({ doi }: { doi: string }) =>
-  /^10\.\d{4,9}\/\S+$/.test(doi) ? <a href={`https://doi.org/${doi}`}>{doi}</a> : <>{doi}</>;
+  /^10\.\d{4,9}\/\S+$/.test(doi) ? (
+    <a href={`https://doi.org/${doi}`} className="ext">
+      {doi}
+      <Icon name="external" size={14} />
+      <span className="sr-only"> (doi.org)</span>
+    </a>
+  ) : (
+    <>{doi}</>
+  );
 
 const version = (x: { version: string; commit: string | null; uncommitted_changes: boolean }) =>
   `${x.version}${x.commit ? `, commit ${x.commit.slice(0, 7)}` : ''}${x.uncommitted_changes ? ' (with uncommitted changes)' : ''}`;
@@ -75,8 +85,9 @@ export default function About() {
         <h2 id="variables">Variables</h2>
         <dl className="vars">
           {catalog.map((v) => (
-            <div key={v.id}>
+            <div key={v.id} style={{ '--var': varColor(v.id) } as React.CSSProperties}>
               <dt>
+                {varIcon(v.id) && <Icon name={varIcon(v.id)!} size={20} className="title-icon" />}
                 {v.name} <span className="muted">({v.public_unit})</span>
                 {!meta.variables_included.includes(v.id) && <span className="badge badge--none">Not in this build</span>}
               </dt>

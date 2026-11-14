@@ -1,3 +1,4 @@
+import type { IconName } from './components/Icon';
 // Small display helpers for the graphics. They only pick and map values that are
 // already in the data files; nothing here estimates or averages anything.
 import { colorFor } from './mapScale';
@@ -46,3 +47,13 @@ export function stripeColors(values: number[], palette: string[]): string[] {
 }
 
 export const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
+const VAR_ICONS: Record<string, IconName> = {
+  t2m: 'temperature',
+  precip: 'precipitation',
+  evap: 'evaporation',
+  runoff_surface: 'runoff',
+  soil_moisture_0_10cm: 'soil',
+};
+/** Icon for a variable id from the data, or undefined for a variable this set has no drawing for. */
+export const varIcon = (id: string): IconName | undefined => VAR_ICONS[id];

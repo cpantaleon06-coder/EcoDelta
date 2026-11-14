@@ -770,7 +770,6 @@ select option {
 
 /* ===== badges and direction ===== */
 .badge {
-  display: inline-block;
   padding: 1px 9px;
   border-radius: var(--radius-pill);
   font: 700 var(--fs-xs) / 1.6 var(--font);
@@ -1293,6 +1292,62 @@ td {
   .wizard__nav .btn {
     flex: 1;
   }
+}
+
+/* ===== icons (src/components/Icon.tsx): neutral stroke in the text color, one accent part in --var ===== */
+.icon {
+  flex: none;
+  display: inline-block;
+  vertical-align: -0.2em;
+}
+.title-icon {
+  margin-right: var(--s2);
+  color: var(--text-2);
+}
+#detail-title .title-icon {
+  vertical-align: -0.15em;
+}
+.field__control {
+  position: relative;
+}
+.field__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-2);
+  pointer-events: none;
+}
+.field__control--icon select {
+  padding-left: 42px;
+}
+.dir,
+.legend__ends span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.badge--lg {
+  gap: 6px;
+}
+/* on a filled badge or the current step the accent would vanish, so these icons go one-tone */
+.badge .icon,
+.stepper li[aria-current='step'] .stepper__n .icon {
+  --icon-accent: currentColor;
+}
+.answer h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ext .icon {
+  margin-left: var(--s1);
+  vertical-align: -0.1em;
 }
 
 /* ===== subtle motion: content rises in, lines draw in. Reduced motion turns all of it off (rule at the top). ===== */

@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCatalog, loadMeta, loadRegionDetail, loadRegions, loadScreening } from '../dataClient';
 import { useAsync } from '../useAsync';
-import { badgeFor, fmtP, fmtPercent, fmtSigned } from '../format';
-import { varColor } from '../viz';
+import { fmtP, fmtPercent, fmtSigned } from '../format';
+import { varColor, varIcon } from '../viz';
 import { Panel } from '../components/ui';
 import { ErrorBox, Loading } from '../components/Status';
 import { TrendChart } from '../components/TrendChart';
 import { TotalChangeBar } from '../components/TotalChangeBar';
+import { Icon, type IconName } from '../components/Icon';
+import { StatusBadge } from '../components/StatusBadge';
 
 const STEPS = ['What?', 'Where?', 'How much?', 'Can we trust it?'];
+const STEP_ICONS: IconName[] = ['q-what', 'q-where', 'q-how-much', 'q-trust'];
 
 export default function Guided() {
   const base = useAsync(() => Promise.all([loadMeta(), loadRegions(), loadCatalog()]), []);
@@ -59,7 +62,10 @@ export default function Guided() {
         {variables.map((x) => (
           <label key={x.id} className="choice" style={{ '--var': varColor(x.id) } as React.CSSProperties}>
             <input type="radio" name="var" value={x.id} checked={varId === x.id} onChange={() => { setVarId(x.id); setSurprise({}); }} />
-            <span className="choice__name">{x.name}</span>
+            <span className="choice__name">
+              {varIcon(x.id) && <Icon name={varIcon(x.id)!} size={18} className="title-icon" />}
+              {x.name}
+            </span>
             <span className="choice__text">{x.definition}</span>
           </label>
         ))}
@@ -133,11 +139,10 @@ export default function Guided() {
       );
   } else {
     const sig = v.answers.significance;
-    const badge = badgeFor(v.score);
     body = (
       <>
         <p className="big-answer">
-          <span className={`badge badge--lg ${badge.cls}`}>{badge.text}</span>
+          <StatusBadge r={v.score} large />
         </p>
         <p className="lede">{sig.explanation}</p>
         {sig.significant && <p>Significant does not mean large or important, and it says nothing about the cause.</p>}
@@ -158,6 +163,7 @@ export default function Guided() {
         )}
         <div className="wizard__end">
           <Link className="btn" to={`/explore?region=${region.id}&var=${variable.id}`}>
+            <Icon name="map" />
             See it on the map
           </Link>
           <button
@@ -193,8 +199,8 @@ export default function Guided() {
       <ol className="stepper">
         {STEPS.map((s, i) => (
           <li key={s} aria-current={i === step ? 'step' : undefined} className={i < step ? 'done' : ''}>
-            <span className="stepper__n" aria-hidden="true">
-              {i + 1}
+            <span className="stepper__n">
+              <Icon name={STEP_ICONS[i]} size={14} />
             </span>
             {s}
             {i < step && <span className="sr-only"> (done)</span>}
@@ -218,11 +224,13 @@ export default function Guided() {
         </div>
         <div className="wizard__nav">
           <button type="button" className="btn btn--secondary" onClick={() => setStep((s) => s - 1)} disabled={step === 0}>
+            <Icon name="arrow-left" />
             Back
           </button>
           {step < 3 && (
             <button type="button" className="btn" onClick={() => setStep((s) => s + 1)} disabled={!canNext}>
               Next
+              <Icon name="arrow-right" />
             </button>
           )}
         </div>

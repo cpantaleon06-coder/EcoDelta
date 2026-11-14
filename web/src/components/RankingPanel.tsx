@@ -1,15 +1,27 @@
 import { loadRegionDetail, loadScreening, type RankedVariable, type Region } from '../dataClient';
 import { useAsync } from '../useAsync';
-import { badgeFor, fmtSigned } from '../format';
-import { varColor, yearlyValues } from '../viz';
+import { fmtSigned } from '../format';
+import { varColor, yearlyValues, varIcon } from '../viz';
 import { ErrorBox, Loading } from './Status';
 import { Spark } from './ui';
+import { Icon } from './Icon';
+import { StatusBadge } from './StatusBadge';
 
 /** Arrow only for a significant trend; anything else must not look like a finding. */
 export function Direction({ r }: { r: Pick<RankedVariable, 'significant' | 'verdict' | 'tier'> }) {
-  if (r.significant && r.verdict === 'increasing') return <span className="dir dir--up">▲ Increasing</span>;
-  if (r.significant && r.verdict === 'decreasing') return <span className="dir dir--down">▼ Decreasing</span>;
-  return <span className="dir dir--none">○ {r.tier === 2 ? 'No estimate' : 'No clear trend'}</span>;
+  if (r.significant && r.verdict === 'increasing')
+    return (
+      <span className="dir dir--up">
+        <Icon name="increasing" size={16} /> Increasing
+      </span>
+    );
+  if (r.significant && r.verdict === 'decreasing')
+    return (
+      <span className="dir dir--down">
+        <Icon name="decreasing" size={16} /> Decreasing
+      </span>
+    );
+  return <span className="dir dir--none">{r.tier === 2 ? 'No estimate' : 'No clear trend'}</span>;
 }
 
 interface Props {
@@ -26,7 +38,10 @@ export function RankingPanel({ region, period, selectedVar, onSelect }: Props) {
   const d = detail.data?.region.id === region.id ? detail.data : undefined;
   return (
     <>
-      <h2 className="panel__title">What changed across {region.phrase}?</h2>
+      <h2 className="panel__title">
+        <Icon name="ranking" size={22} className="title-icon" />
+        What changed across {region.phrase}?
+      </h2>
       <p className="panel__period">
         {period.start} to {period.end}
       </p>
@@ -38,7 +53,6 @@ export function RankingPanel({ region, period, selectedVar, onSelect }: Props) {
       ) : (
         <ol className="ranking" key={region.id}>
           {data.ranking.map((r, i) => {
-            const badge = badgeFor(r);
             const finding = r.significant && r.tier === 0;
             const series = d?.variables[r.variable]?.series;
             const years = series && d ? yearlyValues(d.dates, series.running_mean_12) : [];
@@ -55,10 +69,13 @@ export function RankingPanel({ region, period, selectedVar, onSelect }: Props) {
                     {r.rank}
                   </span>
                   <span className="rank-row__body">
-                    <span className="rank-row__name">{r.name}</span>
+                    <span className="rank-row__name">
+                      {varIcon(r.variable) && <Icon name={varIcon(r.variable)!} size={18} className="title-icon" />}
+                      {r.name}
+                    </span>
                     <span className="rank-row__meta">
                       <Direction r={r} />
-                      <span className={`badge ${badge.cls}`}>{badge.text}</span>
+                      <StatusBadge r={r} />
                     </span>
                     {r.slope_per_decade !== null && r.ci_per_decade && (
                       <span className="rank-row__value">

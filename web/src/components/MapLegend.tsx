@@ -1,5 +1,6 @@
 import { fmtTick } from '../format';
 import { classEdges } from '../viz';
+import { Icon } from './Icon';
 
 interface Props {
   palette: string[];
@@ -30,8 +31,12 @@ export function MapLegend({ palette, max, unit, period }: Props) {
         ))}
       </ol>
       <p className="legend__ends">
-        <span>▼ decrease</span>
-        <span>increase ▲</span>
+        <span style={{ '--icon-accent': palette[1] } as React.CSSProperties}>
+          <Icon name="decreasing" size={14} /> decrease
+        </span>
+        <span style={{ '--icon-accent': palette[palette.length - 2] } as React.CSSProperties}>
+          increase <Icon name="increasing" size={14} />
+        </span>
       </p>
       <ul className="legend__read" aria-label="How to read the map">
         <li>
