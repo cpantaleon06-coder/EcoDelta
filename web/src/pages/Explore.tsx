@@ -9,7 +9,7 @@ import { RankingPanel } from '../components/RankingPanel';
 import { DetailView } from '../components/DetailView';
 import { AsciiGlobe } from '../hero/AsciiGlobe';
 import { Icon } from '../components/Icon';
-import { varColor, varIcon } from '../viz';
+import { varIcon } from '../viz';
 import { PALETTE, gridToGeoJson, symmetricMax } from '../mapScale';
 
 // grids are cached by dataClient, so their GeoJSON can be cached by identity too: switching back costs nothing
@@ -85,7 +85,7 @@ export default function Explore() {
       <div className="explore">
         <section id="map" className="explore__map" aria-label="Trend map">
           <div className="controls">
-            <div className="field" style={{ '--var': varColor(varId) } as React.CSSProperties}>
+            <div className="field">
               <label className="field__label" htmlFor="f-var">
                 Variable
               </label>

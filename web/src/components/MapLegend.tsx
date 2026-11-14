@@ -31,10 +31,10 @@ export function MapLegend({ palette, max, unit, period }: Props) {
         ))}
       </ol>
       <p className="legend__ends">
-        <span style={{ '--icon-accent': palette[1] } as React.CSSProperties}>
+        <span>
           <Icon name="decreasing" size={14} /> decrease
         </span>
-        <span style={{ '--icon-accent': palette[palette.length - 2] } as React.CSSProperties}>
+        <span>
           increase <Icon name="increasing" size={14} />
         </span>
       </p>

@@ -1,143 +1,122 @@
 import type { ReactNode } from 'react';
 
-// Custom icon set (drawn for EcoDelta, no third-party paths). 24px grid, 2px stroke, square caps, miter joins,
-// 45 degree chamfers instead of round corners. Two tones: the stroke is the neutral text color (currentColor)
-// and one accent part follows --icon-accent, else the surrounding --var (variable color), else green.
-const A = 'var(--icon-accent, var(--var, var(--green)))';
-const fill = { fill: A, stroke: 'none' };
-const line = { stroke: A };
-const OCTAGON = 'M8 3h8l5 5v8l-5 5H8l-5-5V8z';
+// Custom icon set (drawn for EcoDelta, no third-party paths) in a flat technical-label style: solid shapes
+// mixed with 1.5px hairlines on a 24px grid, crosshairs, sparkles, block arrows, wireframe globes, hatching
+// and seals with a cut-out symbol. One color: everything is currentColor, which the CSS sets to green.
+const F = { fill: 'currentColor', stroke: 'none' };
+const THICK = { strokeWidth: 2.5 };
+const CHECK = 'M7.5 12.5l1.8-1.8 1.7 1.7 3.9-3.9 1.8 1.8-5.7 5.7z';
+const DISC = 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z';
+
+// a 12-point sawtooth seal, the shape of a certification stamp
+const SEAL = (() => {
+  const pts = Array.from({ length: 24 }, (_, i) => {
+    const a = (i * Math.PI) / 12 - Math.PI / 2;
+    const r = i % 2 ? 8.2 : 10;
+    return `${(12 + r * Math.cos(a)).toFixed(2)} ${(12 + r * Math.sin(a)).toFixed(2)}`;
+  });
+  return `M${pts.join('L')}z`;
+})();
 
 const PATHS = {
   // variables
   temperature: (
     <>
-      <path d="M11 3h2l1 1v10l2 2v3l-2 2h-4l-2-2v-3l2-2V4z" />
-      <path d="M11 9h2v6l1 1v2l-1 1h-2l-1-1v-2l1-1z" style={fill} />
-      <path d="M17 6h2M17 10h2" />
+      <path d="M10 14V5a2 2 0 0 1 4 0v9" />
+      <circle cx="12" cy="17.5" r="4.5" style={F} />
+      <path d="M11.25 8h1.5v6h-1.5z" style={F} />
+      <path d="M16 6h3M16 9h2M16 12h3" />
+      <path d="M5.5 2.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" style={F} />
     </>
   ),
   precipitation: (
     <>
-      <path d="M6 15h12l2-2v-2l-2-2h-1l-1-2-2-2h-3l-2 2-1 3H6l-2 2v2z" />
-      <path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" style={line} />
+      <path d="M7 15a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.3 1.5A3.3 3.3 0 0 1 17.5 15z" style={F} />
+      <path d="M8 17.5l-2 4M12.5 17.5l-2 4M17 17.5l-2 4" style={THICK} />
     </>
   ),
   evaporation: (
     <>
-      <path d="M3 21l3-2 3 2 3-2 3 2 3-2 3 2" />
-      <path d="M8 16V5M5 8l3-3 3 3M16 14V7M13 10l3-3 3 3" style={line} />
+      <path d="M6 11l6-6 6 6h-3.5L12 8.5 9.5 11zM6 16.5l6-6 6 6h-3.5L12 14l-2.5 2.5z" style={F} />
+      <path d="M2 20.5c1.7-1.6 3.3-1.6 5 0s3.3 1.6 5 0 3.3-1.6 5 0 3.3 1.6 5 0" />
     </>
   ),
   runoff: (
     <>
-      <path d="M3 9v12h12z" />
-      <path d="M8 5l9 9M17 9v5h-5" style={line} />
-      <path d="M17 21h4" />
+      <path d="M2 9v13h13z" style={F} />
+      <path d="M7 3l11 11" />
+      <path d="M21 17h-6.5l6.5-6.5z" style={F} />
     </>
   ),
   soil: (
     <>
-      <path d="M3 15h18M3 18h18M3 21h18" />
-      <path d="M12 3l4 5v2l-2 2h-4l-2-2V8z" style={fill} />
+      <path d="M12 2l3.5 5.2a4.2 4.2 0 1 1-7 0z" style={F} />
+      <path d="M3 14h18v2.5H3z" style={F} />
+      {[4.5, 9.5, 14.5, 19.5].map((x) => (
+        <circle key={x} cx={x} cy="19" r="1.1" style={F} />
+      ))}
+      <path d="M3 22h18" />
     </>
   ),
   // status
-  significant: (
-    <>
-      <path d={OCTAGON} />
-      <path d="M8 12l3 3 6-6" style={line} />
-    </>
-  ),
+  significant: <path d={`${DISC}${CHECK}`} fillRule="evenodd" style={F} />,
   'not-significant': (
     <>
-      <path d={OCTAGON} />
-      <path d="M8 12h8" style={line} />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M7 10.75h10v2.5H7z" style={F} />
     </>
   ),
-  increasing: (
-    <>
-      <path d="M12 20V6M6 11l6-6 6 6" style={line} />
-      <path d="M5 21h14" />
-    </>
-  ),
-  decreasing: (
-    <>
-      <path d="M12 4v14M6 13l6 6 6-6" style={line} />
-      <path d="M5 3h14" />
-    </>
-  ),
+  increasing: <path d="M12 3l8 8h-5v10H9V11H4z" style={F} />,
+  decreasing: <path d="M12 21l-8-8h5V3h6v10h5z" style={F} />,
   'no-data': (
     <>
-      <path d={OCTAGON} strokeDasharray="2 4" /* square caps add 1px to each end of a dash */ />
-      <path d="M7 17L17 7" style={line} />
+      <circle cx="12" cy="12" r="9" strokeDasharray="1.5 2" />
+      <path d="M5.5 18.5l13-13" style={THICK} />
     </>
   ),
   // interface
-  map: (
-    <>
-      <path d="M9 4l6 2v14l-6-2z" style={{ ...fill, opacity: 0.55 }} />
-      <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14" />
-    </>
-  ),
+  // a folded map: three solid panels with gaps at the folds
+  map: <path d="M2 6l5.5-2v14L2 20zM9.25 4l5.5 2v14l-5.5-2zM16.5 6L22 4v14l-5.5 2z" style={F} />,
   ranking: (
     <>
-      <path d="M10 6h11M10 12h11M10 18h11" />
-      <path d="M3 4h4v4H3zM3 10h4v4H3zM3 16h4v4H3z" style={fill} />
+      {[6, 12, 18].map((y) => (
+        <circle key={y} cx="4.5" cy={y} r="1.5" style={F} />
+      ))}
+      <path d="M8 4.75h13v2.5H8zM8 10.75h10v2.5H8zM8 16.75h7v2.5H8z" style={F} />
     </>
   ),
   globe: (
     <>
-      <path d={OCTAGON} />
-      <path d="M12 3l-3 4v10l3 4M12 3l3 4v10l-3 4" />
-      <path d="M3 12h18" style={line} />
+      <circle cx="12" cy="12" r="9" />
+      <ellipse cx="12" cy="12" rx="4" ry="9" />
+      <path d="M3 12h18M4.2 7.5h15.6M4.2 16.5h15.6" />
+      <circle cx="12" cy="12" r="1.8" style={F} />
     </>
   ),
-  info: (
-    <>
-      <path d={OCTAGON} />
-      <path d="M12 11v6M12 7v1" style={line} />
-    </>
-  ),
-  download: (
-    <>
-      <path d="M12 3v11M7 9l5 5 5-5" style={line} />
-      <path d="M4 15v5h16v-5" />
-    </>
-  ),
+  info: <path d={`${DISC}M11 10.5h2V17h-2zM11 7h2v2h-2z`} fillRule="evenodd" style={F} />,
+  download: <path d="M9 3h6v8h4l-7 7-7-7h4zM3 20h18v2.5H3z" style={F} />,
   external: (
     <>
-      <path d="M10 5H5v14h14v-5" />
-      <path d="M14 4h6v6M20 4l-9 9" style={line} />
+      <path d="M3 9V3h6M3 15v6h6M15 21h6v-6" strokeWidth={2} />
+      <path d="M9 15l9-9" style={THICK} />
+      <path d="M21 3v8l-8-8z" style={F} />
     </>
   ),
-  'arrow-right': <path d="M4 12h15M13 6l6 6-6 6" />,
-  'arrow-left': <path d="M20 12H5M11 6l-6 6 6 6" />,
+  'arrow-right': <path d="M3 10h10V5l8 7-8 7v-5H3z" style={F} />,
+  'arrow-left': <path d="M21 10H11V5l-8 7 8 7v-5h10z" style={F} />,
   // the four guided questions
   'q-what': (
-    <>
-      <path d="M12 4l9 16H3z" />
-      <path d="M12 10l4 7H8z" style={fill} />
-    </>
+    <path d="M12 2c.8 5.6 3.4 8.2 10 10-6.6 1.8-9.2 4.4-10 10-.8-5.6-3.4-8.2-10-10 6.6-1.8 9.2-4.4 10-10z" style={F} />
   ),
   'q-where': (
     <>
-      <path d="M12 21l-6-7V7l3-3h6l3 3v7z" />
-      <path d="M10 8h4v4h-4z" style={fill} />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" style={F} />
+      <path d="M12 2v5M12 17v5M2 12h5M17 12h5" strokeWidth={2} />
     </>
   ),
-  'q-how-much': (
-    <>
-      <path d="M3 21h18M6 18v-4M11 18V10" />
-      <path d="M15 6h4v12h-4z" style={fill} />
-    </>
-  ),
-  'q-trust': (
-    <>
-      <path d="M12 3l8 3v7l-3 5-5 3-5-3-3-5V6z" />
-      <path d="M8 12l3 3 5-5" style={line} />
-    </>
-  ),
+  'q-how-much': <path d="M3 16h3v5H3zM8 12h3v9H8zM13 8h3v13h-3zM18 4h3v17h-3z" style={F} />,
+  'q-trust': <path d={`${SEAL}${CHECK}`} fillRule="evenodd" style={F} />,
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof PATHS;
@@ -163,8 +142,8 @@ export function Icon({ name, size = 20, title, decorative = !title, className = 
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="square"
+      strokeWidth={1.5}
+      strokeLinecap="butt"
       strokeLinejoin="miter"
       focusable="false"
       {...a11y}

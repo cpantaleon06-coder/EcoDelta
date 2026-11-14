@@ -4,7 +4,7 @@ import { ErrorBox, Loading } from '../components/Status';
 import { MethodsList } from '../components/MethodsList';
 import { EXPLAINERS } from '../copy';
 import { Icon } from '../components/Icon';
-import { varColor, varIcon } from '../viz';
+import { varIcon } from '../viz';
 
 // Show DOIs exactly as exported; link only values that look like a DOI.
 const Doi = ({ doi }: { doi: string }) =>
@@ -85,7 +85,7 @@ export default function About() {
         <h2 id="variables">Variables</h2>
         <dl className="vars">
           {catalog.map((v) => (
-            <div key={v.id} style={{ '--var': varColor(v.id) } as React.CSSProperties}>
+            <div key={v.id}>
               <dt>
                 {varIcon(v.id) && <Icon name={varIcon(v.id)!} size={20} className="title-icon" />}
                 {v.name} <span className="muted">({v.public_unit})</span>

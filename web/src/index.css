@@ -1295,15 +1295,24 @@ td {
   }
 }
 
-/* ===== icons (src/components/Icon.tsx): neutral stroke in the text color, one accent part in --var ===== */
+/* ===== icons (src/components/Icon.tsx): one color, the palette green ===== */
 .icon {
   flex: none;
   display: inline-block;
   vertical-align: -0.2em;
+  color: var(--green);
+}
+/* on a green fill, the light badge or a disabled button, icons take the element's own ink so they stay visible */
+.btn .icon,
+.badge--sig .icon,
+.stepper li[aria-current='step'] .stepper__n .icon {
+  color: inherit;
+}
+.btn--secondary:not(:disabled) .icon {
+  color: var(--green);
 }
 .title-icon {
   margin-right: var(--s2);
-  color: var(--text-2);
 }
 #detail-title .title-icon {
   vertical-align: -0.15em;
@@ -1316,7 +1325,6 @@ td {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-2);
   pointer-events: none;
 }
 .field__control--icon select {
@@ -1335,11 +1343,6 @@ td {
 }
 .badge--lg {
   gap: 6px;
-}
-/* on a filled badge or the current step the accent would vanish, so these icons go one-tone */
-.badge .icon,
-.stepper li[aria-current='step'] .stepper__n .icon {
-  --icon-accent: currentColor;
 }
 .answer h3 {
   display: flex;
