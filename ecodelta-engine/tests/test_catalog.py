@@ -56,3 +56,28 @@ def test_real_datasets_md_if_present():
     d = parse_datasets_md(p)
     assert set(d) == set(read_variables_yaml())
     assert all(v["doi"].startswith("10.") and v["citation"] != NOT_FOUND for v in d.values())
+
+
+def test_provenance_is_null_when_the_data_build_has_no_value(fixture_root):
+    prov = build_catalog(read_manifest(fixture_root), {})["t2m"]["provenance"]
+    assert prov["collection_id"] is None and prov["doi"] is None and prov["source_units"] is None
+    assert prov["units"] == "degC" and prov["displayed_units"] == "°C" and prov["period"] == ["2001-01", "2025-09"]
+    assert [s["step"] for s in prov["processing_steps"]] == ["unit conversion", "regridding to 2 x 2 degrees"]
+
+
+def test_provenance_copies_manifest_values(fixture_root):
+    manifest = read_manifest(fixture_root)
+    real = dict(manifest["t2m"], source_doi="10.5067/X", collection_concept_id="C1-GES_DISC", source_units="K",
+                native_resolution={"lon_deg": 0.625}, retrieved={"data_first": "2026-11-14"})
+    prov = build_catalog(dict(manifest, t2m=real), {})["t2m"]["provenance"]
+    assert (prov["doi"], prov["collection_id"], prov["source_units"]) == ("10.5067/X", "C1-GES_DISC", "K")
+    assert prov["native_resolution"] == {"lon_deg": 0.625} and prov["retrieved"] == {"data_first": "2026-11-14"}
+
+
+def test_held_variables_are_dropped_from_the_real_build(fixture_root):
+    from ecodelta_engine.cli import apply_holds
+    plain = read_variables_yaml()
+    plain = dict(plain, precip=dict(plain["precip"], hold="reason"))
+    manifest, kept, held = apply_holds(read_manifest(fixture_root), plain)
+    assert held["precip"] == "reason" and "precip" not in manifest and "precip" not in kept
+    assert "evap" in manifest and "evap" in kept

@@ -18,7 +18,7 @@ import trendkit
 from . import __version__, config
 from .screen import SCORE_DEFINITION
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 SIG_DIGITS = 4
 AUTOCORR_NOTES = {"yue_wang": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; "
                               "recommended in trendkit docs/METHODS.md"}
@@ -179,15 +179,33 @@ def meta_file(source: str, catalog: dict, period: dict, n_months: int, missing: 
     }
 
 
+def run_provenance(meta: dict) -> dict:
+    """The per-variable provenance fields that describe this build rather than the data."""
+    m = meta["methods"]
+    return {
+        "statistics": {"trendkit_version": meta["trendkit"]["version"],
+                       **{k: m[k] for k in ("deseasonalizing", "climatology_base_period", "trend_estimator",
+                                            "significance_test", "autocorrelation_handling",
+                                            "autocorrelation_note", "alpha", "ci_level", "fdr",
+                                            "data_requirement", "regional_mean")}},
+        "engine_commit": meta["engine"]["commit"],
+        "engine_uncommitted_changes": meta["engine"]["uncommitted_changes"],
+        "manifest_sha256": meta["data"]["manifest_sha256"],
+    }
+
+
 def export(out: Path, source: str, catalog: dict, regions: list[dict], results: dict, ranked: dict,
-           period: dict, missing: list[str], timing: dict, sanity: dict) -> dict:
+           period: dict, missing: list[str], timing: dict, sanity: dict, manifest_sha256: str | None) -> dict:
     """Write every file into a temporary folder, then swap it in place of `out`. Returns size info."""
     tmp = out.with_name(out.name + ".tmp")
     shutil.rmtree(tmp, ignore_errors=True)
     any_res = next(iter(results.values()))
     dates = list(pd.DatetimeIndex(any_res["dates"]).strftime("%Y-%m"))
     included = {v: catalog[v] for v in results}
-    write_json(tmp / "meta.json", meta_file(source, included, period, len(dates), missing, timing, sanity))
+    meta = meta_file(source, included, period, len(dates), missing, timing, sanity) | {
+        "data": {"manifest_sha256": manifest_sha256}}
+    included = {v: dict(c, provenance=c["provenance"] | run_provenance(meta)) for v, c in included.items()}
+    write_json(tmp / "meta.json", meta)
     write_json(tmp / "catalog.json", {"schema_version": SCHEMA_VERSION,
                                       "variables": [included[v] for v in sorted(included)]})
     write_json(tmp / "regions.json", {"schema_version": SCHEMA_VERSION, "note": LIMITATIONS[0],

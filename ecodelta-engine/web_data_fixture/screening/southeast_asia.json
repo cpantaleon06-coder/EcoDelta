@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/southeast_asia.json",
  "region_id": "southeast_asia",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

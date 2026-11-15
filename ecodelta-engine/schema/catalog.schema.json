@@ -78,6 +78,202 @@
       ],
       "type": "object"
      },
+     "provenance": {
+      "additionalProperties": false,
+      "description": "Where the numbers come from. Data fields are copied from the data build's manifest.json (read from CMR and the source files there); null means the value could not be retrieved.",
+      "properties": {
+       "collection_id": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "displayed_units": {
+        "type": "string"
+       },
+       "doi": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "engine_commit": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "engine_uncommitted_changes": {
+        "type": [
+         "boolean",
+         "null"
+        ]
+       },
+       "grid": {
+        "type": "object"
+       },
+       "manifest_sha256": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "native_resolution": {
+        "type": [
+         "object",
+         "null"
+        ]
+       },
+       "period": {
+        "items": {
+         "pattern": "^\\d{4}-\\d{2}$",
+         "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+       },
+       "processing_steps": {
+        "items": {
+         "additionalProperties": false,
+         "properties": {
+          "detail": {
+           "type": [
+            "string",
+            "null"
+           ]
+          },
+          "step": {
+           "type": "string"
+          }
+         },
+         "required": [
+          "step",
+          "detail"
+         ],
+         "type": "object"
+        },
+        "type": "array"
+       },
+       "product_short_name": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "retrieved": {
+        "type": [
+         "object",
+         "null"
+        ]
+       },
+       "source_units": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "source_variable": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "statistics": {
+        "additionalProperties": false,
+        "properties": {
+         "alpha": {
+          "type": "number"
+         },
+         "autocorrelation_handling": {
+          "type": "string"
+         },
+         "autocorrelation_note": {
+          "type": "string"
+         },
+         "ci_level": {
+          "type": "number"
+         },
+         "climatology_base_period": {
+          "type": "array"
+         },
+         "data_requirement": {
+          "type": "string"
+         },
+         "deseasonalizing": {
+          "type": "string"
+         },
+         "fdr": {
+          "type": "object"
+         },
+         "regional_mean": {
+          "type": "string"
+         },
+         "significance_test": {
+          "type": "string"
+         },
+         "trend_estimator": {
+          "type": "string"
+         },
+         "trendkit_version": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "trendkit_version",
+         "deseasonalizing",
+         "climatology_base_period",
+         "trend_estimator",
+         "significance_test",
+         "autocorrelation_handling",
+         "autocorrelation_note",
+         "alpha",
+         "ci_level",
+         "fdr",
+         "data_requirement",
+         "regional_mean"
+        ],
+        "type": "object"
+       },
+       "temporal_resolution": {
+        "type": [
+         "object",
+         "null"
+        ]
+       },
+       "units": {
+        "type": "string"
+       },
+       "version": {
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      },
+      "required": [
+       "collection_id",
+       "displayed_units",
+       "doi",
+       "engine_commit",
+       "engine_uncommitted_changes",
+       "grid",
+       "manifest_sha256",
+       "native_resolution",
+       "period",
+       "processing_steps",
+       "product_short_name",
+       "retrieved",
+       "source_units",
+       "source_variable",
+       "statistics",
+       "temporal_resolution",
+       "units",
+       "version"
+      ],
+      "type": "object"
+     },
      "public_unit": {
       "type": "string"
      },
@@ -95,6 +291,7 @@
      "name",
      "period",
      "product",
+     "provenance",
      "public_unit",
      "units"
     ],

@@ -1,5 +1,5 @@
 {
- "schema_version": "1.0.0",
+ "schema_version": "1.1.0",
  "variables": [
   {
    "caveats": [
@@ -24,6 +24,72 @@
     "short_name": "FIXTURE",
     "source_variable": "evap",
     "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "provenance": {
+    "collection_id": null,
+    "displayed_units": "mm/day",
+    "doi": null,
+    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_uncommitted_changes": true,
+    "grid": {
+     "dims": [
+      "time",
+      "lat",
+      "lon"
+     ],
+     "lat_centers": "-89 to 89 step 2",
+     "lon_centers": "-179 to 179 step 2",
+     "resolution_deg": 2.0,
+     "shape": [
+      297,
+      90,
+      180
+     ]
+    },
+    "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08",
+    "native_resolution": null,
+    "period": [
+     "2001-01",
+     "2025-09"
+    ],
+    "processing_steps": [
+     {
+      "detail": "none (synthetic)",
+      "step": "unit conversion"
+     },
+     {
+      "detail": "none (synthetic)",
+      "step": "regridding to 2 x 2 degrees"
+     }
+    ],
+    "product_short_name": "FIXTURE",
+    "retrieved": null,
+    "source_units": null,
+    "source_variable": "evap",
+    "statistics": {
+     "alpha": 0.05,
+     "autocorrelation_handling": "yue_wang",
+     "autocorrelation_note": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; recommended in trendkit docs/METHODS.md",
+     "ci_level": 0.95,
+     "climatology_base_period": [
+      "2001-01",
+      "2025-09"
+     ],
+     "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
+     "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
+     "fdr": {
+      "applies_to": "grid cells, per variable",
+      "method": "Benjamini-Hochberg",
+      "q": 0.05
+     },
+     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "significance_test": "Mann-Kendall",
+     "trend_estimator": "Sen's slope, reported per decade in the variable's units",
+     "trendkit_version": "0.1.0"
+    },
+    "temporal_resolution": null,
+    "units": "mm day-1",
     "version": "0"
    },
    "public_unit": "mm/day",
@@ -54,6 +120,72 @@
     "unit_conversion": "none (synthetic)",
     "version": "0"
    },
+   "provenance": {
+    "collection_id": null,
+    "displayed_units": "mm/day",
+    "doi": null,
+    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_uncommitted_changes": true,
+    "grid": {
+     "dims": [
+      "time",
+      "lat",
+      "lon"
+     ],
+     "lat_centers": "-89 to 89 step 2",
+     "lon_centers": "-179 to 179 step 2",
+     "resolution_deg": 2.0,
+     "shape": [
+      297,
+      90,
+      180
+     ]
+    },
+    "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08",
+    "native_resolution": null,
+    "period": [
+     "2001-01",
+     "2025-09"
+    ],
+    "processing_steps": [
+     {
+      "detail": "none (synthetic)",
+      "step": "unit conversion"
+     },
+     {
+      "detail": "none (synthetic)",
+      "step": "regridding to 2 x 2 degrees"
+     }
+    ],
+    "product_short_name": "FIXTURE",
+    "retrieved": null,
+    "source_units": null,
+    "source_variable": "precip",
+    "statistics": {
+     "alpha": 0.05,
+     "autocorrelation_handling": "yue_wang",
+     "autocorrelation_note": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; recommended in trendkit docs/METHODS.md",
+     "ci_level": 0.95,
+     "climatology_base_period": [
+      "2001-01",
+      "2025-09"
+     ],
+     "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
+     "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
+     "fdr": {
+      "applies_to": "grid cells, per variable",
+      "method": "Benjamini-Hochberg",
+      "q": 0.05
+     },
+     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "significance_test": "Mann-Kendall",
+     "trend_estimator": "Sen's slope, reported per decade in the variable's units",
+     "trendkit_version": "0.1.0"
+    },
+    "temporal_resolution": null,
+    "units": "mm day-1",
+    "version": "0"
+   },
    "public_unit": "mm/day",
    "units": "mm day-1"
   },
@@ -80,6 +212,72 @@
     "short_name": "FIXTURE",
     "source_variable": "runoff_surface",
     "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "provenance": {
+    "collection_id": null,
+    "displayed_units": "mm/day",
+    "doi": null,
+    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_uncommitted_changes": true,
+    "grid": {
+     "dims": [
+      "time",
+      "lat",
+      "lon"
+     ],
+     "lat_centers": "-89 to 89 step 2",
+     "lon_centers": "-179 to 179 step 2",
+     "resolution_deg": 2.0,
+     "shape": [
+      297,
+      90,
+      180
+     ]
+    },
+    "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08",
+    "native_resolution": null,
+    "period": [
+     "2001-01",
+     "2025-09"
+    ],
+    "processing_steps": [
+     {
+      "detail": "none (synthetic)",
+      "step": "unit conversion"
+     },
+     {
+      "detail": "none (synthetic)",
+      "step": "regridding to 2 x 2 degrees"
+     }
+    ],
+    "product_short_name": "FIXTURE",
+    "retrieved": null,
+    "source_units": null,
+    "source_variable": "runoff_surface",
+    "statistics": {
+     "alpha": 0.05,
+     "autocorrelation_handling": "yue_wang",
+     "autocorrelation_note": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; recommended in trendkit docs/METHODS.md",
+     "ci_level": 0.95,
+     "climatology_base_period": [
+      "2001-01",
+      "2025-09"
+     ],
+     "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
+     "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
+     "fdr": {
+      "applies_to": "grid cells, per variable",
+      "method": "Benjamini-Hochberg",
+      "q": 0.05
+     },
+     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "significance_test": "Mann-Kendall",
+     "trend_estimator": "Sen's slope, reported per decade in the variable's units",
+     "trendkit_version": "0.1.0"
+    },
+    "temporal_resolution": null,
+    "units": "mm day-1",
     "version": "0"
    },
    "public_unit": "mm/day",
@@ -111,6 +309,72 @@
     "unit_conversion": "none (synthetic)",
     "version": "0"
    },
+   "provenance": {
+    "collection_id": null,
+    "displayed_units": "kg/m²",
+    "doi": null,
+    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_uncommitted_changes": true,
+    "grid": {
+     "dims": [
+      "time",
+      "lat",
+      "lon"
+     ],
+     "lat_centers": "-89 to 89 step 2",
+     "lon_centers": "-179 to 179 step 2",
+     "resolution_deg": 2.0,
+     "shape": [
+      297,
+      90,
+      180
+     ]
+    },
+    "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08",
+    "native_resolution": null,
+    "period": [
+     "2001-01",
+     "2025-09"
+    ],
+    "processing_steps": [
+     {
+      "detail": "none (synthetic)",
+      "step": "unit conversion"
+     },
+     {
+      "detail": "none (synthetic)",
+      "step": "regridding to 2 x 2 degrees"
+     }
+    ],
+    "product_short_name": "FIXTURE",
+    "retrieved": null,
+    "source_units": null,
+    "source_variable": "soil_moisture_0_10cm",
+    "statistics": {
+     "alpha": 0.05,
+     "autocorrelation_handling": "yue_wang",
+     "autocorrelation_note": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; recommended in trendkit docs/METHODS.md",
+     "ci_level": 0.95,
+     "climatology_base_period": [
+      "2001-01",
+      "2025-09"
+     ],
+     "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
+     "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
+     "fdr": {
+      "applies_to": "grid cells, per variable",
+      "method": "Benjamini-Hochberg",
+      "q": 0.05
+     },
+     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "significance_test": "Mann-Kendall",
+     "trend_estimator": "Sen's slope, reported per decade in the variable's units",
+     "trendkit_version": "0.1.0"
+    },
+    "temporal_resolution": null,
+    "units": "kg m-2",
+    "version": "0"
+   },
    "public_unit": "kg/m²",
    "units": "kg m-2"
   },
@@ -136,6 +400,72 @@
     "short_name": "FIXTURE",
     "source_variable": "t2m",
     "unit_conversion": "none (synthetic)",
+    "version": "0"
+   },
+   "provenance": {
+    "collection_id": null,
+    "displayed_units": "°C",
+    "doi": null,
+    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_uncommitted_changes": true,
+    "grid": {
+     "dims": [
+      "time",
+      "lat",
+      "lon"
+     ],
+     "lat_centers": "-89 to 89 step 2",
+     "lon_centers": "-179 to 179 step 2",
+     "resolution_deg": 2.0,
+     "shape": [
+      297,
+      90,
+      180
+     ]
+    },
+    "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08",
+    "native_resolution": null,
+    "period": [
+     "2001-01",
+     "2025-09"
+    ],
+    "processing_steps": [
+     {
+      "detail": "none (synthetic)",
+      "step": "unit conversion"
+     },
+     {
+      "detail": "none (synthetic)",
+      "step": "regridding to 2 x 2 degrees"
+     }
+    ],
+    "product_short_name": "FIXTURE",
+    "retrieved": null,
+    "source_units": null,
+    "source_variable": "t2m",
+    "statistics": {
+     "alpha": 0.05,
+     "autocorrelation_handling": "yue_wang",
+     "autocorrelation_note": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; recommended in trendkit docs/METHODS.md",
+     "ci_level": 0.95,
+     "climatology_base_period": [
+      "2001-01",
+      "2025-09"
+     ],
+     "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
+     "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
+     "fdr": {
+      "applies_to": "grid cells, per variable",
+      "method": "Benjamini-Hochberg",
+      "q": 0.05
+     },
+     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "significance_test": "Mann-Kendall",
+     "trend_estimator": "Sen's slope, reported per decade in the variable's units",
+     "trendkit_version": "0.1.0"
+    },
+    "temporal_resolution": null,
+    "units": "degC",
     "version": "0"
    },
    "public_unit": "°C",

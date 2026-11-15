@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/east_china.json",
  "region_id": "east_china",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

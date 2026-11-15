@@ -100,5 +100,5 @@
  ],
  "region_file": "regions/sahel.json",
  "region_id": "sahel",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

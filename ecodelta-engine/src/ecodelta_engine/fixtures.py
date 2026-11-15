@@ -136,10 +136,12 @@ def write_fixture(root=config.FIXTURE_DIR, start=config.FIXTURE_START, n_months=
         manifest[path.name] = dict(
             variable=name, units=units, long_name=long_name, source_product="FIXTURE",
             source_version="0", source_variable=name, source_doi="not found (synthetic fixture)",
+            source_units=None, collection_concept_id=None, cmr_collection_revision_date=None,
             unit_conversion="none (synthetic)", time_range=[months[0], months[-1]], n_months=n_months,
             grid=dict(dims=["time", "lat", "lon"], shape=list(da.shape), resolution_deg=2.0,
                       lat_centers="-89 to 89 step 2", lon_centers="-179 to 179 step 2"),
-            native_grid="synthetic", regridding_method="none (synthetic)",
+            native_grid="synthetic", native_resolution=None, temporal_resolution=None, retrieved=None,
+            regridding_method="none (synthetic)",
             valid_cells_first_month=int(np.isfinite(x[0]).sum()),
             nan_fraction=round(float(np.isnan(x).mean()), 4))
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2))

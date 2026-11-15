@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/southern_south_america.json",
  "region_id": "southern_south_america",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

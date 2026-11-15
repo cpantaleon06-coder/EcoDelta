@@ -6,6 +6,23 @@
   "build_date": {
    "type": "string"
   },
+  "data": {
+   "additionalProperties": false,
+   "description": "Which data build was used: SHA-256 of nasa-data/data/processed/manifest.json as read.",
+   "properties": {
+    "manifest_sha256": {
+     "pattern": "^[0-9a-f]{64}$",
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   },
+   "required": [
+    "manifest_sha256"
+   ],
+   "type": "object"
+  },
   "engine": {
    "additionalProperties": true,
    "properties": {
@@ -235,6 +252,7 @@
  },
  "required": [
   "build_date",
+  "data",
   "engine",
   "grid",
   "limitations",

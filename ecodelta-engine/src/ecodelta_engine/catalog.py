@@ -53,6 +53,28 @@ def parse_datasets_md(path: Path) -> dict:
     return out
 
 
+def data_provenance(m: dict, public_unit: str) -> dict:
+    """Provenance copied from a manifest entry; null where the data build could not retrieve a value."""
+    doi = m.get("source_doi")
+    return {
+        "product_short_name": m.get("source_product"),
+        "collection_id": m.get("collection_concept_id"),
+        "version": m.get("source_version"),
+        "doi": doi if doi and doi.startswith("10.") else None,
+        "source_variable": m.get("source_variable"),
+        "source_units": m.get("source_units"),
+        "units": m["units"],
+        "displayed_units": public_unit,
+        "native_resolution": m.get("native_resolution"),
+        "grid": m["grid"],
+        "temporal_resolution": m.get("temporal_resolution"),
+        "period": m["time_range"],
+        "retrieved": m.get("retrieved"),
+        "processing_steps": [{"step": "unit conversion", "detail": m.get("unit_conversion")},
+                             {"step": "regridding to 2 x 2 degrees", "detail": m.get("regridding_method")}],
+    }
+
+
 def build_catalog(manifest: dict, datasets: dict, plain: dict | None = None) -> dict:
     """One entry per manifest variable: plain-language fields + manifest facts + product provenance.
 
@@ -97,5 +119,6 @@ def build_catalog(manifest: dict, datasets: dict, plain: dict | None = None) -> 
                 "citation": d.get("citation", NOT_FOUND),
                 "unit_conversion": m.get("unit_conversion", NOT_FOUND),
             },
+            "provenance": data_provenance(m, p["public_unit"]),
         }
     return catalog

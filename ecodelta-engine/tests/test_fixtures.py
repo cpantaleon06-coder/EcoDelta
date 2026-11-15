@@ -11,7 +11,9 @@ from ecodelta_engine.fixtures import PLANTED
 # Keys written by nasa-data/scripts/build_coarse_grid.py assemble(); the fixture must mirror them.
 MANIFEST_KEYS = {"variable", "units", "long_name", "source_product", "source_version", "source_variable",
                  "source_doi", "unit_conversion", "time_range", "n_months", "grid", "native_grid",
-                 "regridding_method", "valid_cells_first_month", "nan_fraction"}
+                 "regridding_method", "valid_cells_first_month", "nan_fraction", "source_units",
+                 "collection_concept_id", "cmr_collection_revision_date", "native_resolution",
+                 "temporal_resolution", "retrieved"}
 
 
 @pytest.fixture

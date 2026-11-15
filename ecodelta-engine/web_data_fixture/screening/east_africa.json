@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/east_africa.json",
  "region_id": "east_africa",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/global.json",
  "region_id": "global",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

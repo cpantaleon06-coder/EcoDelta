@@ -1,4 +1,7 @@
-# web_data output format (schema version 1.0.0)
+# web_data output format (schema version 1.1.0)
+
+Changes in 1.1.0 (additive; 1.0.0 readers keep working): `meta.data.manifest_sha256` and a
+`provenance` block on every `catalog.json` variable.
 
 Everything the web app needs is precomputed JSON. **The browser never computes a trend**: it only
 reads, filters and draws these files. Machine-readable JSON Schemas live in `schema/`; this page
@@ -16,7 +19,8 @@ web_data/
 ```
 
 Variable ids: `t2m`, `precip`, `evap`, `runoff_surface`, `soil_moisture_0_10cm` (always check
-`meta.variables_included`; missing ones are in `meta.variables_missing`).
+`meta.variables_included`; missing ones are in `meta.variables_missing`, which also lists variables
+the owner held back from the real export).
 Region ids: see `regions.json` (21, starting with `global`).
 
 ## General rules
@@ -44,6 +48,7 @@ Region ids: see `regions.json` (21, starting with `global`).
 | `products` | data products: `name`, `short_name`, `version`, `doi`, `citation`, `variables`. Show these as credits. `"not found"` means we could not find the value. |
 | `variables_included`, `variables_missing` | which variables are in this export |
 | `limitations` | sentences to show on an "About the data" page |
+| `data` | `manifest_sha256`: SHA-256 of the data build's `manifest.json`, identifying the exact processed files used (null only if unknown) |
 | `timing`, `sanity_checks` | build diagnostics (not for display) |
 
 ## catalog.json
@@ -61,6 +66,26 @@ Region ids: see `regions.json` (21, starting with `global`).
 | `caveats` | list of sentences (data source type, resolution, coverage) |
 | `long_name`, `period` | technical name and `[start, end]` |
 | `product` | `name`, `short_name`, `version`, `source_variable`, `doi`, `citation`, `unit_conversion` |
+| `provenance` | where every number comes from (below); show it on a "Data sources" or "How this was made" panel |
+
+`provenance` keys. Data values are copied from the data build's `manifest.json`, which reads them from NASA's
+CMR catalog and from a real source file; `null` means the value could not be retrieved (all data values are
+null in the synthetic fixture).
+
+| Key | Meaning |
+|---|---|
+| `product_short_name`, `collection_id`, `version`, `doi` | NASA product short name, CMR collection concept id (for example `C1276812859-GES_DISC`), product version, DOI |
+| `source_variable`, `source_units` | variable name and units in the NASA file |
+| `units`, `displayed_units` | units of the exported numbers, and the label shown (same numbers) |
+| `native_resolution` | `{lon_deg, lat_deg, n_lon, n_lat, lat_range, from, cmr_gridded_resolution}` of the source grid |
+| `grid` | the 2 x 2 degree grid used here (`resolution_deg`, `shape`, cell centers) |
+| `temporal_resolution` | `{per_file, example_granule_range, from}`: one value per calendar month |
+| `period` | `[start, end]` as `YYYY-MM` |
+| `retrieved` | `{data_first, data_last, metadata, from}`: dates the monthly files and the metadata were fetched |
+| `processing_steps` | list of `{step, detail}`: unit conversion, then regridding |
+| `statistics` | `trendkit_version`, `deseasonalizing`, `climatology_base_period`, `trend_estimator` (Sen), `significance_test` (Mann-Kendall), `autocorrelation_handling` and `autocorrelation_note` (Yue-Wang), `alpha`, `ci_level`, `fdr` (Benjamini-Hochberg, `q`), `data_requirement`, `regional_mean` |
+| `engine_commit`, `engine_uncommitted_changes` | git commit of the engine that made the export |
+| `manifest_sha256` | same as `meta.data.manifest_sha256` |
 
 ## regions.json
 
@@ -93,7 +118,7 @@ Draw `slope` with a diverging color scale centered on 0; mark or hatch cells whe
 The ranked list for one region; small enough to load on every region click.
 
 ```json
-{"schema_version": "1.0.0", "region_id": "sahel", "region_file": "regions/sahel.json",
+{"schema_version": "1.1.0", "region_id": "sahel", "region_file": "regions/sahel.json",
  "ranking": [{"rank": 1, "variable": "precip", "name": "Rain and snow (precipitation)",
    "verdict": "increasing", "tier": 0, "significant": true, "pvalue": 1.363e-08,
    "effect_size": 0.782, "abs_effect_size": 0.782,

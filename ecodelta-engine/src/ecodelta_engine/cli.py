@@ -9,7 +9,7 @@ from .catalog import build_catalog, parse_datasets_md, read_variables_yaml
 from .compute import compute_all, sanity_checks
 from .export import export
 from .fixtures import write_fixture
-from .load import available, read_manifest
+from .load import available, manifest_sha256, read_manifest
 from .regions import load_regions
 from .screen import period_info, screen_region
 
@@ -25,17 +25,29 @@ def source_root(source: str):
     return config.DATA_DIR
 
 
+def apply_holds(manifest: dict, plain: dict) -> tuple[dict, dict, dict]:
+    """Drop variables whose variables.yaml entry has `hold` (owner decision): (manifest, plain, {var: reason})."""
+    held = {k: v["hold"] for k, v in sorted(plain.items()) if v.get("hold")}
+    return ({k: v for k, v in manifest.items() if k not in held},
+            {k: v for k, v in plain.items() if k not in held}, held)
+
+
 def build(source: str, allow_missing: bool = False, workers: int | None = None) -> int:
     root = source_root(source)
     print(f"source={source} data={root}")
     manifest = read_manifest(root)
     plain = read_variables_yaml()
+    held = {}
+    if source == "real":  # the fixture keeps every variable so the tests cover all of them
+        manifest, plain, held = apply_holds(manifest, plain)
+        for k, reason in held.items():
+            print(f"HELD (not exported): {k}: {reason}")
     not_in_manifest = sorted(set(plain) - set(manifest))
     if not_in_manifest and allow_missing:
         plain = {k: v for k, v in plain.items() if k in manifest}
     catalog = build_catalog(manifest, parse_datasets_md(config.datasets_doc(root)), plain)
     have, missing_files = available(root, manifest)
-    missing = sorted(missing_files + not_in_manifest)
+    missing = sorted(missing_files + not_in_manifest + list(held))
     if missing:
         print(f"MISSING variables (listed in meta.json): {missing}")
     if not have:
@@ -54,7 +66,8 @@ def build(source: str, allow_missing: bool = False, workers: int | None = None) 
     ranked = {r["id"]: screen_region(r, {v: results[v]["regions"][r["id"]] for v in results}, catalog, period)
               for r in regions}
     out = config.OUTPUT_DIRS[source]
-    info = export(out, source, catalog, regions, results, ranked, period, missing, timing, sanity)
+    info = export(out, source, catalog, regions, results, ranked, period, missing, timing, sanity,
+                  manifest_sha256(root))
     print(f"wrote {info['n_files']} files, {info['total_bytes'] / 1024**2:.2f} MB to {out}")
     print("largest:", info["largest"])
     if info["total_bytes"] > SIZE_BUDGET:

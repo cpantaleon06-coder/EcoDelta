@@ -1,5 +1,6 @@
 """Read the processed NetCDF files and check them against manifest.json."""
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -20,6 +21,11 @@ def read_manifest(root: Path) -> dict:
         raise FileNotFoundError(f"no manifest at {path}; is the data download finished?")
     raw = json.loads(path.read_text())
     return {entry["variable"]: dict(entry, file=fname) for fname, entry in sorted(raw.items())}
+
+
+def manifest_sha256(root: Path) -> str:
+    """SHA-256 of manifest.json as stored, so an export names the exact data build it came from."""
+    return hashlib.sha256((config.processed_dir(root) / "manifest.json").read_bytes()).hexdigest()
 
 
 def available(root: Path, manifest: dict) -> tuple[list[str], list[str]]:

@@ -1,7 +1,10 @@
 {
- "build_date": "2026-11-14T06:31:30Z",
+ "build_date": "2026-11-15T01:20:06Z",
+ "data": {
+  "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08"
+ },
  "engine": {
-  "commit": null,
+  "commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
   "uncommitted_changes": true,
   "version": "0.1.0"
  },
@@ -138,38 +141,38 @@
    "n_tested_cells": 16200
   }
  },
- "schema_version": "1.0.0",
+ "schema_version": "1.1.0",
  "source": "fixture",
  "synthetic": true,
  "timing": {
   "per_variable_s": {
    "evap": {
-    "grid": 77.3,
-    "total": 80.5
+    "grid": 81.6,
+    "total": 84.3
    },
    "precip": {
-    "grid": 110.4,
-    "total": 111.9
+    "grid": 114.1,
+    "total": 115.6
    },
    "runoff_surface": {
-    "grid": 76.2,
-    "total": 79.5
+    "grid": 82.0,
+    "total": 84.7
    },
    "soil_moisture_0_10cm": {
-    "grid": 77.3,
-    "total": 80.5
+    "grid": 78.6,
+    "total": 81.7
    },
    "t2m": {
-    "grid": 117.2,
-    "total": 118.4
+    "grid": 120.2,
+    "total": 121.3
    }
   },
-  "wall_s": 119.3,
+  "wall_s": 122.1,
   "workers": 5
  },
  "trendkit": {
-  "commit": "187bde41e84c443339ba6334888cd838e9d00fce",
-  "uncommitted_changes": false,
+  "commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+  "uncommitted_changes": true,
   "version": "0.1.0"
  },
  "variables_included": [

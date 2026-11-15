@@ -100,5 +100,5 @@
  ],
  "region_file": "regions/amazon_basin.json",
  "region_id": "amazon_basin",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

@@ -98,5 +98,5 @@
  ],
  "region_file": "regions/eastern_us.json",
  "region_id": "eastern_us",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }

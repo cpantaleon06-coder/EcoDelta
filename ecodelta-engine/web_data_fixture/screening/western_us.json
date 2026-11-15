@@ -100,5 +100,5 @@
  ],
  "region_file": "regions/western_us.json",
  "region_id": "western_us",
- "schema_version": "1.0.0"
+ "schema_version": "1.1.0"
 }
