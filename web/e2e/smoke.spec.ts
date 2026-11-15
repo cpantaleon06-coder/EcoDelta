@@ -54,13 +54,20 @@ test('ranking: evidence and magnitude stay separate, sort toggle, profile and re
     await expect(page.locator('.research-note dt', { hasText: part })).toBeVisible();
 });
 
-test('compare: verdict, required caveats, overlap flag, no difference series invented', async ({ page }) => {
+test('compare: verdict, required caveats, overlap caution, difference series', async ({ page }) => {
+  await page.goto('./#/compare?var=t2m&a=mexico&b=sahel');
+  await expect(page.getByRole('heading', { name: /^Verdict:/ })).toBeVisible();
+  await expect(page.getByText('Overlapping regions, interpret with caution')).toHaveCount(0);
   await page.goto('./#/compare?var=t2m&a=mexico&b=global');
   await expect(page.getByRole('heading', { name: /^Verdict:/ })).toBeVisible();
   await expect(page.getByText('A trend that is significant in one region and not in the other does not show that the two trends differ.')).toBeVisible();
   await expect(page.getByText('Looking at many pairs raises the chance of false positives.')).toBeVisible();
-  await expect(page.getByText('Overlapping study areas.')).toBeVisible();
-  await expect(page.getByText(/Difference series .*not available/)).toBeVisible();
+  await expect(page.getByText('Overlapping regions, interpret with caution')).toBeVisible();
+  await expect(page.locator('.callout--warn')).toContainText('Shared cells do not fully cancel');
+  await expect(page.getByText(/the shared cells cancel in the difference/)).toHaveCount(0);
+  // global comes first in the file, so the difference is Global minus Mexico
+  await expect(page.getByRole('heading', { name: /^Difference series: Global minus Mexico$/ })).toBeVisible();
+  await expect(page.getByRole('img', { name: /monthly difference .* with the trend of the difference/ })).toBeVisible();
   await page.getByLabel('Region B').selectOption({ label: 'Mexico' });
   await expect(page.getByText('Choose two different regions.')).toBeVisible();
 });

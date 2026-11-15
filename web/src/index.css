@@ -1695,6 +1695,35 @@ td {
 .compare .verdict h2 {
   margin-bottom: var(--s1);
 }
+/* overlapping boxes: the verdict is softened and carries a text-plus-icon caution, not color alone */
+.verdict__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1) var(--s3);
+  margin-bottom: var(--s1);
+}
+.compare .verdict .verdict__head h2 {
+  margin: 0;
+}
+.compare .verdict .verdict--soft {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text-2);
+}
+.badge--caution {
+  border: 1px solid var(--sky);
+  background: var(--notice-bg);
+  color: var(--text);
+  white-space: normal;
+}
+.badge--caution .icon {
+  color: var(--sky);
+  flex: none;
+}
+.compare__diff-title {
+  margin: var(--s5) 0 var(--s2);
+}
 .compare__caveats {
   margin: var(--s4) 0;
 }

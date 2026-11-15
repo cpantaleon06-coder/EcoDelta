@@ -13,6 +13,8 @@ interface Props {
   unit: string;
   color: string;
   label: string;
+  /** key and tooltip names for the monthly and 12-month lines, when they are not plain anomalies */
+  names?: { a: string; m: string };
 }
 
 // SVG attributes cannot read CSS variables reliably, so the chart keeps its own copy of the tokens.
@@ -33,7 +35,8 @@ const endLabel = (text: string, fill: string, last: number) =>
     );
   };
 
-export function TrendChart({ dates, series, slopePerDecade, ciPerDecade, significant, unit, color, label }: Props) {
+export function TrendChart({ dates, series, slopePerDecade, ciPerDecade, significant, unit, color, label, names }: Props) {
+  const tipNames = names ? { ...NAMES, ...names } : NAMES;
   const n = dates.length;
   const lastMean = series.running_mean_12.reduce<number>((k, v, i) => (v !== null ? i : k), -1);
   const data = dates.map((_, i) => ({
@@ -71,7 +74,7 @@ export function TrendChart({ dates, series, slopePerDecade, ciPerDecade, signifi
             <Tooltip
               labelFormatter={(i) => monthLabel(dates[Number(i)] ?? '')}
               formatter={(v, name) =>
-                Array.isArray(v) ? [`${fmtSigned(Number(v[0]))} to ${fmtSigned(Number(v[1]))}`, 'Slope range (95% CI)'] : [`${fmtSigned(Number(v))} ${unit}`, NAMES[String(name)] ?? name]
+                Array.isArray(v) ? [`${fmtSigned(Number(v[0]))} to ${fmtSigned(Number(v[1]))}`, 'Slope range (95% CI)'] : [`${fmtSigned(Number(v))} ${unit}`, tipNames[String(name)] ?? name]
               }
               contentStyle={{ background: INK.panel, border: 'none', borderRadius: 8, fontSize: 13, lineHeight: 1.5, fontFamily: FONT, color: INK.text }}
               labelStyle={{ color: INK.muted }}
@@ -111,11 +114,11 @@ export function TrendChart({ dates, series, slopePerDecade, ciPerDecade, signifi
       </div>
       <figcaption className="chart__key">
         <span>
-          <i className="key-line key-line--thin" style={{ borderColor: color }} aria-hidden="true" /> Monthly anomaly (difference
-          from the usual value for that month)
+          <i className="key-line key-line--thin" style={{ borderColor: color }} aria-hidden="true" />{' '}
+          {names?.a ?? 'Monthly anomaly (difference from the usual value for that month)'}
         </span>
         <span>
-          <i className="key-line key-line--thick" style={{ borderColor: color }} aria-hidden="true" /> 12-month running mean
+          <i className="key-line key-line--thick" style={{ borderColor: color }} aria-hidden="true" /> {names?.m ?? '12-month running mean'}
         </span>
         {slopePerDecade !== null && (
           <span>

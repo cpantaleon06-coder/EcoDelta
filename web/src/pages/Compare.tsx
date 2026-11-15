@@ -7,6 +7,7 @@ import { findPair } from '../results';
 import { ErrorBox, Loading } from '../components/Status';
 import { Icon } from '../components/Icon';
 import { CompareChart } from '../components/CompareChart';
+import { TrendChart } from '../components/TrendChart';
 import { AreaTag, Evidence, SourceLine } from '../components/ResultMeta';
 
 // required caveats (audit 5), shown with every comparison
@@ -14,6 +15,9 @@ const CAVEATS = [
   'A trend that is significant in one region and not in the other does not show that the two trends differ.',
   'Looking at many pairs raises the chance of false positives.',
 ];
+
+// D(t) = A(t) - B(t), month by month: a plain subtraction of the exported series, no statistics in the browser
+const minus = (x: (number | null)[], y: (number | null)[]) => x.map((v, i) => (v === null || y[i] === null ? null : v - y[i]!));
 
 const ci = (c: [number, number] | null) => (c ? `95% CI ${fmtSigned(c[0])} to ${fmtSigned(c[1])}` : '95% CI not available');
 
@@ -121,13 +125,24 @@ export default function Compare() {
               {varIcon(varId) && <Icon name={varIcon(varId)!} size={16} className="title-icon" />}
               {variable.name} · {file.data.period[0]} to {file.data.period[1]}
             </p>
-            <h2 id="verdict-title">Verdict: {pair.verdict}</h2>
+            <div className="verdict__head">
+              <h2 id="verdict-title" className={pair.independent ? undefined : 'verdict--soft'}>
+                Verdict: {pair.verdict}
+              </h2>
+              {!pair.independent && (
+                <span className="badge badge--lg badge--caution">
+                  <Icon name="info" size={16} /> Overlapping regions, interpret with caution
+                </span>
+              )}
+            </div>
             <SourceLine provenance={variable.provenance} />
             {!pair.independent && (
               <p className="callout callout--warn">
                 <strong>Overlapping study areas.</strong> {fmtPercent(pair.overlap_fraction)} of the smaller box lies inside
-                the other one. The two results share grid cells and are not independent; the shared cells cancel in the
-                difference, so the test compares only the parts that do not overlap.
+                the other one. These two regions overlap, so their averages share data and the two results are not
+                independent. The test is applied to the difference between the two averages. Shared cells do not fully
+                cancel, because each average is divided by its own area, so read this as a comparison of two overlapping
+                areas.
               </p>
             )}
           </section>
@@ -168,16 +183,35 @@ export default function Compare() {
           ) : !sa || !seriesA || !seriesB ? (
             <Loading label="Loading series…" minHeight={300} />
           ) : (
-            <CompareChart
-              dates={sa.dates}
-              a={{ name: ra.name, values: seriesA.running_mean_12 }}
-              b={{ name: rb.name, values: seriesB.running_mean_12 }}
-              unit={unit}
-              color={color}
-              label={`Line chart of the 12-month running mean of ${variable.name.toLowerCase()} anomalies in ${ra.name} and ${rb.name}.`}
-            />
+            <>
+              <CompareChart
+                dates={sa.dates}
+                a={{ name: ra.name, values: seriesA.running_mean_12 }}
+                b={{ name: rb.name, values: seriesB.running_mean_12 }}
+                unit={unit}
+                color={color}
+                label={`Line chart of the 12-month running mean of ${variable.name.toLowerCase()} anomalies in ${ra.name} and ${rb.name}.`}
+              />
+              <h3 className="compare__diff-title">
+                Difference series: {ra.name} minus {rb.name}
+              </h3>
+              <TrendChart
+                dates={sa.dates}
+                series={{ anomaly: minus(seriesA.anomaly, seriesB.anomaly), running_mean_12: minus(seriesA.running_mean_12, seriesB.running_mean_12) }}
+                slopePerDecade={pair.difference_slope_per_decade}
+                ciPerDecade={pair.difference_ci_per_decade}
+                significant={pair.verdict === 'trends differ'}
+                unit={unit}
+                color={color}
+                names={{ a: 'Monthly difference (the series the test uses)', m: 'Difference of the two 12-month running means' }}
+                label={`Line chart of the monthly difference in ${variable.name.toLowerCase()} anomalies, ${ra.name} minus ${rb.name}, with the trend of the difference.`}
+              />
+              <p className="note">
+                The difference is computed in your browser by subtracting the two exported monthly series. The slope, its
+                95% CI and the verdict come from the data files.
+              </p>
+            </>
           )}
-          <p className="note">Difference series ({ra.name} minus {rb.name}, month by month): not available in the data files.</p>
 
           <details className="how">
             <summary>How was this computed?</summary>
