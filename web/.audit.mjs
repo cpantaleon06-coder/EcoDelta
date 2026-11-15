@@ -9,6 +9,10 @@ const states = [
   ['guided-3', '/guided', async (p) => { await p.getByLabel('Rain and snow (precipitation)').check(); await p.getByRole('button', { name: 'Next' }).click(); await p.getByLabel('Mexico').check(); await p.getByRole('button', { name: 'Next' }).click(); await p.waitForSelector('.tcb'); }],
   ['guided-4', '/guided', async (p) => { await p.getByLabel('Rain and snow (precipitation)').check(); await p.getByRole('button', { name: 'Next' }).click(); await p.getByLabel('Mexico').check(); await p.getByRole('button', { name: 'Next' }).click(); await p.waitForSelector('.tcb'); await p.getByRole('button', { name: 'Next' }).click(); }],
   ['about', '/about', null],
+  ['explore-research-note', '/explore?region=mexico&var=t2m', async (p) => { await p.getByText('Research note').click(); }],
+  ['explore-by-magnitude', '/explore?region=mexico&var=precip', async (p) => { await p.getByRole('button', { name: 'By magnitude', exact: true }).click(); }],
+  ['compare', '/compare?var=t2m&a=mexico&b=global', async (p) => { await p.waitForSelector('.recharts-line-curve'); }],
+  ['compare-same', '/compare?var=t2m&a=mexico&b=mexico', null],
 ];
 const contrastCheck = () => {
   const lum = (c) => { const [r, g, b] = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };

@@ -7,9 +7,12 @@ import { TrendMap } from '../components/TrendMap';
 import { MapLegend } from '../components/MapLegend';
 import { RankingPanel } from '../components/RankingPanel';
 import { DetailView } from '../components/DetailView';
+import { Profile } from '../components/Profile';
 import { AsciiGlobe } from '../hero/AsciiGlobe';
 import { Icon } from '../components/Icon';
 import { varIcon } from '../viz';
+import { MAP_CORRELATION_NOTE } from '../copy';
+import { fmtPercent } from '../format';
 import { PALETTE, gridToGeoJson, symmetricMax } from '../mapScale';
 
 // grids are cached by dataClient, so their GeoJSON can be cached by identity too: switching back costs nothing
@@ -56,6 +59,9 @@ export default function Explore() {
     document.getElementById('map')?.scrollIntoView({ block: 'start' });
     document.getElementById('f-var')?.focus({ preventScroll: true });
   };
+
+  const fdr = meta?.methods.fdr as { q?: number } | undefined;
+  const fdrQ = typeof fdr?.q === 'number' ? fdr.q : undefined;
 
   if (base.error) return <ErrorBox error={base.error} />;
   if (!meta || !variable || !region) return <Loading label="Loading data…" minHeight={480} />;
@@ -138,19 +144,32 @@ export default function Explore() {
               label={`Map of the trend in ${variable.name.toLowerCase()} per decade, ${meta.period.start} to ${meta.period.end}. Use the region list to choose a region with the keyboard.`}
             />
           )}
-          <MapLegend palette={PALETTE} max={max} unit={variable.public_unit} period={meta.period} />
+          <MapLegend
+            palette={PALETTE}
+            max={max}
+            unit={variable.public_unit}
+            period={meta.period}
+            areaNote={region.kind === 'approximate_box' ? region.display_note : undefined}
+          />
           <p className="note">{regionList!.note}</p>
+          <p className="note">
+            {MAP_CORRELATION_NOTE} {fdrQ !== undefined ? fmtPercent(fdrQ) : 'level'}.
+          </p>
           <div className="fill" aria-hidden="true" />
         </section>
         <aside className="explore__panel" aria-label="Ranking for the selected region">
           <RankingPanel
             region={region}
             period={meta.period}
+            variables={variables}
             selectedVar={varId}
             onSelect={(id) => open({ var: id })}
           />
           <div className="fill" aria-hidden="true" />
         </aside>
+        <div id="profile" className="explore__detail">
+          <Profile region={region} variables={variables} />
+        </div>
         <section id="detail" className="explore__detail">
           <DetailView region={region} variable={variable} meta={meta} />
         </section>

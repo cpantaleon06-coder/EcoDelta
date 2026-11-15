@@ -32,14 +32,15 @@ export function TotalChangeBar({ value, ci, unit, years, color }: Props) {
   );
 }
 
-/** Bar from zero to the value with the 95% CI as a whisker; the numbers are always shown next to it in text. */
-function CiBar({ value, ci, color }: { value: number; ci: [number, number]; color: string }) {
+/** Bar from zero to the value with the 95% CI as a whisker; the numbers are always shown next to it in text.
+ * Spans, so it can sit inside a button. */
+export function CiBar({ value, ci, color }: { value: number; ci: [number, number]; color: string }) {
   const g = barGeometry(value, ci[0], ci[1]);
   return (
-    <div className="cibar" aria-hidden="true">
+    <span className="cibar" aria-hidden="true">
       <span className="cibar__zero" />
       <span className="cibar__bar" style={{ left: `${g.barStart}%`, width: `${g.barEnd - g.barStart}%`, background: color }} />
       <span className="cibar__ci" style={{ left: `${g.ciStart}%`, width: `${g.ciEnd - g.ciStart}%` }} />
-    </div>
+    </span>
   );
 }

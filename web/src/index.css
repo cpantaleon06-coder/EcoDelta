@@ -519,6 +519,10 @@ select option {
 .explore__detail {
   scroll-margin-top: 12px;
 }
+/* grid items default to min-width: auto, so the wide profile table would stretch the whole column */
+.explore > * {
+  min-width: 0;
+}
 
 /* ===== map ===== */
 .map-frame {
@@ -825,6 +829,7 @@ select option {
   flex: 1;
 }
 .cibar {
+  display: block;
   position: relative;
   height: 28px;
   max-width: 640px;
@@ -1492,4 +1497,204 @@ td {
 }
 .btn:hover {
   transform: translateY(-1px);
+}
+
+/* ===== result metadata: data badge, source, study area, evidence, coverage (v8) ===== */
+.site-header .wordmark {
+  margin-right: auto;
+}
+.data-badge {
+  padding: 2px 10px;
+  border: 1px solid var(--green);
+  border-radius: var(--radius-pill);
+  color: var(--green);
+  font: 700 var(--fs-xs) / 1.6 var(--font);
+  letter-spacing: var(--tracking-label);
+  white-space: nowrap;
+}
+.data-badge--demo {
+  border-color: var(--sky);
+  color: var(--sky);
+}
+.source-line,
+.coverage,
+.coverage > span {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.coverage__warn {
+  margin-top: 2px;
+  color: var(--text);
+  font-weight: 600;
+}
+.coverage__warn .icon {
+  color: var(--sky);
+}
+.area-tag {
+  display: inline-block;
+  margin-left: var(--s1);
+  padding: 0 8px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius-pill);
+  font: 400 var(--fs-xs) / 1.6 var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-2);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.evidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+.evidence__dots {
+  letter-spacing: 1px;
+  color: var(--green);
+}
+.evidence--none,
+.evidence--insufficient-data,
+.evidence--na {
+  font-weight: 400;
+  color: var(--text-2);
+}
+.evidence--none .evidence__dots,
+.evidence--insufficient-data .evidence__dots {
+  color: var(--muted);
+}
+.evidence__cap {
+  font-weight: 400;
+  color: var(--text-2);
+  white-space: normal;
+}
+.result-meta {
+  display: grid;
+  gap: var(--s1);
+}
+
+/* ranking: sort toggle and magnitude bar */
+.sort {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin: var(--s2) 0 var(--s1);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.sort__btn {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+  font: 600 var(--fs-sm) / 1.4 var(--font);
+  cursor: pointer;
+}
+.sort__btn[aria-pressed='true'] {
+  background: var(--text);
+  color: var(--on-accent);
+}
+.rank-row__mag {
+  display: grid;
+  gap: var(--s1);
+  margin: 2px 0;
+}
+.rank-row .cibar {
+  height: 18px;
+  max-width: none;
+}
+.rank-row .cibar__bar,
+.rank-row .cibar__ci {
+  top: 5px;
+  bottom: 5px;
+}
+
+/* Earth system profile, research note, compare, provenance */
+.profile {
+  margin-top: var(--s5);
+}
+.profile th[scope='row'] {
+  min-width: 11rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.profile__signals {
+  margin-top: var(--s3);
+  color: var(--text-2);
+  max-width: 80ch;
+}
+.profile__signals strong {
+  color: var(--text);
+}
+.research-note,
+.prov {
+  margin: var(--s4) 0;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  padding: var(--s3) var(--s4);
+}
+.research-note summary,
+.prov summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text);
+}
+.research-note dl {
+  display: grid;
+  gap: var(--s1) var(--s4);
+  margin: var(--s3) 0 0;
+  max-width: 90ch;
+}
+.research-note dt {
+  font: 700 var(--fs-xs) / 1.4 var(--font);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: var(--s2);
+}
+.research-note dd {
+  margin: 0;
+  color: var(--text-2);
+}
+.research-note dd ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+@media (min-width: 760px) {
+  .research-note dl {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+  .research-note dt {
+    margin-top: 0;
+  }
+}
+.prov .table-wrap {
+  margin-top: var(--s3);
+}
+.prov th[scope='row'] {
+  width: 12rem;
+  color: var(--text);
+  font-weight: 600;
+}
+.prov td ol,
+.prov td ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.hash {
+  overflow-wrap: anywhere;
+}
+.compare .controls {
+  margin: var(--s4) 0;
+}
+.compare .verdict h2 {
+  margin-bottom: var(--s1);
+}
+.compare__caveats {
+  margin: var(--s4) 0;
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCatalog, loadMeta, loadRegionDetail, loadRegions, loadScreening } from '../dataClient';
 import { useAsync } from '../useAsync';
-import { fmtP, fmtPercent, fmtSigned } from '../format';
+import { fmtSigned } from '../format';
 import { varColor, varIcon } from '../viz';
 import { Panel } from '../components/ui';
 import { ErrorBox, Loading } from '../components/Status';
@@ -10,6 +10,7 @@ import { TrendChart } from '../components/TrendChart';
 import { TotalChangeBar } from '../components/TotalChangeBar';
 import { Icon, type IconName } from '../components/Icon';
 import { StatusBadge } from '../components/StatusBadge';
+import { AreaTag, Coverage, Evidence, ExpertsNote, SourceLine } from '../components/ResultMeta';
 
 const STEPS = ['What?', 'Where?', 'How much?', 'Can we trust it?'];
 const STEP_ICONS: IconName[] = ['q-what', 'q-where', 'q-how-much', 'q-trust'];
@@ -135,6 +136,11 @@ export default function Guided() {
             />
           )}
           <p className="lede">{v.sentence}</p>
+          <p className="result-meta">
+            <Evidence cls={v.evidence?.class} capped={v.evidence?.capped_by_coverage} />
+            <Coverage where={v.answers.where} />
+            <SourceLine provenance={variable.provenance} />
+          </p>
         </>
       );
   } else {
@@ -143,6 +149,11 @@ export default function Guided() {
       <>
         <p className="big-answer">
           <StatusBadge r={v.score} large />
+        </p>
+        <p className="result-meta">
+          <Evidence cls={v.evidence?.class} capped={v.evidence?.capped_by_coverage} />
+          <Coverage where={v.answers.where} />
+          <SourceLine provenance={variable.provenance} />
         </p>
         <p className="lede">{sig.explanation}</p>
         {sig.significant && <p>Significant does not mean large or important, and it says nothing about the cause.</p>}
@@ -154,12 +165,9 @@ export default function Guided() {
           </ul>
         )}
         {v.score.tier !== 2 && (
-        <p className="experts">
-          For experts: p {fmtP(sig.pvalue)}
-          {sig.test ? ` (${sig.test})` : ''}; q-value: not applicable, because this is one test for one region and
-          variable (q-values are used on the map, where {fmtPercent(sig.cells_significant_after_fdr_fraction)} of this
-          region's cells are significant after FDR).
-        </p>
+          <p>
+            <ExpertsNote v={v} />
+          </p>
         )}
         <div className="wizard__end">
           <Link className="btn" to={`/explore?region=${region.id}&var=${variable.id}`}>
@@ -217,7 +225,7 @@ export default function Guided() {
           {step >= 2 ? ` · ${region.name}` : ''}
         </p>
         <h2 ref={heading} tabIndex={-1}>
-          {titles[step]}
+          {titles[step]} {step === 2 && <AreaTag region={region} />}
         </h2>
         <div className="step-body" key={step}>
           {body}

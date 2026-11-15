@@ -1,4 +1,6 @@
-import { isDemoData, loadCatalog, loadMeta, loadRegions } from '../dataClient';
+import { isDemoData, loadCatalog, loadMeta, loadRegions, type Provenance } from '../dataClient';
+import { describeValue, humanizeKey } from '../format';
+import { NA } from '../results';
 import { useAsync } from '../useAsync';
 import { ErrorBox, Loading } from '../components/Status';
 import { MethodsList } from '../components/MethodsList';
@@ -17,6 +19,60 @@ const Doi = ({ doi }: { doi: string }) =>
   ) : (
     <>{doi}</>
   );
+
+// every provenance field, in reading order; values are shown as exported, nulls as "not available"
+const PROVENANCE: [string, (p: Provenance) => React.ReactNode][] = [
+  ['Product', (p) => p.product_short_name],
+  ['Collection', (p) => p.collection_id],
+  ['Version', (p) => p.version],
+  ['DOI', (p) => p.doi && <Doi doi={p.doi} />],
+  ['Source variable', (p) => p.source_variable],
+  ['Source units', (p) => p.source_units],
+  ['Units', (p) => p.units],
+  ['Displayed units', (p) => p.displayed_units],
+  ['Native resolution', (p) => p.native_resolution && describeValue(p.native_resolution)],
+  ['Grid', (p) => describeValue(p.grid)],
+  ['Temporal resolution', (p) => p.temporal_resolution && describeValue(p.temporal_resolution)],
+  ['Period', (p) => p.period && `${p.period[0]} to ${p.period[1]}`],
+  ['Retrieved', (p) => p.retrieved && describeValue(p.retrieved)],
+  [
+    'Processing',
+    (p) =>
+      p.processing_steps && (
+        <ol>
+          {p.processing_steps.map((s) => (
+            <li key={s.step}>
+              {s.step}: {s.detail}
+            </li>
+          ))}
+        </ol>
+      ),
+  ],
+  [
+    'Statistical method',
+    (p) =>
+      p.statistics && (
+        <ul>
+          {Object.entries(p.statistics).map(([k, v]) => (
+            <li key={k}>
+              {humanizeKey(k)}: {describeValue(v)}
+            </li>
+          ))}
+        </ul>
+      ),
+  ],
+  [
+    'Engine commit',
+    (p) =>
+      p.engine_commit && (
+        <>
+          <code className="hash">{p.engine_commit}</code>
+          {p.engine_uncommitted_changes ? ' (with uncommitted changes)' : ''}
+        </>
+      ),
+  ],
+  ['Manifest hash (SHA-256)', (p) => p.manifest_sha256 && <code className="hash">{p.manifest_sha256}</code>],
+];
 
 const version = (x: { version: string; commit: string | null; uncommitted_changes: boolean }) =>
   `${x.version}${x.commit ? `, commit ${x.commit.slice(0, 7)}` : ''}${x.uncommitted_changes ? ' (with uncommitted changes)' : ''}`;
@@ -99,6 +155,39 @@ export default function About() {
           ))}
         </dl>
         {meta.variables_missing.length > 0 && <p className="note">Missing from this build: {meta.variables_missing.join(', ')}.</p>}
+      </section>
+
+      <section aria-labelledby="provenance">
+        <h2 id="provenance">Data provenance</h2>
+        <p>
+          Where each variable comes from and how it was processed, as recorded by the engine. Engine commit:{' '}
+          <code className="hash">{meta.engine.commit ?? NA}</code>. Manifest hash (SHA-256): <code className="hash">{meta.data?.manifest_sha256 ?? NA}</code>.
+        </p>
+        {catalog.map((v, i) => (
+          <details key={v.id} className="prov" open={i === 0}>
+            <summary>
+              {varIcon(v.id) && <Icon name={varIcon(v.id)!} size={18} className="title-icon" />}
+              {v.name}
+            </summary>
+            {v.provenance ? (
+              <div className="table-wrap">
+                <table>
+                  <caption className="sr-only">Provenance of {v.name}</caption>
+                  <tbody>
+                    {PROVENANCE.map(([label, get]) => (
+                      <tr key={label}>
+                        <th scope="row">{label}</th>
+                        <td>{get(v.provenance!) || NA}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="note">Provenance: {NA}.</p>
+            )}
+          </details>
+        ))}
       </section>
 
       <section aria-labelledby="reading">

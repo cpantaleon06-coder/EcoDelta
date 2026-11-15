@@ -7,9 +7,11 @@ interface Props {
   max: number;
   unit: string;
   period: { start: string; end: string };
+  /** display_note of the selected region, when it is an approximate box */
+  areaNote?: string;
 }
 
-export function MapLegend({ palette, max, unit, period }: Props) {
+export function MapLegend({ palette, max, unit, period, areaNote }: Props) {
   const end = palette[palette.length - 1];
   const edges = classEdges(max, palette.length);
   return (
@@ -54,6 +56,13 @@ export function MapLegend({ palette, max, unit, period }: Props) {
           <span>blank</span>
           <span>no data or too little data</span>
         </li>
+        {areaNote && (
+          <li>
+            <span aria-hidden="true">▭</span>
+            <span>outline</span>
+            <span>selected region: {areaNote}</span>
+          </li>
+        )}
       </ul>
     </figure>
   );

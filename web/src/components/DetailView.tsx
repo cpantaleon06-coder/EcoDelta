@@ -1,6 +1,6 @@
 import { loadRegionDetail, type Meta, type Region, type Variable, type Verdict } from '../dataClient';
 import { useAsync } from '../useAsync';
-import { badgeFor, fmt, fmtP, fmtPercent, fmtSigned } from '../format';
+import { badgeFor, fmt, fmtPercent, fmtSigned } from '../format';
 import { PALETTE } from '../mapScale';
 import { varColor, yearlyValues, varIcon } from '../viz';
 import { Stripes } from './ui';
@@ -9,6 +9,8 @@ import { TrendChart } from './TrendChart';
 import { MethodsList } from './MethodsList';
 import { Icon } from './Icon';
 import { StatusBadge } from './StatusBadge';
+import { AreaTag, Coverage, Evidence, ExpertsNote, SourceLine } from './ResultMeta';
+import { ResearchNote } from './ResearchNote';
 
 const VERDICT_TEXT: Record<Verdict, string> = {
   increasing: 'It went up',
@@ -55,9 +57,13 @@ export function DetailView({ region, variable, meta }: Props) {
         </p>
         <h2 id="detail-title">
           {varIcon(variable.id) && <Icon name={varIcon(variable.id)!} size={28} className="title-icon" />}
-          {variable.name} across {region.phrase} <StatusBadge r={v.score} />
+          {variable.name} across {region.phrase} <AreaTag region={region} /> <StatusBadge r={v.score} />
         </h2>
         <p className="detail__sentence">{v.sentence}</p>
+        <p className="result-meta">
+          <Evidence cls={v.evidence?.class} capped={v.evidence?.capped_by_coverage} />
+          <SourceLine provenance={variable.provenance} />
+        </p>
         {v.cautions.length > 0 && (
           <ul className="cautions">
             {v.cautions.map((c) => (
@@ -95,9 +101,13 @@ export function DetailView({ region, variable, meta }: Props) {
             <Icon name="q-where" size={16} /> Where?
           </h3>
           <p className="answer__big">{where.name}</p>
+          <AreaTag region={region} />
           <p>
             {where.n_valid_cells} of {where.n_box_cells} grid cells have enough data ({fmtPercent(where.covered_fraction)}{' '}
             of the box area){where.land_only ? ', land only' : ''}. The box is outlined on the map.
+          </p>
+          <p>
+            <Coverage where={where} />
           </p>
         </div>
         <div className="answer answer--num">
@@ -130,14 +140,13 @@ export function DetailView({ region, variable, meta }: Props) {
           </h3>
           <p className="answer__big">{badge.text}</p>
           <p>{significance.explanation}</p>
-          <p className="experts">
-            For experts: p {fmtP(significance.pvalue)}
-            {significance.test ? ` (${significance.test})` : ''}; grid cells significant after FDR:{' '}
-            {fmtPercent(significance.cells_significant_after_fdr_fraction)}; q-value: not applicable (one test per region
-            and variable).
+          <p>
+            <ExpertsNote v={v} />
           </p>
         </div>
       </section>
+
+      <ResearchNote v={v} variable={variable} region={region} meta={meta} />
 
       <section className="about-var">
         <h3>

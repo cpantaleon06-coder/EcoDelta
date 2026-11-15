@@ -1,16 +1,19 @@
 import { lazy, Suspense } from 'react';
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { DemoBanner } from './components/DemoBanner';
+import { DataBadge } from './components/ResultMeta';
 import { Loading } from './components/Status';
 
 // one chunk per page: the map library loads only on Explore
 const Explore = lazy(() => import('./pages/Explore'));
 const Guided = lazy(() => import('./pages/Guided'));
+const Compare = lazy(() => import('./pages/Compare'));
 const About = lazy(() => import('./pages/About'));
 
 const NAV = [
   { to: '/explore', label: 'Explore' },
   { to: '/guided', label: 'Guided questions' },
+  { to: '/compare', label: 'Compare regions' },
   { to: '/about', label: 'About the data' },
 ];
 
@@ -32,6 +35,7 @@ export default function App() {
             Eco<b>Delta</b>
           </span>
         </NavLink>
+        <DataBadge />
         <nav aria-label="Main">
           <ul className="nav">
             {NAV.map((n) => (
@@ -50,6 +54,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/explore" replace />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/guided" element={<Guided />} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Navigate to="/explore" replace />} />
         </Routes>
