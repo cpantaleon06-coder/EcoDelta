@@ -6,7 +6,7 @@ import sys
 
 from . import config
 from .catalog import build_catalog, parse_datasets_md, read_variables_yaml
-from .compute import compute_all, sanity_checks
+from .compute import compare_regions, compute_all, sanity_checks
 from .export import export
 from .fixtures import write_fixture
 from .load import available, manifest_sha256, read_manifest
@@ -65,11 +65,13 @@ def build(source: str, allow_missing: bool = False, workers: int | None = None) 
     period = period_info(next(iter(results.values()))["dates"])
     ranked = {r["id"]: screen_region(r, {v: results[v]["regions"][r["id"]] for v in results}, catalog, period)
               for r in regions}
+    compare = {v: compare_regions(results[v], regions) for v in results}
     out = config.OUTPUT_DIRS[source]
     info = export(out, source, catalog, regions, results, ranked, period, missing, timing, sanity,
-                  manifest_sha256(root))
+                  manifest_sha256(root), compare)
     print(f"wrote {info['n_files']} files, {info['total_bytes'] / 1024**2:.2f} MB to {out}")
     print("largest:", info["largest"])
+    print(f"compare/: {info['compare_bytes'] / 1024**2:.2f} MB")
     if info["total_bytes"] > SIZE_BUDGET:
         print(f"WARNING: over the {SIZE_BUDGET / 1024**2:.0f} MB budget")
     return 0

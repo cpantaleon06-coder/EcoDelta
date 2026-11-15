@@ -16,12 +16,22 @@ import pandas as pd
 import trendkit
 
 from . import __version__, config
-from .screen import SCORE_DEFINITION
+from .compute import COMPARE_METHOD, COMPARE_NOTE, Q_NOTE
+from .screen import (EVIDENCE_CLASSES, EVIDENCE_DEFINITION, MAGNITUDE_DEFINITION, ORDERINGS, SCORE_DEFINITION,
+                     evidence_code)
 
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.2.0"
 SIG_DIGITS = 4
 AUTOCORR_NOTES = {"yue_wang": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; "
                               "recommended in trendkit docs/METHODS.md"}
+
+# Figure read from trendkit docs/METHODS.md, section 6 (not recomputed here).
+SPATIAL_DEPENDENCE = (
+    "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate "
+    "control used on the maps is proven only for independent or positively dependent tests, so here it holds "
+    "approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test "
+    "measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its "
+    "synthetic cells were independent of each other, so it does not measure the effect of spatial correlation.")
 
 LIMITATIONS = [
     "Regions are approximate latitude/longitude boxes, not political borders; some boxes overlap.",
@@ -33,10 +43,9 @@ LIMITATIONS = [
     "falls can show as no significant trend, and a sudden jump (for example a change of satellite) can look "
     "like a trend.",
     "Statistically significant does not mean large or important, and a trend says nothing about its cause.",
-    "Regional means average only the cells that pass the data requirement; land-only variables cover only the "
-    "land part of a region.",
-    "Neighbouring grid cells are correlated, which makes the false discovery rate of a single map more variable "
-    "than its 5% target.",
+    "Regional means average only the cells of a region that have data in at least 95% of the months, the same "
+    "cells every month; land-only variables cover only the land part of a region.",
+    SPATIAL_DEPENDENCE,
 ]
 
 
@@ -100,6 +109,10 @@ def grid_file(var: str, res: dict) -> dict:
         "p": g.pvalue.values.ravel(),
         "q": g.qvalue.values.ravel(),
         "significant": [int(s) if t else None for s, t in zip(sig, tested)],
+        "evidence": [int(c) if t else None for c, t in
+                     zip(evidence_code(g.qvalue.values.ravel(), g.ci_low.values.ravel(), g.ci_high.values.ravel()),
+                         tested)],
+        "evidence_classes": list(EVIDENCE_CLASSES[:4]),
         "n_valid": g.n_valid.values.ravel().astype(int),
     }
 
@@ -109,7 +122,9 @@ def region_file(region: dict, entries: list[dict], results: dict, dates: list[st
     for e in entries:
         rr = results[e["variable"]]["regions"][region["id"]]
         variables[e["variable"]] = {
-            "rank": e["rank"], "score": e["score"], "answers": e["answers"], "sentence": e["sentence"],
+            "rank": e["rank"], "rank_by_magnitude": e["rank_by_magnitude"], "score": e["score"],
+            "evidence": e["evidence"], "magnitude": e["magnitude"], "map_cells": rr["map_cells"],
+            "answers": e["answers"], "sentence": e["sentence"],
             "cautions": e["cautions"], "report": rr["report"],
             "series": None if rr["anomalies"] is None else
             {"anomaly": rr["anomalies"], "running_mean_12": rr["running_mean"]},
@@ -122,8 +137,14 @@ def screening_file(region: dict, entries: list[dict]) -> dict:
         "schema_version": SCHEMA_VERSION,
         "region_id": region["id"],
         "region_file": f"regions/{region['id']}.json",
+        "by_evidence": [e["variable"] for e in entries],
+        "by_magnitude": [e["variable"] for e in sorted(entries, key=lambda e: e["rank_by_magnitude"])],
         "ranking": [{
-            "rank": e["rank"], "variable": e["variable"], "name": e["answers"]["what"]["name"],
+            "rank": e["rank"], "rank_by_magnitude": e["rank_by_magnitude"], "variable": e["variable"],
+            "name": e["answers"]["what"]["name"], "evidence_class": e["evidence"]["class"],
+            "total_change": e["magnitude"]["total_change"],
+            "standardized_change": e["magnitude"]["standardized_change"],
+            "cells_significant_fraction": e["answers"]["significance"]["cells_significant_after_fdr_fraction"],
             "verdict": e["answers"]["what"]["verdict"], **e["score"],
             "slope_per_decade": e["answers"]["how_much"]["slope_per_decade"],
             "ci_per_decade": e["answers"]["how_much"]["ci_per_decade"],
@@ -131,6 +152,12 @@ def screening_file(region: dict, entries: list[dict]) -> dict:
             "sentence": e["sentence"], "cautions": e["cautions"],
         } for e in entries],
     }
+
+
+def compare_file(var: dict, pairs: list[dict], period: dict) -> dict:
+    return {"schema_version": SCHEMA_VERSION, "variable": var["id"], "units": var["units"],
+            "public_unit": var["public_unit"], "period": [period["start"], period["end"]],
+            "method": COMPARE_METHOD, "note": COMPARE_NOTE, "q_note": Q_NOTE, "pairs": pairs}
 
 
 def meta_file(source: str, catalog: dict, period: dict, n_months: int, missing: list[str],
@@ -159,14 +186,26 @@ def meta_file(source: str, catalog: dict, period: dict, n_months: int, missing: 
             "autocorrelation_handling": config.TREND_METHOD,
             "autocorrelation_note": AUTOCORR_NOTES.get(config.TREND_METHOD, "see trendkit docs/METHODS.md"),
             "alpha": config.ALPHA, "ci_level": 1 - config.ALPHA,
-            "fdr": {"method": "Benjamini-Hochberg", "q": config.FDR_Q, "applies_to": "grid cells, per variable"},
+            "fdr": {"method": "Benjamini-Hochberg", "q": config.FDR_Q, "applies_to": "grid cells, per variable",
+                    "spatial_dependence": SPATIAL_DEPENDENCE},
             "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
             "climatology_base_period": config.BASE_PERIOD or [period["start"], period["end"]],
             "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
-            "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+            "regional_mean": ("cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at "
+                              f"least {config.FIXED_MASK_MIN_VALID:.0%} of the months, the same cells every month; a month "
+                              f"is missing when more than {config.FIXED_MASK_MAX_MISSING_WEIGHT:.0%} of the mask's area "
+                              "weight has no data" if config.FIXED_MASK else
+                              "cos(latitude)-weighted mean of cells inside the box that pass the data requirement"),
+            "regional_mean_rule": {"mode": "fixed_mask" if config.FIXED_MASK else "all_valid_cells",
+                                   "min_valid_fraction": config.FIXED_MASK_MIN_VALID,
+                                   "max_missing_weight": config.FIXED_MASK_MAX_MISSING_WEIGHT},
             "display_series": "monthly anomalies and a trailing 12-month running mean (null until 12 valid months); "
                               "no annual means are published because the last year is incomplete",
             "ranking": SCORE_DEFINITION,
+            "evidence_classes": EVIDENCE_DEFINITION,
+            "magnitude": MAGNITUDE_DEFINITION,
+            "orderings": ORDERINGS,
+            "region_comparison": COMPARE_METHOD,
             "rounding": f"every number rounded to {SIG_DIGITS} significant digits",
         },
         "products": list(products.values()),
@@ -195,7 +234,8 @@ def run_provenance(meta: dict) -> dict:
 
 
 def export(out: Path, source: str, catalog: dict, regions: list[dict], results: dict, ranked: dict,
-           period: dict, missing: list[str], timing: dict, sanity: dict, manifest_sha256: str | None) -> dict:
+           period: dict, missing: list[str], timing: dict, sanity: dict, manifest_sha256: str | None,
+           compare: dict) -> dict:
     """Write every file into a temporary folder, then swap it in place of `out`. Returns size info."""
     tmp = out.with_name(out.name + ".tmp")
     shutil.rmtree(tmp, ignore_errors=True)
@@ -212,6 +252,7 @@ def export(out: Path, source: str, catalog: dict, regions: list[dict], results: 
                                       "regions": regions})
     for var, res in sorted(results.items()):
         write_json(tmp / "grids" / f"{var}.json", grid_file(var, res), compact=True)
+        write_json(tmp / "compare" / f"{var}.json", compare_file(included[var], compare[var], period), compact=True)
     for region in regions:
         entries = ranked[region["id"]]
         write_json(tmp / "regions" / f"{region['id']}.json", region_file(region, entries, results, dates), compact=True)
@@ -220,4 +261,5 @@ def export(out: Path, source: str, catalog: dict, regions: list[dict], results: 
     tmp.rename(out)
     sizes = {str(p.relative_to(out)): p.stat().st_size for p in sorted(out.rglob("*.json"))}
     return {"total_bytes": sum(sizes.values()), "n_files": len(sizes),
+            "compare_bytes": sum(v for k, v in sizes.items() if k.startswith("compare/")),
             "largest": sorted(sizes.items(), key=lambda kv: -kv[1])[:5]}

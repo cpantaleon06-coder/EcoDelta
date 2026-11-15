@@ -34,7 +34,19 @@ ALPHA = 0.05  # per-test significance level; CI level is 1 - ALPHA
 FDR_Q = 0.05  # Benjamini-Hochberg false discovery rate across grid cells
 BASE_PERIOD = None  # climatology base period; None = full record
 RUNNING_MEAN_MONTHS = 12
+# Regional means over a fixed set of cells (trendkit.fixed_mask_mean): cells valid in at least
+# FIXED_MASK_MIN_VALID of the months; a month is missing when more than FIXED_MASK_MAX_MISSING_WEIGHT
+# of the mask's area weight is missing. False = old rule (all cells passing the data requirement,
+# changing month by month), kept only for comparison.
+FIXED_MASK = True
+FIXED_MASK_MIN_VALID = 0.95
+FIXED_MASK_MAX_MISSING_WEIGHT = 0.05
+
+# Evidence classes (screen.evidence_code): strong p < EVIDENCE_STRONG_P, moderate p < ALPHA, weak
+# p < EVIDENCE_WEAK_P; strong and moderate also need a CI that excludes 0. On maps q replaces p.
+EVIDENCE_STRONG_P = 0.01
+EVIDENCE_WEAK_P = 0.10
 
 # Caution thresholds for the plain-language sentences
-LOW_COVERAGE = 0.3  # warn when valid cells cover less than this fraction of a region box
+LOW_COVERAGE = 0.3  # warn, and cap evidence at "weak", when the fixed mask covers less of the box
 WIDE_CI_RATIO = 1.0  # warn when CI width exceeds this multiple of |slope|

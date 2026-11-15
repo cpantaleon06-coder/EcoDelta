@@ -1,0 +1,216 @@
+{
+ "$id": "ecodelta/compare.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "additionalProperties": false,
+ "properties": {
+  "method": {
+   "type": "string"
+  },
+  "note": {
+   "type": "string"
+  },
+  "pairs": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "difference_ci_per_decade": {
+      "items": {
+       "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": [
+       "array",
+       "null"
+      ]
+     },
+     "difference_slope_per_decade": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "independent": {
+      "type": "boolean"
+     },
+     "n_common_months": {
+      "minimum": 0,
+      "type": "integer"
+     },
+     "overlap_fraction": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+     },
+     "pvalue": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "q_across_pairs": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "region_a": {
+      "type": "string"
+     },
+     "region_b": {
+      "type": "string"
+     },
+     "trend_a": {
+      "additionalProperties": false,
+      "properties": {
+       "ci_per_decade": {
+        "items": {
+         "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": [
+         "array",
+         "null"
+        ]
+       },
+       "evidence_class": {
+        "enum": [
+         "strong",
+         "moderate",
+         "weak",
+         "none",
+         "insufficient data"
+        ]
+       },
+       "pvalue": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "slope_per_decade": {
+        "type": [
+         "number",
+         "null"
+        ]
+       }
+      },
+      "required": [
+       "ci_per_decade",
+       "evidence_class",
+       "pvalue",
+       "slope_per_decade"
+      ],
+      "type": "object"
+     },
+     "trend_b": {
+      "additionalProperties": false,
+      "properties": {
+       "ci_per_decade": {
+        "items": {
+         "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": [
+         "array",
+         "null"
+        ]
+       },
+       "evidence_class": {
+        "enum": [
+         "strong",
+         "moderate",
+         "weak",
+         "none",
+         "insufficient data"
+        ]
+       },
+       "pvalue": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "slope_per_decade": {
+        "type": [
+         "number",
+         "null"
+        ]
+       }
+      },
+      "required": [
+       "ci_per_decade",
+       "evidence_class",
+       "pvalue",
+       "slope_per_decade"
+      ],
+      "type": "object"
+     },
+     "verdict": {
+      "enum": [
+       "trends differ",
+       "no evidence that trends differ",
+       "insufficient data"
+      ]
+     }
+    },
+    "required": [
+     "difference_ci_per_decade",
+     "difference_slope_per_decade",
+     "independent",
+     "n_common_months",
+     "overlap_fraction",
+     "pvalue",
+     "q_across_pairs",
+     "region_a",
+     "region_b",
+     "trend_a",
+     "trend_b",
+     "verdict"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "period": {
+   "items": {
+    "pattern": "^\\d{4}-\\d{2}$",
+    "type": "string"
+   },
+   "maxItems": 2,
+   "minItems": 2,
+   "type": "array"
+  },
+  "public_unit": {
+   "type": "string"
+  },
+  "q_note": {
+   "type": "string"
+  },
+  "schema_version": {
+   "pattern": "^\\d+\\.\\d+\\.\\d+$",
+   "type": "string"
+  },
+  "units": {
+   "type": "string"
+  },
+  "variable": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "method",
+  "note",
+  "pairs",
+  "period",
+  "public_unit",
+  "q_note",
+  "schema_version",
+  "units",
+  "variable"
+ ],
+ "title": "EcoDelta region comparison file",
+ "type": "object"
+}

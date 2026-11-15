@@ -21,6 +21,25 @@
    },
    "type": "array"
   },
+  "evidence": {
+   "items": {
+    "maximum": 3,
+    "minimum": 0,
+    "type": [
+     "integer",
+     "null"
+    ]
+   },
+   "type": "array"
+  },
+  "evidence_classes": {
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 4,
+   "minItems": 4,
+   "type": "array"
+  },
   "lat": {
    "properties": {
     "first": {
@@ -130,6 +149,8 @@
  "required": [
   "ci_high",
   "ci_low",
+  "evidence",
+  "evidence_classes",
   "lat",
   "lon",
   "n_valid",

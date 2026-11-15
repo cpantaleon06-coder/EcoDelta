@@ -16,7 +16,12 @@ def rr(slope, lo, hi, p, verdict, cov=1.0, cells=145, valid_fraction=1.0):
            "method": "Sen's slope; Mann-Kendall test (yue_wang)", "warnings": [],
            "n_valid": 297, "n_total": 297, "valid_fraction": valid_fraction}
     return {"report": rep, "n_box_cells": 145, "n_valid_cells": cells, "covered_fraction": cov,
-            "cells_significant_fraction": 0.5, "effect_size": 0.7}
+            "fixed_mask": mask(cells, cov), "cells_significant_fraction": 0.5, "effect_size": 0.7}
+
+
+def mask(cells, cov):
+    return {"n_cells": cells, "covered_fraction": cov, "n_valid_months": 297 if cells else 0, "n_months": 297,
+            "weight_share_min": 1.0 if cells else None, "weight_share_max": 1.0 if cells else None}
 
 
 def say(var, r):
@@ -46,13 +51,16 @@ def test_cautions():
     _, c = say(VAR, rr(0.013, 0.0001, 0.026, 0.04, "increasing"))
     assert any("wide" in x for x in c)
     _, c = say(LAND, rr(0.1, 0.05, 0.15, 0.001, "increasing", cov=0.12))
-    assert any("Only 12% of this region's area has land cells" in x for x in c)
+    assert any("Only 12% of this region's area has land cells with data in at least 95% of the months" in x
+               for x in c)
+    _, c = say(VAR, rr(0.1, 0.05, 0.15, 0.001, "increasing", cells=3))
+    assert any("only 3 grid cells" in x for x in c)
     _, c = say(VAR, rr(0.1, 0.05, 0.15, 0.001, "increasing", valid_fraction=0.85))
     assert any("15% of the months have no data" in x for x in c)
 
 
 def test_insufficient_data_land_only():
-    r = {"report": None, "n_box_cells": 2700, "n_valid_cells": 0, "covered_fraction": 0.0,
+    r = {"report": None, "n_box_cells": 2700, "n_valid_cells": 0, "covered_fraction": 0.0, "fixed_mask": mask(0, 0.0),
          "cells_significant_fraction": None, "effect_size": None}
     a = answers(LAND, REGION, r, PERIOD)
     text, _ = narrate(a, LAND, REGION)

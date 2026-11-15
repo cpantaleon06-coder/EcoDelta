@@ -3,6 +3,18 @@
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "additionalProperties": false,
  "properties": {
+  "by_evidence": {
+   "items": {
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "by_magnitude": {
+   "items": {
+    "type": "string"
+   },
+   "type": "array"
+  },
   "ranking": {
    "items": {
     "additionalProperties": false,
@@ -18,6 +30,14 @@
        "type": "string"
       },
       "type": "array"
+     },
+     "cells_significant_fraction": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": [
+       "number",
+       "null"
+      ]
      },
      "ci_per_decade": {
       "items": {
@@ -36,6 +56,15 @@
        "null"
       ]
      },
+     "evidence_class": {
+      "enum": [
+       "strong",
+       "moderate",
+       "weak",
+       "none",
+       "insufficient data"
+      ]
+     },
      "name": {
       "type": "string"
      },
@@ -52,6 +81,10 @@
       "minimum": 1,
       "type": "integer"
      },
+     "rank_by_magnitude": {
+      "minimum": 1,
+      "type": "integer"
+     },
      "sentence": {
       "type": "string"
      },
@@ -64,11 +97,23 @@
        "null"
       ]
      },
+     "standardized_change": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
      "tier": {
       "enum": [
        0,
        1,
        2
+      ]
+     },
+     "total_change": {
+      "type": [
+       "number",
+       "null"
       ]
      },
      "variable": {
@@ -86,16 +131,21 @@
     "required": [
      "abs_effect_size",
      "cautions",
+     "cells_significant_fraction",
      "ci_per_decade",
      "effect_size",
+     "evidence_class",
      "name",
      "public_unit",
      "pvalue",
      "rank",
+     "rank_by_magnitude",
      "sentence",
      "significant",
      "slope_per_decade",
+     "standardized_change",
      "tier",
+     "total_change",
      "variable",
      "verdict"
     ],
@@ -115,6 +165,8 @@
   }
  },
  "required": [
+  "by_evidence",
+  "by_magnitude",
   "ranking",
   "region_file",
   "region_id",

@@ -21,15 +21,21 @@ For every variable:
 2. **Data rule** (trendkit's own): a cell or regional series is judged only with at least 10 years of
    valid months and at least 80% of months valid. Cells failing it are left out of maps, regional means
    and FDR; a region with no passing cell gets the verdict "insufficient data".
-3. **Per region**: the cells inside the region box that pass the data rule are averaged with
-   cos(latitude) weights (`trendkit.area_weighted_mean`; on this 2 degree grid cos(latitude) is exactly
-   proportional to cell area). The regional series is turned into monthly anomalies
+3. **Per region** (schema 1.2.0): a fixed mask, the cells inside the region box with data in at least 95%
+   of the months, is averaged with cos(latitude) weights, using the same cells every month
+   (`trendkit.fixed_mask_mean`; on this 2 degree grid cos(latitude) is exactly proportional to cell
+   area). A month is missing when more than 5% of the mask's weight has no data. This prevents spurious
+   trends from cells entering or leaving the record (proof in trendkit docs/METHODS.md section 7). The regional series is turned into monthly anomalies
    (`trendkit.deseasonalize_monthly`) and summarized by `trendkit.trend_report`.
 4. **Display series**: monthly anomalies and a trailing 12-month running mean (the mean of the 12 months
    ending in that month; empty until 12 valid months are available). No annual means are published,
    because the last year (2025) has only 9 months.
-5. **Effect size**: regional slope per decade divided by the standard deviation of the regional
-   anomalies, so variables with different units can be compared.
+5. **Evidence and magnitude** (schema 1.2.0): an evidence class (strong, moderate, weak, none,
+   insufficient data) and a magnitude block (slope, total change, standardized change = total change /
+   SD of the detrended anomalies); see trendkit docs/METHODS.md section 7b. The 1.1.0 effect size
+   (slope / SD of the anomalies) is still exported.
+6. **Region comparison** (schema 1.2.0): for each pair of regions, the trend test on the difference of
+   their anomaly series (`compute.compare_regions`, `compare/<variable>.json`).
 
 Stops before export (blockers): any value outside the loose `plausible_range` in `variables.yaml`
 (catches unit mistakes), a variable with no testable cell, or a global-mean 2 m temperature trend outside
@@ -60,13 +66,11 @@ results will be added after the real run.
 
 ## Screening, ranking and sentences (step 5)
 
-**Ranking** (`screen.py`). For one region, variables are sorted by:
-1. tier: significant regional trend (p < 0.05), then not significant, then insufficient data;
-2. smaller regional p-value first;
-3. larger |effect size| first (trend per decade / standard deviation of the deseasonalized regional series).
-
-All three ingredients are exported per variable (`score`) so the web app can show why a variable ranks
-where it does. Effect size rarely decides the order, because two p-values are almost never equal.
+**Ranking** (`screen.py`, schema 1.2.0). Two orderings are exported per region. `by_evidence`: evidence
+class, then smaller p-value, then larger |standardized change|, then variable id; `rank` is the position
+here. `by_magnitude`: larger |standardized change|, then stronger evidence, then smaller p-value, then
+variable id. Before 1.2.0 the order was tier, p-value, effect size, so effect size almost never mattered;
+the 1.1.0 `score` is still exported.
 
 **Answers.** Each region and variable gets `what` (variable, direction, verdict), `where` (region, box,
 cells in the box, valid cells, area-weighted coverage), `how_much` (trend per decade with 95% CI, total

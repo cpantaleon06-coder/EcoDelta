@@ -18,8 +18,16 @@
       "minItems": 4,
       "type": "array"
      },
+     "display_note": {
+      "type": "string"
+     },
      "id": {
       "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "approximate_box"
+      ]
      },
      "name": {
       "type": "string"
@@ -30,7 +38,9 @@
     },
     "required": [
      "box",
+     "display_note",
      "id",
+     "kind",
      "name",
      "phrase"
     ],

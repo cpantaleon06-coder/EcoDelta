@@ -119,14 +119,108 @@
    "type": "array"
   },
   "methods": {
+   "properties": {
+    "evidence_classes": {
+     "additionalProperties": {
+      "type": "string"
+     },
+     "required": [
+      "strong",
+      "moderate",
+      "weak",
+      "none",
+      "insufficient data",
+      "coverage_cap",
+      "maps"
+     ],
+     "type": "object"
+    },
+    "fdr": {
+     "properties": {
+      "applies_to": {
+       "type": "string"
+      },
+      "method": {
+       "type": "string"
+      },
+      "q": {
+       "type": "number"
+      },
+      "spatial_dependence": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "applies_to",
+      "method",
+      "q",
+      "spatial_dependence"
+     ],
+     "type": "object"
+    },
+    "magnitude": {
+     "type": "string"
+    },
+    "orderings": {
+     "additionalProperties": false,
+     "properties": {
+      "by_evidence": {
+       "type": "string"
+      },
+      "by_magnitude": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "by_evidence",
+      "by_magnitude"
+     ],
+     "type": "object"
+    },
+    "region_comparison": {
+     "type": "string"
+    },
+    "regional_mean_rule": {
+     "additionalProperties": false,
+     "properties": {
+      "max_missing_weight": {
+       "maximum": 1,
+       "minimum": 0,
+       "type": "number"
+      },
+      "min_valid_fraction": {
+       "maximum": 1,
+       "minimum": 0,
+       "type": "number"
+      },
+      "mode": {
+       "enum": [
+        "fixed_mask",
+        "all_valid_cells"
+       ]
+      }
+     },
+     "required": [
+      "max_missing_weight",
+      "min_valid_fraction",
+      "mode"
+     ],
+     "type": "object"
+    }
+   },
    "required": [
-    "autocorrelation_handling",
     "alpha",
-    "fdr",
+    "autocorrelation_handling",
     "climatology_base_period",
-    "rounding",
+    "display_series",
+    "evidence_classes",
+    "fdr",
+    "magnitude",
+    "orderings",
     "ranking",
-    "display_series"
+    "region_comparison",
+    "regional_mean_rule",
+    "rounding"
    ],
    "type": "object"
   },

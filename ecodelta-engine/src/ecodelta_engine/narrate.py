@@ -48,7 +48,7 @@ def narrate(a: dict, var: dict, region: dict) -> tuple[str, list[str]]:
     cautions = []
 
     if verdict == "insufficient data":
-        if where["n_valid_cells"] == 0 and var["land_only"]:
+        if where["fixed_mask"]["n_cells"] == 0 and var["land_only"]:
             text = (f"{period}, there is no trend estimate for {subject}: this variable is only available over "
                     f"land, and no land cell in this region has enough data.")
         else:
@@ -74,12 +74,13 @@ def narrate(a: dict, var: dict, region: dict) -> tuple[str, list[str]]:
                 f"estimate is {slope_txt} ({ci_txt}). This does not mean nothing changed; the data cannot tell "
                 f"a trend this small apart from natural ups and downs.")
 
-    if where["covered_fraction"] < config.LOW_COVERAGE:
-        what = "land cells with enough data" if var["land_only"] else "cells with enough data"
-        cautions.append(f"Only {100 * where['covered_fraction']:.0f}% of this region's area has {what}, so the "
-                        f"result describes only that part.")
-    elif where["n_valid_cells"] < 5:
-        cautions.append(f"Based on only {where['n_valid_cells']} grid cells of about 220 km.")
+    mask = where["fixed_mask"]  # the cells the regional mean is made of
+    if mask["covered_fraction"] < config.LOW_COVERAGE:
+        what = "land cells" if var["land_only"] else "cells"
+        cautions.append(f"Only {100 * mask['covered_fraction']:.0f}% of this region's area has {what} with data in "
+                        f"at least 95% of the months, so the result describes only that part.")
+    elif mask["n_cells"] < 5:
+        cautions.append(f"Based on only {mask['n_cells']} grid cells of about 220 km.")
     if a["data"]["valid_fraction"] < LIMITED_DATA:
         cautions.append(f"{100 * (1 - a['data']['valid_fraction']):.0f}% of the months have no data here.")
     return text, cautions

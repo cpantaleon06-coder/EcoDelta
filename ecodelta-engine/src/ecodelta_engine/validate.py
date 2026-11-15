@@ -11,7 +11,7 @@ from pathlib import Path
 import jsonschema
 import numpy as np
 import xarray as xr
-from trendkit import area_weighted_mean, deseasonalize_monthly, mann_kendall, sens_slope, trend_report
+from trendkit import area_weighted_mean, deseasonalize_monthly, fixed_mask_mean, mann_kendall, sens_slope, trend_report
 from trendkit.grid import has_enough_data
 from trendkit.timeutil import decimal_year
 
@@ -20,6 +20,7 @@ from .cli import source_root
 from .export import rnd
 from .load import open_variable, read_manifest
 from .regions import box_mask
+from .screen import EVIDENCE_CLASSES, evidence_code
 
 GOLDEN_REGIONS = ("global", "sahel", "arctic", "mediterranean")
 N_GOLDEN_CELLS = 5
@@ -28,7 +29,7 @@ N_GOLDEN_CELLS = 5
 def check_schemas(out: Path) -> list[str]:
     errors = []
     kinds = {"meta.json": "meta", "catalog.json": "catalog", "regions.json": "regions"}
-    files = [(p, kinds.get(p.name) or {"grids": "grid", "regions": "region", "screening": "screening"}[p.parent.name])
+    files = [(p, kinds.get(p.name) or {"grids": "grid", "regions": "region", "screening": "screening", "compare": "compare"}[p.parent.name])
              for p in sorted(out.rglob("*.json"))]
     schemas = {k: json.loads((config.SCHEMA_DIR / f"{k}.schema.json").read_text()) for k in set(k for _, k in files)}
     for path, kind in files:
@@ -50,12 +51,29 @@ def check_consistency(out: Path, meta: dict) -> list[str]:
             if (s is None) != (p is None) or (s is not None and bool(s) != (q <= meta["methods"]["fdr"]["q"])):
                 errors.append(f"grids/{v}.json: significant flag disagrees with q")
                 break
+        cf = json.loads((out / "compare" / f"{v}.json").read_text())
+        if len(cf["pairs"]) != len(regions) * (len(regions) - 1) // 2:
+            errors.append(f"compare/{v}.json: {len(cf['pairs'])} pairs for {len(regions)} regions")
+        for e in cf["pairs"]:
+            if (e["verdict"] == "trends differ") != (e["pvalue"] is not None and e["pvalue"] < meta["methods"]["alpha"]):
+                errors.append(f"compare/{v}.json {e['region_a']}-{e['region_b']}: verdict disagrees with p")
+                break
     for r in regions:
         rf = json.loads((out / "regions" / f"{r['id']}.json").read_text())
         sc = json.loads((out / "screening" / f"{r['id']}.json").read_text())
         if [e["variable"] for e in sorted(sc["ranking"], key=lambda e: e["rank"])] != \
-                sorted(rf["variables"], key=lambda v: rf["variables"][v]["rank"]):
-            errors.append(f"screening/{r['id']}.json: ranking disagrees with regions/{r['id']}.json")
+                sorted(rf["variables"], key=lambda v: rf["variables"][v]["rank"]) or \
+                sc["by_evidence"] != [e["variable"] for e in sc["ranking"]]:
+            errors.append(f"screening/{r['id']}.json: ranking disagrees with regions/{r['id']}.json or by_evidence")
+        if sc["by_magnitude"] != sorted(rf["variables"], key=lambda v: rf["variables"][v]["rank_by_magnitude"]):
+            errors.append(f"screening/{r['id']}.json: by_magnitude disagrees with rank_by_magnitude")
+        for v, d in rf["variables"].items():
+            rep = d["report"]
+            if rep and rep["verdict"] != "insufficient data" and not d["evidence"]["capped_by_coverage"]:
+                want = EVIDENCE_CLASSES[int(evidence_code(rep["pvalue"], rep["ci_low_per_decade"],
+                                                          rep["ci_high_per_decade"]))]
+                if want != d["evidence"]["class"]:
+                    errors.append(f"regions/{r['id']}.json {v}: evidence class {d['evidence']['class']} != {want}")
         for v, d in rf["variables"].items():
             if d["series"] and len(d["series"]["anomaly"]) != len(rf["dates"]):
                 errors.append(f"regions/{r['id']}.json: {v} series length != number of dates")
@@ -70,6 +88,7 @@ def golden(out: Path, root: Path, meta: dict) -> tuple[int, list[str]]:
     base = meta["methods"]["climatology_base_period"]
     base = None if base == [meta["period"]["start"], meta["period"]["end"]] else base
     regions = {r["id"]: r for r in json.loads((out / "regions.json").read_text())["regions"]}
+    rule = meta["methods"].get("regional_mean_rule", {"mode": "all_valid_cells"})
     for v in meta["variables_included"]:
         da = open_variable(root, manifest[v])
         dates, t = da.time.values, decimal_year(da.time.values)
@@ -90,19 +109,27 @@ def golden(out: Path, root: Path, meta: dict) -> tuple[int, list[str]]:
                                   f"exported {g[key][k]} != recomputed {rnd(val)}")
         valid = xr.DataArray(has_enough_data(np.array(g["n_valid"]).reshape(da.shape[1:]), t),
                              dims=("lat", "lon"), coords={"lat": da.lat, "lon": da.lon})
+        golden_anomalies = {}
         for rid in GOLDEN_REGIONS:
             if rid not in regions:
                 continue
             exported = json.loads((out / "regions" / f"{rid}.json").read_text())["variables"][v]
-            mask = box_mask(regions[rid]["box"], da.lat.values, da.lon.values) & valid
+            box = box_mask(regions[rid]["box"], da.lat.values, da.lon.values)
+            if rule["mode"] == "fixed_mask":
+                series, fm = fixed_mask_mean(da, box, rule["min_valid_fraction"], rule["max_missing_weight"])
+                mask = fm["mask"]
+            else:
+                mask = box & valid
+                series = area_weighted_mean(da, mask) if mask.any() else None
             if not mask.any():
                 n += 1
                 if exported["report"] is not None:
                     errors.append(f"regions/{rid}.json {v}: report exported for a region without valid cells")
                 continue
-            series = area_weighted_mean(da, mask).values
+            series = series.values
             rep = trend_report(series, dates, method=method, alpha=alpha) if base is None else None
             anomalies, _ = deseasonalize_monthly(series, dates, base)
+            golden_anomalies[rid] = anomalies
             checks = {"anomaly[:24]": ([rnd(x) for x in anomalies[:24]], exported["series"]["anomaly"][:24])}
             if rep is not None:
                 for key in ("slope_per_decade", "ci_low_per_decade", "ci_high_per_decade", "pvalue"):
@@ -112,6 +139,22 @@ def golden(out: Path, root: Path, meta: dict) -> tuple[int, list[str]]:
                 n += 1
                 if want != got:
                     errors.append(f"regions/{rid}.json {v} {key}: exported {got} != recomputed {want}")
+        # region comparison: D = A - B recomputed from the trendkit regional anomalies above
+        pairs = {(e["region_a"], e["region_b"]): e
+                 for e in json.loads((out / "compare" / f"{v}.json").read_text())["pairs"]}
+        for (a, b), e in pairs.items():
+            if a in golden_anomalies and b in golden_anomalies:
+                rep = trend_report(golden_anomalies[a] - golden_anomalies[b], dates, method=method, alpha=alpha,
+                                   deseasonalize=False)
+                verdict = "insufficient data" if rep["verdict"] == "insufficient data" else \
+                    "trends differ" if rep["significant"] else "no evidence that trends differ"
+                ok = verdict != "insufficient data"
+                want = {"difference_slope_per_decade": rnd(rep["slope_per_decade"]) if ok else None,
+                        "pvalue": rnd(rep["pvalue"]) if ok else None, "verdict": verdict}
+                for key, w in want.items():
+                    n += 1
+                    if w != e[key]:
+                        errors.append(f"compare/{v}.json {a}-{b} {key}: exported {e[key]} != recomputed {w}")
     return n, errors
 
 

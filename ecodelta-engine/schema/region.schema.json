@@ -21,8 +21,16 @@
      "minItems": 4,
      "type": "array"
     },
+    "display_note": {
+     "type": "string"
+    },
     "id": {
      "type": "string"
+    },
+    "kind": {
+     "enum": [
+      "approximate_box"
+     ]
     },
     "name": {
      "type": "string"
@@ -33,7 +41,9 @@
    },
    "required": [
     "box",
+    "display_note",
     "id",
+    "kind",
     "name",
     "phrase"
    ],
@@ -258,6 +268,53 @@
           "minimum": 0,
           "type": "number"
          },
+         "fixed_mask": {
+          "additionalProperties": false,
+          "properties": {
+           "covered_fraction": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+           },
+           "n_cells": {
+            "minimum": 0,
+            "type": "integer"
+           },
+           "n_months": {
+            "minimum": 0,
+            "type": "integer"
+           },
+           "n_valid_months": {
+            "minimum": 0,
+            "type": "integer"
+           },
+           "weight_share_max": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": [
+             "number",
+             "null"
+            ]
+           },
+           "weight_share_min": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": [
+             "number",
+             "null"
+            ]
+           }
+          },
+          "required": [
+           "covered_fraction",
+           "n_cells",
+           "n_months",
+           "n_valid_months",
+           "weight_share_max",
+           "weight_share_min"
+          ],
+          "type": "object"
+         },
          "land_only": {
           "type": "boolean"
          },
@@ -279,6 +336,7 @@
         "required": [
          "box",
          "covered_fraction",
+         "fixed_mask",
          "land_only",
          "n_box_cells",
          "n_valid_cells",
@@ -303,7 +361,117 @@
       },
       "type": "array"
      },
+     "evidence": {
+      "additionalProperties": false,
+      "properties": {
+       "capped_by_coverage": {
+        "type": "boolean"
+       },
+       "ci_excludes_zero": {
+        "type": [
+         "boolean",
+         "null"
+        ]
+       },
+       "class": {
+        "enum": [
+         "strong",
+         "moderate",
+         "weak",
+         "none",
+         "insufficient data"
+        ]
+       }
+      },
+      "required": [
+       "capped_by_coverage",
+       "ci_excludes_zero",
+       "class"
+      ],
+      "type": "object"
+     },
+     "magnitude": {
+      "additionalProperties": false,
+      "properties": {
+       "residual_sd": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "slope_per_decade": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "standardized_change": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "total_change": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "units": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "residual_sd",
+       "slope_per_decade",
+       "standardized_change",
+       "total_change",
+       "units"
+      ],
+      "type": "object"
+     },
+     "map_cells": {
+      "additionalProperties": false,
+      "properties": {
+       "n_significant": {
+        "minimum": 0,
+        "type": "integer"
+       },
+       "n_significant_decreasing": {
+        "minimum": 0,
+        "type": "integer"
+       },
+       "n_significant_increasing": {
+        "minimum": 0,
+        "type": "integer"
+       },
+       "n_tested": {
+        "minimum": 0,
+        "type": "integer"
+       },
+       "share_significant": {
+        "maximum": 1,
+        "minimum": 0,
+        "type": [
+         "number",
+         "null"
+        ]
+       }
+      },
+      "required": [
+       "n_significant",
+       "n_significant_decreasing",
+       "n_significant_increasing",
+       "n_tested",
+       "share_significant"
+      ],
+      "type": "object"
+     },
      "rank": {
+      "minimum": 1,
+      "type": "integer"
+     },
+     "rank_by_magnitude": {
       "minimum": 1,
       "type": "integer"
      },
@@ -413,7 +581,11 @@
     "required": [
      "answers",
      "cautions",
+     "evidence",
+     "magnitude",
+     "map_cells",
      "rank",
+     "rank_by_magnitude",
      "report",
      "score",
      "sentence",

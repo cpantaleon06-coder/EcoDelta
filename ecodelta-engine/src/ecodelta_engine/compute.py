@@ -3,10 +3,13 @@
 Per variable (one process each, variables run in parallel):
   1. trendkit.grid_trends: deseasonalize every cell (monthly climatology over BASE_PERIOD),
      Sen's slope per decade with 95% CI, Mann-Kendall p (TREND_METHOD), BH-FDR q across cells.
-  2. For each region: cells inside the box that pass trendkit's data rule (has_enough_data),
-     trendkit.area_weighted_mean (cos-latitude weights, NaN aware), monthly anomalies
+  2. For each region: trendkit.fixed_mask_mean over the cells of the box valid in at least 95% of
+     the months, the same cells every month (cos-latitude weights; a month is missing when more
+     than 5% of the mask's weight is missing; config.FIXED_MASK), monthly anomalies
      (trendkit.deseasonalize_monthly), a trailing 12-month running mean for display,
      and trendkit.trend_report on the anomalies.
+  3. For each pair of regions (compare_regions): the trend test on D(t) = A(t) - B(t), the difference of
+     the two regions' anomalies on their common months.
 No annual means are produced: the last year (2025) has only 9 months.
 """
 
@@ -18,13 +21,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import xarray as xr
-from trendkit import area_weighted_mean, deseasonalize_monthly, grid_trends, trend_report
+from trendkit import area_weighted_mean, deseasonalize_monthly, fdr_bh, fixed_mask_mean, grid_trends, trend_report
 from trendkit.grid import has_enough_data
 from trendkit.timeutil import decimal_year
 
 from . import config
 from .load import open_variable
-from .regions import box_mask, coverage
+from .regions import area_weights, box_mask, coverage
+from .screen import evidence
 
 
 def regional_report(series: np.ndarray, dates: np.ndarray, units: str) -> tuple[np.ndarray, dict]:
@@ -50,17 +54,35 @@ def region_result(da: xr.DataArray, valid: xr.DataArray, grid: xr.Dataset, regio
     """Regional series, trend report and coverage for one variable and one region."""
     in_box = box_mask(region["box"], da.lat.values, da.lon.values)
     cov = coverage(in_box, valid)
-    out = {"region": region["id"], **cov}
-    if cov["n_valid_cells"] == 0:
+    fixed_series, fm = fixed_mask_mean(da, in_box, config.FIXED_MASK_MIN_VALID, config.FIXED_MASK_MAX_MISSING_WEIGHT) \
+        if in_box.any() else (None, {"n_cells": 0, "region_area_fraction": 0.0, "n_valid": 0,
+                                     "n_total": da.sizes["time"], "weight_share_min": None, "weight_share_max": None})
+    fixed = {"n_cells": fm["n_cells"], "covered_fraction": round(fm["region_area_fraction"], 4),
+             "n_valid_months": fm["n_valid"], "n_months": fm["n_total"],
+             "weight_share_min": fm["weight_share_min"], "weight_share_max": fm["weight_share_max"]}
+    out = {"region": region["id"], **cov, "fixed_mask": fixed}
+    tested = in_box & grid.pvalue.notnull()
+    n_tested = int(tested.sum())
+    sig = grid.significant & tested
+    map_cells = {"n_tested": n_tested, "n_significant": int(sig.sum()),
+                 "n_significant_increasing": int((sig & (grid.slope > 0)).sum()),
+                 "n_significant_decreasing": int((sig & (grid.slope < 0)).sum()),
+                 "share_significant": float(sig.sum()) / n_tested if n_tested else None}
+    if (fixed["n_cells"] if config.FIXED_MASK else cov["n_valid_cells"]) == 0:
         return out | {"series": None, "anomalies": None, "running_mean": None, "report": None,
-                      "anomaly_sd": None, "effect_size": None, "cells_significant_fraction": None}
+                      "anomaly_sd": None, "effect_size": None, "total_change": None, "residual_sd": None,
+                      "standardized_change": None, "cells_significant_fraction": map_cells["share_significant"],
+                      "map_cells": map_cells}
     dates = da.time.values
-    series = area_weighted_mean(da, in_box & valid).values
+    series = fixed_series.values if config.FIXED_MASK else area_weighted_mean(da, in_box & valid).values
     anomalies, report = regional_report(series, dates, da.attrs.get("units"))
     sd = float(np.nanstd(anomalies, ddof=1))
     slope = report["slope_per_decade"]
-    tested = in_box & grid.pvalue.notnull()
-    n_tested = int(tested.sum())
+    t = decimal_year(dates)
+    has_slope = slope is not None and report["verdict"] != "insufficient data"
+    # magnitude: total change over the period / SD of the anomalies around the Sen trend line
+    residual_sd = float(np.nanstd(anomalies - (slope / 10 * t if has_slope else 0), ddof=1))
+    total = slope * (t[-1] - t[0]) / 10 if has_slope else None
     return out | {
         "series": series,
         "anomalies": anomalies,
@@ -68,8 +90,72 @@ def region_result(da: xr.DataArray, valid: xr.DataArray, grid: xr.Dataset, regio
         "report": report,
         "anomaly_sd": sd,
         "effect_size": slope / sd if slope is not None and sd > 0 else None,
-        "cells_significant_fraction": float((grid.significant & tested).sum()) / n_tested if n_tested else None,
+        "total_change": total,
+        "residual_sd": residual_sd,
+        "standardized_change": total / residual_sd if has_slope and residual_sd > 0 else None,
+        "cells_significant_fraction": map_cells["share_significant"],
+        "map_cells": map_cells,
     }
+
+
+COMPARE_METHOD = ("D(t) = A(t) - B(t), the difference of the two regions' deseasonalized fixed-mask monthly means "
+                  "on the months where both have a value; Sen's slope with 95% CI and Mann-Kendall (same autocorrelation "
+                  "handling as the regional trends) on D. 'trends differ' when p < alpha. P-values of the two regions are "
+                  "never compared, and overlapping confidence intervals are not used as a test.")
+COMPARE_NOTE = ("Each p-value is valid for one comparison chosen in advance. Looking through many pairs and picking those "
+                "that differ raises the chance of false positives: about 1 in 20 pairs with no real difference will show "
+                "'trends differ'. Overlapping boxes share cells, so their results are not independent.")
+Q_NOTE = ("q_across_pairs: Benjamini-Hochberg q-value across all region pairs of this variable, for scanning many pairs "
+          "at once. Approximate: the pairs share regions and are not independent.")
+
+
+def compare_pair(a: np.ndarray, b: np.ndarray, dates: np.ndarray) -> dict:
+    """Trend test on D = a - b (deseasonalized series; NaN where either is missing)."""
+    d = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+    rep = trend_report(d, dates, method=config.TREND_METHOD, alpha=config.ALPHA, deseasonalize=False)
+    ok = rep["verdict"] != "insufficient data"
+    return {"verdict": ("trends differ" if rep["significant"] else "no evidence that trends differ") if ok
+            else "insufficient data",
+            "difference_slope_per_decade": rep["slope_per_decade"] if ok else None,
+            "difference_ci_per_decade": [rep["ci_low_per_decade"], rep["ci_high_per_decade"]] if ok else None,
+            "pvalue": rep["pvalue"] if ok else None,
+            "n_common_months": int(np.isfinite(d).sum())}
+
+
+def box_overlap(box_a, box_b, lat: np.ndarray, lon: np.ndarray) -> float:
+    """Share of the smaller box's area inside the other box (2 degree cells by center)."""
+    a, b = box_mask(box_a, lat, lon), box_mask(box_b, lat, lon)
+    w = xr.DataArray(area_weights(lat), dims="lat", coords={"lat": lat})
+    return float((w * (a & b)).sum()) / min(float((w * a).sum()), float((w * b).sum()))
+
+
+def own_trend(rr: dict) -> dict:
+    rep = rr["report"]
+    ok = rep is not None and rep["verdict"] != "insufficient data"
+    return {"slope_per_decade": rep["slope_per_decade"] if ok else None,
+            "ci_per_decade": [rep["ci_low_per_decade"], rep["ci_high_per_decade"]] if ok else None,
+            "pvalue": rep["pvalue"] if ok else None, "evidence_class": evidence(rr)["class"]}
+
+
+def compare_regions(res: dict, regions: list[dict]) -> list[dict]:
+    """Every pair of regions (in list order) for one variable, plus a BH q-value across the pairs."""
+    lat, lon = res["grid"].lat.values, res["grid"].lon.values
+    pairs = []
+    for i, ra in enumerate(regions):
+        for rb in regions[i + 1:]:
+            A, B = res["regions"][ra["id"]], res["regions"][rb["id"]]
+            ov = box_overlap(ra["box"], rb["box"], lat, lon)
+            test = compare_pair(A["anomalies"], B["anomalies"], res["dates"]) \
+                if A["anomalies"] is not None and B["anomalies"] is not None else \
+                {"verdict": "insufficient data", "difference_slope_per_decade": None,
+                 "difference_ci_per_decade": None, "pvalue": None, "n_common_months": 0}
+            pairs.append({"region_a": ra["id"], "region_b": rb["id"], **test,
+                          "trend_a": own_trend(A), "trend_b": own_trend(B),
+                          "overlap_fraction": round(ov, 4), "independent": ov == 0})
+    q, _ = fdr_bh([np.nan if e["pvalue"] is None else e["pvalue"] for e in pairs], config.ALPHA)
+    for e, qq in zip(pairs, q):
+        e["q_across_pairs"] = None if np.isnan(qq) else float(qq)
+    return pairs
 
 
 def compute_variable(root: Path, entry: dict, regions: list[dict], plausible_range=None) -> dict:

@@ -1,23 +1,49 @@
 """Rank the variables of a region and build the four answers (what, where, how much, significance).
 
-Ranking (sorted ascending by this key; all ingredients are exported):
-  1. tier: 0 = significant regional trend (trendkit trend_report, p < ALPHA),
-           1 = not significant, 2 = insufficient data
-  2. p-value of the regional Mann-Kendall test (smaller first)
-  3. |effect size| = |trend per decade| / standard deviation of the regional anomalies (larger first)
-Effect size only breaks ties between equal p-values, which in practice happens for "insufficient data"
-entries; it is exported so the web app can show it.
+Evidence (how sure we are that there is a trend) and magnitude (how big it is) are kept apart:
+  evidence class: strong / moderate / weak / none / insufficient data, from p, whether the 95% CI
+                  excludes 0, and the fixed mask's coverage (evidence_code, evidence)
+  magnitude:      slope per decade, total change, and standardized_change = total change / SD of the
+                  detrended deseasonalized monthly series (computed in compute.region_result)
+Two orderings are exported (ORDERINGS); `rank` follows by_evidence. The 1.1.0 score (tier, p,
+effect size) is still exported for old readers.
 """
 
+import numpy as np
 import pandas as pd
 from trendkit.timeutil import decimal_year
 
 from . import config
 from .narrate import narrate
 
-SCORE_DEFINITION = ("Sort by (1) tier: significant regional trend, then not significant, then insufficient data; "
-                    "(2) smaller regional p-value first; (3) larger |effect size| first, where effect size = "
-                    "trend per decade / standard deviation of the deseasonalized regional series.")
+EVIDENCE_CLASSES = ("strong", "moderate", "weak", "none", "insufficient data")  # strongest first
+EVIDENCE_DEFINITION = {
+    "strong": f"p < {config.EVIDENCE_STRONG_P} and the 95% confidence interval of the slope excludes 0",
+    "moderate": f"p < {config.ALPHA} and the 95% confidence interval excludes 0 (not strong)",
+    "weak": f"p < {config.EVIDENCE_WEAK_P} (not moderate or strong), or p < {config.ALPHA} with a confidence "
+            "interval that includes 0",
+    "none": "everything else with enough data",
+    "insufficient data": "no regional report, or fewer than 10 years or 80% of months with data",
+    "coverage_cap": f"when the fixed mask covers less than {config.LOW_COVERAGE:.0%} of the region box, strong and "
+                    "moderate become weak",
+    "maps": "grid cells use the same thresholds with the Benjamini-Hochberg q-value in place of p; cells that fail "
+            "the data requirement are insufficient data",
+}
+MAGNITUDE_DEFINITION = (
+    "slope_per_decade and total_change (slope x period years / 10) in the variable's units; standardized_change = "
+    "total_change / residual_sd, where residual_sd is the standard deviation of the deseasonalized monthly regional "
+    "series after removing the Sen trend line (no unit: how many typical monthly swings the trend added up to). "
+    "Limits: not a measure of importance; smaller for noisy variables and larger for big regions, so compare "
+    "variables within one region, not regions; smaller than the same measure on annual means; grows with the "
+    "period length. No percent-of-mean is given (meaningless for temperature in degC).")
+ORDERINGS = {
+    "by_evidence": "evidence class (strong, moderate, weak, none, insufficient data); ties: smaller regional p-value, "
+                   "then larger |standardized_change|, then variable id",
+    "by_magnitude": "larger |standardized_change| first, results without one last; ties: stronger evidence class, "
+                    "then smaller p-value, then variable id",
+}
+SCORE_DEFINITION = ("rank follows by_evidence: " + ORDERINGS["by_evidence"] + ". A second ordering, by_magnitude, is "
+                    "exported next to it. The tier, p-value and effect_size of schema 1.1.0 are still exported.")
 
 EXPLANATIONS = {
     "increasing": "A rising trend this strong would show up by chance less than 5% of the time if there were no "
@@ -60,6 +86,7 @@ def answers(var: dict, region: dict, rr: dict, period: dict) -> dict:
             "n_box_cells": rr["n_box_cells"],
             "n_valid_cells": rr["n_valid_cells"],
             "covered_fraction": rr["covered_fraction"],
+            "fixed_mask": rr["fixed_mask"],
         },
         "how_much": {
             "period": [period["start"], period["end"]],
@@ -101,9 +128,48 @@ def score(rr: dict) -> dict:
             "effect_size": eff, "abs_effect_size": abs(eff) if eff is not None else None}
 
 
-def _key(s: dict) -> tuple:
-    p = s["pvalue"] if s["pvalue"] is not None else 1.0
-    return (s["tier"], p, -(s["abs_effect_size"] or 0.0))
+def evidence_code(p, ci_low, ci_high):
+    """Evidence class index into EVIDENCE_CLASSES per element: 0 strong, 1 moderate, 2 weak, 3 none,
+    4 insufficient data (p is NaN). Works on scalars and arrays (maps pass q as p)."""
+    p, lo, hi = (np.asarray(x, dtype=float) for x in (p, ci_low, ci_high))
+    excludes_zero = (lo > 0) | (hi < 0)
+    with np.errstate(invalid="ignore"):
+        code = np.select([(p < config.EVIDENCE_STRONG_P) & excludes_zero, (p < config.ALPHA) & excludes_zero,
+                          p < config.EVIDENCE_WEAK_P], [0, 1, 2], 3)
+    return np.where(np.isnan(p), 4, code)
+
+
+def evidence(rr: dict) -> dict:
+    """Evidence class of one regional result (compute.region_result)."""
+    rep = rr["report"]
+    if not rep or rep["verdict"] == "insufficient data":
+        return {"class": "insufficient data", "ci_excludes_zero": None, "capped_by_coverage": False}
+    lo, hi = rep["ci_low_per_decade"], rep["ci_high_per_decade"]
+    code = int(evidence_code(rep["pvalue"], lo, hi))
+    capped = code < 2 and rr["fixed_mask"]["covered_fraction"] < config.LOW_COVERAGE
+    return {"class": EVIDENCE_CLASSES[2 if capped else code], "ci_excludes_zero": bool(lo > 0 or hi < 0),
+            "capped_by_coverage": capped}
+
+
+def magnitude(rr: dict, units: str) -> dict:
+    rep = rr["report"]
+    ok = rr["standardized_change"] is not None
+    return {"slope_per_decade": rep["slope_per_decade"] if ok else None, "total_change": rr["total_change"],
+            "units": units, "residual_sd": rr["residual_sd"], "standardized_change": rr["standardized_change"]}
+
+
+def evidence_key(e: dict) -> tuple:
+    p = e["score"]["pvalue"]
+    m = e["magnitude"]["standardized_change"]
+    return (EVIDENCE_CLASSES.index(e["evidence"]["class"]), 1.0 if p is None else p,
+            -abs(m) if m is not None else 0.0, e["variable"])
+
+
+def magnitude_key(e: dict) -> tuple:
+    p = e["score"]["pvalue"]
+    m = e["magnitude"]["standardized_change"]
+    return (m is None, -abs(m) if m is not None else 0.0, EVIDENCE_CLASSES.index(e["evidence"]["class"]),
+            1.0 if p is None else p, e["variable"])
 
 
 def screen_region(region: dict, region_results: dict, catalog: dict, period: dict) -> list[dict]:
@@ -112,9 +178,13 @@ def screen_region(region: dict, region_results: dict, catalog: dict, period: dic
     for var in sorted(region_results):
         a = answers(catalog[var], region, region_results[var], period)
         sentence, cautions = narrate(a, catalog[var], region)
-        entries.append({"variable": var, "score": score(region_results[var]), "answers": a,
+        rr = region_results[var]
+        entries.append({"variable": var, "score": score(rr), "evidence": evidence(rr),
+                        "magnitude": magnitude(rr, catalog[var]["units"]), "answers": a,
                         "sentence": sentence, "cautions": cautions})
-    entries.sort(key=lambda e: (_key(e["score"]), e["variable"]))
+    for i, e in enumerate(sorted(entries, key=magnitude_key), 1):
+        e["rank_by_magnitude"] = i
+    entries.sort(key=evidence_key)
     for i, e in enumerate(entries, 1):
         e["rank"] = i
     return entries

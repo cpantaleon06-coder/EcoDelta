@@ -42,9 +42,9 @@ src/ecodelta_engine/
   fixtures.py   synthetic data in the same format as nasa-data/data/processed
   load.py       read NetCDF files and check them against manifest.json
   catalog.py    join manifest.json + data/catalog/variables.yaml + DATASETS.md
-  regions.py    region boxes, masks, area weights, coverage
-  compute.py    trendkit grid trends, regional series and reports, sanity checks
-  screen.py     ranking and the what / where / how much / significance answers
+  regions.py    region boxes (kind approximate_box), masks, area weights, coverage
+  compute.py    trendkit grid trends, fixed-mask regional series and reports, region comparison, sanity checks
+  screen.py     evidence classes, magnitude, the two orderings, and the what / where / how much / significance answers
   narrate.py    rule-based sentences and caution lines
   export.py     write web_data/
   validate.py   JSON Schema, consistency and golden checks of an export

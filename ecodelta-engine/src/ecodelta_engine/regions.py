@@ -13,6 +13,9 @@ import yaml
 
 from . import config
 
+KIND = "approximate_box"
+DISPLAY_NOTE = "approximate study area, not a political border"
+
 
 def load_regions(path: Path = config.CATALOG_DIR / "regions.yaml") -> list[dict]:
     regions = yaml.safe_load(path.read_text())
@@ -22,6 +25,7 @@ def load_regions(path: Path = config.CATALOG_DIR / "regions.yaml") -> list[dict]
     for r in regions:
         validate_box(r["box"])
         r.setdefault("phrase", r["name"])
+        r.update(kind=KIND, display_note=DISPLAY_NOTE)
     return regions
 
 
@@ -36,7 +40,7 @@ def custom_region(lat_min: float, lat_max: float, lon_min: float, lon_max: float
     """A user-defined box region (for future use; not part of the web export)."""
     box = [float(lat_min), float(lat_max), float(lon_min), float(lon_max)]
     validate_box(box)
-    return {"id": "custom", "name": name, "box": box}
+    return {"id": "custom", "name": name, "box": box, "kind": KIND, "display_note": DISPLAY_NOTE}
 
 
 def box_mask(box, lat: np.ndarray, lon: np.ndarray) -> xr.DataArray:

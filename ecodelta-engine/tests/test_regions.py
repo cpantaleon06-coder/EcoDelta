@@ -11,6 +11,7 @@ def test_regions_file():
     ids = [r["id"] for r in regions]
     assert ids[0] == "global" and len(regions) == 21
     for r in regions:
+        assert r["kind"] == "approximate_box" and r["display_note"] == "approximate study area, not a political border"
         assert box_mask(r["box"], LAT, LON).sum() > 0, r["id"]
 
 
