@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "t2m",
+  "precip",
+  "runoff_surface",
+  "evap",
+  "soil_moisture_0_10cm"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "precip",
+  "runoff_surface",
+  "evap",
+  "soil_moisture_0_10cm"
+ ],
  "ranking": [
   {
-   "abs_effect_size": 0.8482,
+   "abs_effect_size": 0.8425,
    "cautions": [],
+   "cells_significant_fraction": 0.9583,
    "ci_per_decade": [
-    0.2172,
-    0.3834
+    0.2147,
+    0.3815
    ],
-   "effect_size": 0.8482,
+   "effect_size": 0.8425,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
-   "pvalue": 2.421e-10,
+   "pvalue": 4.315e-10,
    "rank": 1,
-   "sentence": "From January 2001 to September 2025, air temperature near the ground in Central Africa changed by +0.300 °C per decade (95% confidence interval +0.217 to +0.383), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.739 °C.",
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, air temperature near the ground in Central Africa changed by +0.297 °C per decade (95% confidence interval +0.215 to +0.381), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.732 °C.",
    "significant": true,
-   "slope_per_decade": 0.2995,
+   "slope_per_decade": 0.2969,
+   "standardized_change": 2.637,
    "tier": 0,
+   "total_change": 0.7323,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.5581,
    "cautions": [],
+   "cells_significant_fraction": 0.3,
    "ci_per_decade": [
     -0.2337,
     -0.08153
    ],
    "effect_size": -0.5581,
+   "evidence_class": "strong",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.0001248,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Central Africa changed by −0.157 mm/day per decade (95% confidence interval −0.234 to −0.082), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is a decrease of about 0.388 mm/day.",
    "significant": true,
    "slope_per_decade": -0.1574,
+   "standardized_change": -1.494,
    "tier": 0,
+   "total_change": -0.3882,
    "variable": "precip",
    "verdict": "decreasing"
   },
   {
-   "abs_effect_size": 0.1385,
+   "abs_effect_size": 0.1416,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
-    -0.01297,
-    0.00373
+    -0.01316,
+    0.003668
    ],
-   "effect_size": -0.1385,
+   "effect_size": -0.1416,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
-   "pvalue": 0.2796,
+   "pvalue": 0.273,
    "rank": 3,
-   "sentence": "From January 2001 to September 2025, water running off the surface in Central Africa shows no statistically significant trend (p = 0.28): the estimate is −0.0046 mm/day per decade (95% confidence interval −0.0130 to +0.0037). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "rank_by_magnitude": 3,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Central Africa shows no statistically significant trend (p = 0.27): the estimate is −0.0047 mm/day per decade (95% confidence interval −0.0132 to +0.0037). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
-   "slope_per_decade": -0.004581,
+   "slope_per_decade": -0.004692,
+   "standardized_change": -0.3504,
    "tier": 1,
+   "total_change": -0.01157,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.09223,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.02507,
     0.01364
    ],
    "effect_size": -0.09223,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.5615,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Central Africa shows no statistically significant trend (p = 0.56): the estimate is −0.006 mm/day per decade (95% confidence interval −0.025 to +0.014). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.005802,
+   "standardized_change": -0.228,
    "tier": 1,
+   "total_change": -0.01431,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.04203,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.1462,
     0.205
    ],
    "effect_size": 0.04203,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.7234,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Central Africa shows no statistically significant trend (p = 0.72): the estimate is +0.03 kg/m² per decade (95% confidence interval −0.15 to +0.20). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.03267,
+   "standardized_change": 0.1037,
    "tier": 1,
+   "total_change": 0.08057,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/central_africa.json",
  "region_id": "central_africa",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "t2m",
+  "precip",
+  "runoff_surface",
+  "evap",
+  "soil_moisture_0_10cm"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "precip",
+  "runoff_surface",
+  "evap",
+  "soil_moisture_0_10cm"
+ ],
  "ranking": [
   {
    "abs_effect_size": 1.003,
    "cautions": [],
+   "cells_significant_fraction": 0.65,
    "ci_per_decade": [
     0.1957,
     0.2798
    ],
    "effect_size": 1.003,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 1.064e-17,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Southeast Asia changed by +0.238 °C per decade (95% confidence interval +0.196 to +0.280), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.586 °C.",
    "significant": true,
    "slope_per_decade": 0.2376,
+   "standardized_change": 3.587,
    "tier": 0,
+   "total_change": 0.5861,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.1635,
    "cautions": [],
+   "cells_significant_fraction": 0.028,
    "ci_per_decade": [
     -0.01186,
     0.05586
    ],
    "effect_size": 0.1635,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.193,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Southeast Asia shows no statistically significant trend (p = 0.19): the estimate is +0.022 mm/day per decade (95% confidence interval −0.012 to +0.056). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.02194,
+   "standardized_change": 0.4066,
    "tier": 1,
+   "total_change": 0.05413,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.1601,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.008179,
     0.002013
    ],
    "effect_size": -0.1601,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.2289,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water running off the surface in Southeast Asia shows no statistically significant trend (p = 0.23): the estimate is −0.0031 mm/day per decade (95% confidence interval −0.0082 to +0.0020). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.003082,
+   "standardized_change": -0.3984,
    "tier": 1,
+   "total_change": -0.007603,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.09824,
    "cautions": [],
+   "cells_significant_fraction": 0.05383,
    "ci_per_decade": [
     -0.006225,
     0.01323
    ],
    "effect_size": 0.09824,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.4764,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Southeast Asia shows no statistically significant trend (p = 0.48): the estimate is +0.0036 mm/day per decade (95% confidence interval −0.0062 to +0.0132). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.003611,
+   "standardized_change": 0.2427,
    "tier": 1,
+   "total_change": 0.008906,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.07388,
    "cautions": [],
+   "cells_significant_fraction": 0.01449,
    "ci_per_decade": [
     -0.1006,
     0.176
    ],
    "effect_size": 0.07388,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.6203,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Southeast Asia shows no statistically significant trend (p = 0.62): the estimate is +0.04 kg/m² per decade (95% confidence interval −0.10 to +0.18). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.03524,
+   "standardized_change": 0.1828,
    "tier": 1,
+   "total_change": 0.08692,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/southeast_asia.json",
  "region_id": "southeast_asia",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

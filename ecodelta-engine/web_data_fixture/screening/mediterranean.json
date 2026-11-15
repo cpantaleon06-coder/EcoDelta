@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "soil_moisture_0_10cm",
+  "t2m",
+  "evap",
+  "runoff_surface",
+  "precip"
+ ],
+ "by_magnitude": [
+  "soil_moisture_0_10cm",
+  "t2m",
+  "evap",
+  "runoff_surface",
+  "precip"
+ ],
  "ranking": [
   {
    "abs_effect_size": 0.9024,
    "cautions": [],
+   "cells_significant_fraction": 0.6771,
    "ci_per_decade": [
     -1.196,
     -0.6935
    ],
    "effect_size": -0.9024,
+   "evidence_class": "strong",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 2.32e-10,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, water in the topsoil in the Mediterranean changed by −0.95 kg/m² per decade (95% confidence interval −1.20 to −0.69), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is a decrease of about 2.35 kg/m².",
    "significant": true,
    "slope_per_decade": -0.9508,
+   "standardized_change": -2.908,
    "tier": 0,
+   "total_change": -2.345,
    "variable": "soil_moisture_0_10cm",
    "verdict": "decreasing"
   },
   {
    "abs_effect_size": 0.6383,
    "cautions": [],
+   "cells_significant_fraction": 0.4167,
    "ci_per_decade": [
     0.1703,
     0.4226
    ],
    "effect_size": 0.6383,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 1.688e-05,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in the Mediterranean changed by +0.30 °C per decade (95% confidence interval +0.17 to +0.42), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.73 °C.",
    "significant": true,
    "slope_per_decade": 0.2977,
+   "standardized_change": 1.754,
    "tier": 0,
+   "total_change": 0.7343,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.2457,
    "cautions": [],
+   "cells_significant_fraction": 0.01042,
    "ci_per_decade": [
     -0.003688,
     0.0315
    ],
    "effect_size": 0.2457,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.1184,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Mediterranean shows no statistically significant trend (p = 0.12): the estimate is +0.014 mm/day per decade (95% confidence interval −0.004 to +0.032). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.01398,
+   "standardized_change": 0.614,
    "tier": 1,
+   "total_change": 0.03447,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.1333,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.01091,
     0.003882
    ],
    "effect_size": -0.1333,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.3573,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, water running off the surface in the Mediterranean shows no statistically significant trend (p = 0.36): the estimate is −0.0037 mm/day per decade (95% confidence interval −0.0109 to +0.0039). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.003728,
+   "standardized_change": -0.3304,
    "tier": 1,
+   "total_change": -0.009196,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.08058,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.07106,
     0.03709
    ],
    "effect_size": -0.08058,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.5447,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Mediterranean shows no statistically significant trend (p = 0.54): the estimate is −0.016 mm/day per decade (95% confidence interval −0.071 to +0.037). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.01625,
+   "standardized_change": -0.1993,
    "tier": 1,
+   "total_change": -0.04008,
    "variable": "precip",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/mediterranean.json",
  "region_id": "mediterranean",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "t2m",
+  "soil_moisture_0_10cm",
+  "precip",
+  "evap",
+  "runoff_surface"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "soil_moisture_0_10cm",
+  "precip",
+  "evap",
+  "runoff_surface"
+ ],
  "ranking": [
   {
    "abs_effect_size": 1.066,
    "cautions": [],
+   "cells_significant_fraction": 0.5487,
    "ci_per_decade": [
     0.3698,
     0.5262
    ],
    "effect_size": 1.066,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 2.392e-17,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Siberia changed by +0.448 °C per decade (95% confidence interval +0.370 to +0.526), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 1.105 °C.",
    "significant": true,
    "slope_per_decade": 0.448,
+   "standardized_change": 3.966,
    "tier": 0,
+   "total_change": 1.105,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.1877,
    "cautions": [],
+   "cells_significant_fraction": 0.002564,
    "ci_per_decade": [
     -0.1875,
     0.03012
    ],
    "effect_size": -0.1877,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.156,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Siberia shows no statistically significant trend (p = 0.16): the estimate is −0.08 kg/m² per decade (95% confidence interval −0.19 to +0.03). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.07974,
+   "standardized_change": -0.466,
    "tier": 1,
+   "total_change": -0.1967,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.18,
    "cautions": [],
+   "cells_significant_fraction": 0.001282,
    "ci_per_decade": [
     -0.06713,
     0.01735
    ],
    "effect_size": -0.18,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.2627,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Siberia shows no statistically significant trend (p = 0.26): the estimate is −0.024 mm/day per decade (95% confidence interval −0.067 to +0.017). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.0245,
+   "standardized_change": -0.4491,
    "tier": 1,
+   "total_change": -0.06042,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.111,
    "cautions": [],
+   "cells_significant_fraction": 0.002564,
    "ci_per_decade": [
     -0.01275,
     0.005498
    ],
    "effect_size": -0.111,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.4194,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Siberia shows no statistically significant trend (p = 0.42): the estimate is −0.0036 mm/day per decade (95% confidence interval −0.0127 to +0.0055). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.003555,
+   "standardized_change": -0.2746,
    "tier": 1,
+   "total_change": -0.008769,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.08365,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.004414,
     0.007639
    ],
    "effect_size": 0.08365,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.6092,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water running off the surface in Siberia shows no statistically significant trend (p = 0.61): the estimate is +0.0015 mm/day per decade (95% confidence interval −0.0044 to +0.0076). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.00153,
+   "standardized_change": 0.2066,
    "tier": 1,
+   "total_change": 0.003775,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/siberia.json",
  "region_id": "siberia",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

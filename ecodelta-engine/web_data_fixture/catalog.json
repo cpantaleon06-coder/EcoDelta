@@ -1,5 +1,5 @@
 {
- "schema_version": "1.1.0",
+ "schema_version": "1.2.0",
  "variables": [
   {
    "caveats": [
@@ -30,7 +30,7 @@
     "collection_id": null,
     "displayed_units": "mm/day",
     "doi": null,
-    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
     "engine_uncommitted_changes": true,
     "grid": {
      "dims": [
@@ -81,9 +81,10 @@
      "fdr": {
       "applies_to": "grid cells, per variable",
       "method": "Benjamini-Hochberg",
-      "q": 0.05
+      "q": 0.05,
+      "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
      },
-     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
      "significance_test": "Mann-Kendall",
      "trend_estimator": "Sen's slope, reported per decade in the variable's units",
      "trendkit_version": "0.1.0"
@@ -124,7 +125,7 @@
     "collection_id": null,
     "displayed_units": "mm/day",
     "doi": null,
-    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
     "engine_uncommitted_changes": true,
     "grid": {
      "dims": [
@@ -175,9 +176,10 @@
      "fdr": {
       "applies_to": "grid cells, per variable",
       "method": "Benjamini-Hochberg",
-      "q": 0.05
+      "q": 0.05,
+      "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
      },
-     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
      "significance_test": "Mann-Kendall",
      "trend_estimator": "Sen's slope, reported per decade in the variable's units",
      "trendkit_version": "0.1.0"
@@ -218,7 +220,7 @@
     "collection_id": null,
     "displayed_units": "mm/day",
     "doi": null,
-    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
     "engine_uncommitted_changes": true,
     "grid": {
      "dims": [
@@ -269,9 +271,10 @@
      "fdr": {
       "applies_to": "grid cells, per variable",
       "method": "Benjamini-Hochberg",
-      "q": 0.05
+      "q": 0.05,
+      "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
      },
-     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
      "significance_test": "Mann-Kendall",
      "trend_estimator": "Sen's slope, reported per decade in the variable's units",
      "trendkit_version": "0.1.0"
@@ -313,7 +316,7 @@
     "collection_id": null,
     "displayed_units": "kg/m²",
     "doi": null,
-    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
     "engine_uncommitted_changes": true,
     "grid": {
      "dims": [
@@ -364,9 +367,10 @@
      "fdr": {
       "applies_to": "grid cells, per variable",
       "method": "Benjamini-Hochberg",
-      "q": 0.05
+      "q": 0.05,
+      "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
      },
-     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
      "significance_test": "Mann-Kendall",
      "trend_estimator": "Sen's slope, reported per decade in the variable's units",
      "trendkit_version": "0.1.0"
@@ -406,7 +410,7 @@
     "collection_id": null,
     "displayed_units": "°C",
     "doi": null,
-    "engine_commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+    "engine_commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
     "engine_uncommitted_changes": true,
     "grid": {
      "dims": [
@@ -457,9 +461,10 @@
      "fdr": {
       "applies_to": "grid cells, per variable",
       "method": "Benjamini-Hochberg",
-      "q": 0.05
+      "q": 0.05,
+      "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
      },
-     "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+     "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
      "significance_test": "Mann-Kendall",
      "trend_estimator": "Sen's slope, reported per decade in the variable's units",
      "trendkit_version": "0.1.0"

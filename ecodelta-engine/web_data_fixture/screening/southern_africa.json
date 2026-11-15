@@ -1,21 +1,40 @@
 {
+ "by_evidence": [
+  "t2m",
+  "soil_moisture_0_10cm",
+  "evap",
+  "precip",
+  "runoff_surface"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "soil_moisture_0_10cm",
+  "evap",
+  "precip",
+  "runoff_surface"
+ ],
  "ranking": [
   {
    "abs_effect_size": 0.6895,
    "cautions": [],
+   "cells_significant_fraction": 0.474,
    "ci_per_decade": [
     0.1506,
     0.3084
    ],
    "effect_size": 0.6895,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 1.581e-07,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Southern Africa changed by +0.232 °C per decade (95% confidence interval +0.151 to +0.308), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.572 °C.",
    "significant": true,
    "slope_per_decade": 0.232,
+   "standardized_change": 1.936,
    "tier": 0,
+   "total_change": 0.5721,
    "variable": "t2m",
    "verdict": "increasing"
   },
@@ -24,81 +43,101 @@
    "cautions": [
     "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
    ],
+   "cells_significant_fraction": 0.005208,
    "ci_per_decade": [
     0.004846,
     0.3711
    ],
    "effect_size": 0.2778,
+   "evidence_class": "moderate",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.04355,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Southern Africa changed by +0.19 kg/m² per decade (95% confidence interval 0.00 to +0.37), which is statistically significant (p = 0.04). Over the whole 24.7-year period that is an increase of about 0.47 kg/m².",
    "significant": true,
    "slope_per_decade": 0.1922,
+   "standardized_change": 0.6981,
    "tier": 0,
+   "total_change": 0.4742,
    "variable": "soil_moisture_0_10cm",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.194,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.02293,
     0.003463
    ],
    "effect_size": -0.194,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.1504,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Southern Africa shows no statistically significant trend (p = 0.15): the estimate is −0.010 mm/day per decade (95% confidence interval −0.023 to +0.003). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.009707,
+   "standardized_change": -0.4839,
    "tier": 1,
+   "total_change": -0.02394,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.1823,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.08143,
     0.01425
    ],
    "effect_size": -0.1823,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.1668,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Southern Africa shows no statistically significant trend (p = 0.17): the estimate is −0.034 mm/day per decade (95% confidence interval −0.081 to +0.014). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.03427,
+   "standardized_change": -0.4538,
    "tier": 1,
+   "total_change": -0.08454,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.1023,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.005958,
     0.0116
    ],
    "effect_size": 0.1023,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.5145,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water running off the surface in Southern Africa shows no statistically significant trend (p = 0.51): the estimate is +0.0029 mm/day per decade (95% confidence interval −0.0060 to +0.0116). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.00289,
+   "standardized_change": 0.2525,
    "tier": 1,
+   "total_change": 0.007127,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/southern_africa.json",
  "region_id": "southern_africa",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

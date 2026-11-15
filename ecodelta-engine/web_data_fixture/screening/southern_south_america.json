@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "t2m",
+  "runoff_surface",
+  "evap",
+  "precip",
+  "soil_moisture_0_10cm"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "evap",
+  "runoff_surface",
+  "precip",
+  "soil_moisture_0_10cm"
+ ],
  "ranking": [
   {
    "abs_effect_size": 0.7462,
    "cautions": [],
+   "cells_significant_fraction": 0.3135,
    "ci_per_decade": [
     0.1662,
     0.3323
    ],
    "effect_size": 0.7462,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 1.383e-07,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Southern South America changed by +0.250 °C per decade (95% confidence interval +0.166 to +0.332), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.618 °C.",
    "significant": true,
    "slope_per_decade": 0.2505,
+   "standardized_change": 2.14,
    "tier": 0,
+   "total_change": 0.6178,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.07205,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.003995,
     0.00684
    ],
    "effect_size": 0.07205,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.5924,
    "rank": 2,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water running off the surface in Southern South America shows no statistically significant trend (p = 0.59): the estimate is +0.0014 mm/day per decade (95% confidence interval −0.0040 to +0.0068). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.001412,
+   "standardized_change": 0.178,
    "tier": 1,
+   "total_change": 0.003482,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.08343,
    "cautions": [],
+   "cells_significant_fraction": 0.007937,
    "ci_per_decade": [
     -0.0169,
     0.009858
    ],
    "effect_size": -0.08343,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.6092,
    "rank": 3,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Southern South America shows no statistically significant trend (p = 0.61): the estimate is −0.004 mm/day per decade (95% confidence interval −0.017 to +0.010). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.00364,
+   "standardized_change": -0.2061,
    "tier": 1,
+   "total_change": -0.008979,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.02211,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.04865,
     0.05557
    ],
    "effect_size": 0.02211,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.8863,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Southern South America shows no statistically significant trend (p = 0.89): the estimate is +0.004 mm/day per decade (95% confidence interval −0.049 to +0.056). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.003868,
+   "standardized_change": 0.05454,
    "tier": 1,
+   "total_change": 0.00954,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.01752,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.1635,
     0.192
    ],
    "effect_size": 0.01752,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.917,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Southern South America shows no statistically significant trend (p = 0.92): the estimate is +0.01 kg/m² per decade (95% confidence interval −0.16 to +0.19). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.01072,
+   "standardized_change": 0.04321,
    "tier": 1,
+   "total_change": 0.02644,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/southern_south_america.json",
  "region_id": "southern_south_america",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

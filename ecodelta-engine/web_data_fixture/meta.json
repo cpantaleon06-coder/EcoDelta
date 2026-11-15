@@ -1,10 +1,10 @@
 {
- "build_date": "2026-11-15T01:20:06Z",
+ "build_date": "2026-11-15T02:02:56Z",
  "data": {
   "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08"
  },
  "engine": {
-  "commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+  "commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
   "uncommitted_changes": true,
   "version": "0.1.0"
  },
@@ -31,8 +31,8 @@
   "Temperature comes from a reanalysis (MERRA-2), evapotranspiration, runoff and soil moisture from a land surface model (GLDAS Noah), and precipitation from a satellite-gauge estimate (GPM IMERG); none is a direct measurement at every place, and the three sources differ in how they are made.",
   "Trends are monotonic (Mann-Kendall, Sen's slope) over the stated period only; a change that rises and then falls can show as no significant trend, and a sudden jump (for example a change of satellite) can look like a trend.",
   "Statistically significant does not mean large or important, and a trend says nothing about its cause.",
-  "Regional means average only the cells that pass the data requirement; land-only variables cover only the land part of a region.",
-  "Neighbouring grid cells are correlated, which makes the false discovery rate of a single map more variable than its 5% target."
+  "Regional means average only the cells of a region that have data in at least 95% of the months, the same cells every month; land-only variables cover only the land part of a region.",
+  "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
  ],
  "methods": {
   "alpha": 0.05,
@@ -46,13 +46,34 @@
   "data_requirement": "at least 10 years of valid months and at least 80% of months valid (trendkit)",
   "deseasonalizing": "monthly climatology subtracted per cell and per regional series",
   "display_series": "monthly anomalies and a trailing 12-month running mean (null until 12 valid months); no annual means are published because the last year is incomplete",
+  "evidence_classes": {
+   "coverage_cap": "when the fixed mask covers less than 30% of the region box, strong and moderate become weak",
+   "insufficient data": "no regional report, or fewer than 10 years or 80% of months with data",
+   "maps": "grid cells use the same thresholds with the Benjamini-Hochberg q-value in place of p; cells that fail the data requirement are insufficient data",
+   "moderate": "p < 0.05 and the 95% confidence interval excludes 0 (not strong)",
+   "none": "everything else with enough data",
+   "strong": "p < 0.01 and the 95% confidence interval of the slope excludes 0",
+   "weak": "p < 0.1 (not moderate or strong), or p < 0.05 with a confidence interval that includes 0"
+  },
   "fdr": {
    "applies_to": "grid cells, per variable",
    "method": "Benjamini-Hochberg",
-   "q": 0.05
+   "q": 0.05,
+   "spatial_dependence": "Neighbouring grid cells on the trend maps are correlated. The Benjamini-Hochberg false discovery rate control used on the maps is proven only for independent or positively dependent tests, so here it holds approximately: a single map can have more or fewer than 5% false discoveries. trendkit's Monte Carlo test measured a false discovery proportion of 0.059 +/- 0.007 (mean of 40 synthetic maps, target 0.05), but its synthetic cells were independent of each other, so it does not measure the effect of spatial correlation."
   },
-  "ranking": "Sort by (1) tier: significant regional trend, then not significant, then insufficient data; (2) smaller regional p-value first; (3) larger |effect size| first, where effect size = trend per decade / standard deviation of the deseasonalized regional series.",
-  "regional_mean": "cos(latitude)-weighted mean of cells inside the box that pass the data requirement",
+  "magnitude": "slope_per_decade and total_change (slope x period years / 10) in the variable's units; standardized_change = total_change / residual_sd, where residual_sd is the standard deviation of the deseasonalized monthly regional series after removing the Sen trend line (no unit: how many typical monthly swings the trend added up to). Limits: not a measure of importance; smaller for noisy variables and larger for big regions, so compare variables within one region, not regions; smaller than the same measure on annual means; grows with the period length. No percent-of-mean is given (meaningless for temperature in degC).",
+  "orderings": {
+   "by_evidence": "evidence class (strong, moderate, weak, none, insufficient data); ties: smaller regional p-value, then larger |standardized_change|, then variable id",
+   "by_magnitude": "larger |standardized_change| first, results without one last; ties: stronger evidence class, then smaller p-value, then variable id"
+  },
+  "ranking": "rank follows by_evidence: evidence class (strong, moderate, weak, none, insufficient data); ties: smaller regional p-value, then larger |standardized_change|, then variable id. A second ordering, by_magnitude, is exported next to it. The tier, p-value and effect_size of schema 1.1.0 are still exported.",
+  "region_comparison": "D(t) = A(t) - B(t), the difference of the two regions' deseasonalized fixed-mask monthly means on the months where both have a value; Sen's slope with 95% CI and Mann-Kendall (same autocorrelation handling as the regional trends) on D. 'trends differ' when p < alpha. P-values of the two regions are never compared, and overlapping confidence intervals are not used as a test.",
+  "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
+  "regional_mean_rule": {
+   "max_missing_weight": 0.05,
+   "min_valid_fraction": 0.95,
+   "mode": "fixed_mask"
+  },
   "rounding": "every number rounded to 4 significant digits",
   "significance_test": "Mann-Kendall",
   "trend_estimator": "Sen's slope, reported per decade in the variable's units"
@@ -141,37 +162,37 @@
    "n_tested_cells": 16200
   }
  },
- "schema_version": "1.1.0",
+ "schema_version": "1.2.0",
  "source": "fixture",
  "synthetic": true,
  "timing": {
   "per_variable_s": {
    "evap": {
-    "grid": 81.6,
-    "total": 84.3
+    "grid": 77.6,
+    "total": 86.1
    },
    "precip": {
-    "grid": 114.1,
-    "total": 115.6
+    "grid": 117.0,
+    "total": 120.3
    },
    "runoff_surface": {
-    "grid": 82.0,
-    "total": 84.7
+    "grid": 80.3,
+    "total": 87.8
    },
    "soil_moisture_0_10cm": {
-    "grid": 78.6,
-    "total": 81.7
+    "grid": 77.8,
+    "total": 86.6
    },
    "t2m": {
-    "grid": 120.2,
-    "total": 121.3
+    "grid": 123.1,
+    "total": 125.4
    }
   },
-  "wall_s": 122.1,
+  "wall_s": 126.3,
   "workers": 5
  },
  "trendkit": {
-  "commit": "a988e112e73cc5b7a218c0342e4b409d9144fad7",
+  "commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
   "uncommitted_changes": true,
   "version": "0.1.0"
  },

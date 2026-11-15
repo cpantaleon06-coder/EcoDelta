@@ -1,21 +1,40 @@
 {
+ "by_evidence": [
+  "t2m",
+  "runoff_surface",
+  "soil_moisture_0_10cm",
+  "precip",
+  "evap"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "runoff_surface",
+  "soil_moisture_0_10cm",
+  "precip",
+  "evap"
+ ],
  "ranking": [
   {
    "abs_effect_size": 0.7943,
    "cautions": [],
+   "cells_significant_fraction": 0.6013,
    "ci_per_decade": [
     0.1819,
     0.3171
    ],
    "effect_size": 0.7943,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 2.868e-10,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Central America and the Caribbean changed by +0.249 °C per decade (95% confidence interval +0.182 to +0.317), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.615 °C.",
    "significant": true,
    "slope_per_decade": 0.2491,
+   "standardized_change": 2.346,
    "tier": 0,
+   "total_change": 0.6145,
    "variable": "t2m",
    "verdict": "increasing"
   },
@@ -24,81 +43,101 @@
    "cautions": [
     "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
    ],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.01453,
     -0.002171
    ],
    "effect_size": -0.3289,
+   "evidence_class": "strong",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.00812,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, water running off the surface in Central America and the Caribbean changed by −0.0084 mm/day per decade (95% confidence interval −0.0145 to −0.0022), which is statistically significant (p = 0.0081). Over the whole 24.7-year period that is a decrease of about 0.0207 mm/day.",
    "significant": true,
    "slope_per_decade": -0.008373,
+   "standardized_change": -0.8317,
    "tier": 0,
+   "total_change": -0.02065,
    "variable": "runoff_surface",
    "verdict": "decreasing"
   },
   {
    "abs_effect_size": 0.1859,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.2941,
     0.05221
    ],
    "effect_size": -0.1859,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.1679,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Central America and the Caribbean shows no statistically significant trend (p = 0.17): the estimate is −0.12 kg/m² per decade (95% confidence interval −0.29 to +0.05). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.1169,
+   "standardized_change": -0.4626,
    "tier": 1,
+   "total_change": -0.2883,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.0429,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.05958,
     0.04385
    ],
    "effect_size": -0.0429,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.7682,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Central America and the Caribbean shows no statistically significant trend (p = 0.77): the estimate is −0.008 mm/day per decade (95% confidence interval −0.060 to +0.044). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.007874,
+   "standardized_change": -0.1059,
    "tier": 1,
+   "total_change": -0.01942,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.01853,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.01498,
     0.01319
    ],
    "effect_size": -0.01853,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.8955,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Central America and the Caribbean shows no statistically significant trend (p = 0.90): the estimate is −0.001 mm/day per decade (95% confidence interval −0.015 to +0.013). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.0009046,
+   "standardized_change": -0.04569,
    "tier": 1,
+   "total_change": -0.002231,
    "variable": "evap",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/central_america_caribbean.json",
  "region_id": "central_america_caribbean",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

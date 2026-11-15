@@ -1,23 +1,42 @@
 {
+ "by_evidence": [
+  "t2m",
+  "evap",
+  "soil_moisture_0_10cm",
+  "precip",
+  "runoff_surface"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "evap",
+  "soil_moisture_0_10cm",
+  "precip",
+  "runoff_surface"
+ ],
  "ranking": [
   {
-   "abs_effect_size": 0.5052,
+   "abs_effect_size": 0.4996,
    "cautions": [
     "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
    ],
+   "cells_significant_fraction": 0.1453,
    "ci_per_decade": [
-    0.1026,
-    0.3385
+    0.09905,
+    0.3362
    ],
-   "effect_size": 0.5052,
+   "effect_size": 0.4996,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
-   "pvalue": 0.0002913,
+   "pvalue": 0.0004146,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in Western Europe changed by +0.22 °C per decade (95% confidence interval +0.10 to +0.34), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.54 °C.",
    "significant": true,
-   "slope_per_decade": 0.2197,
+   "slope_per_decade": 0.2171,
+   "standardized_change": 1.321,
    "tier": 0,
+   "total_change": 0.5354,
    "variable": "t2m",
    "verdict": "increasing"
   },
@@ -26,81 +45,101 @@
    "cautions": [
     "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
    ],
+   "cells_significant_fraction": 0.01709,
    "ci_per_decade": [
     0.008526,
     0.03192
    ],
    "effect_size": 0.4408,
+   "evidence_class": "strong",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.0009895,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Western Europe changed by +0.020 mm/day per decade (95% confidence interval +0.009 to +0.032), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.050 mm/day.",
    "significant": true,
    "slope_per_decade": 0.02025,
+   "standardized_change": 1.138,
    "tier": 0,
+   "total_change": 0.04996,
    "variable": "evap",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.163,
    "cautions": [],
+   "cells_significant_fraction": 0.1026,
    "ci_per_decade": [
     -0.2989,
     0.0867
    ],
    "effect_size": -0.163,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.2561,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water in the topsoil in Western Europe shows no statistically significant trend (p = 0.26): the estimate is −0.11 kg/m² per decade (95% confidence interval −0.30 to +0.09). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.1127,
+   "standardized_change": -0.4033,
    "tier": 1,
+   "total_change": -0.2779,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.1368,
    "cautions": [],
+   "cells_significant_fraction": 0.008547,
    "ci_per_decade": [
     -0.02826,
     0.08344
    ],
    "effect_size": 0.1368,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.3649,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Western Europe shows no statistically significant trend (p = 0.36): the estimate is +0.026 mm/day per decade (95% confidence interval −0.028 to +0.083). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.02648,
+   "standardized_change": 0.3392,
    "tier": 1,
+   "total_change": 0.06532,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
-   "abs_effect_size": 0.03673,
+   "abs_effect_size": 0.03955,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
-    -0.00697,
-    0.005287
+    -0.007028,
+    0.005197
    ],
-   "effect_size": -0.03673,
+   "effect_size": -0.03955,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
-   "pvalue": 0.7726,
+   "pvalue": 0.7596,
    "rank": 5,
-   "sentence": "From January 2001 to September 2025, water running off the surface in Western Europe shows no statistically significant trend (p = 0.77): the estimate is −0.0009 mm/day per decade (95% confidence interval −0.0070 to +0.0053). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "rank_by_magnitude": 5,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Western Europe shows no statistically significant trend (p = 0.76): the estimate is −0.0010 mm/day per decade (95% confidence interval −0.0070 to +0.0052). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
-   "slope_per_decade": -0.0008961,
+   "slope_per_decade": -0.0009639,
+   "standardized_change": -0.09761,
    "tier": 1,
+   "total_change": -0.002378,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/western_europe.json",
  "region_id": "western_europe",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }

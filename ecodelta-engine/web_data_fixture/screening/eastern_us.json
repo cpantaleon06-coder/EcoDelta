@@ -1,102 +1,141 @@
 {
+ "by_evidence": [
+  "t2m",
+  "precip",
+  "soil_moisture_0_10cm",
+  "evap",
+  "runoff_surface"
+ ],
+ "by_magnitude": [
+  "t2m",
+  "precip",
+  "soil_moisture_0_10cm",
+  "evap",
+  "runoff_surface"
+ ],
  "ranking": [
   {
    "abs_effect_size": 0.8043,
    "cautions": [],
+   "cells_significant_fraction": 0.5726,
    "ci_per_decade": [
     0.2305,
     0.4089
    ],
    "effect_size": 0.8043,
+   "evidence_class": "strong",
    "name": "Air temperature near the ground",
    "public_unit": "°C",
    "pvalue": 2.888e-10,
    "rank": 1,
+   "rank_by_magnitude": 1,
    "sentence": "From January 2001 to September 2025, air temperature near the ground in the Eastern US changed by +0.320 °C per decade (95% confidence interval +0.231 to +0.409), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.789 °C.",
    "significant": true,
    "slope_per_decade": 0.3197,
+   "standardized_change": 2.399,
    "tier": 0,
+   "total_change": 0.7887,
    "variable": "t2m",
    "verdict": "increasing"
   },
   {
    "abs_effect_size": 0.09957,
    "cautions": [],
+   "cells_significant_fraction": 0.01282,
    "ci_per_decade": [
     -0.0409,
     0.07918
    ],
    "effect_size": 0.09957,
+   "evidence_class": "none",
    "name": "Rain and snow (precipitation)",
    "public_unit": "mm/day",
    "pvalue": 0.5192,
    "rank": 2,
+   "rank_by_magnitude": 2,
    "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Eastern US shows no statistically significant trend (p = 0.52): the estimate is +0.019 mm/day per decade (95% confidence interval −0.041 to +0.079). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.01939,
+   "standardized_change": 0.2461,
    "tier": 1,
+   "total_change": 0.04783,
    "variable": "precip",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.09063,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.2445,
     0.1223
    ],
    "effect_size": -0.09063,
+   "evidence_class": "none",
    "name": "Water in the topsoil",
    "public_unit": "kg/m²",
    "pvalue": 0.5263,
    "rank": 3,
+   "rank_by_magnitude": 3,
    "sentence": "From January 2001 to September 2025, water in the topsoil in the Eastern US shows no statistically significant trend (p = 0.53): the estimate is −0.06 kg/m² per decade (95% confidence interval −0.24 to +0.12). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.05752,
+   "standardized_change": -0.2242,
    "tier": 1,
+   "total_change": -0.1419,
    "variable": "soil_moisture_0_10cm",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.06228,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.01173,
     0.0185
    ],
    "effect_size": 0.06228,
+   "evidence_class": "none",
    "name": "Water leaving the land (evapotranspiration)",
    "public_unit": "mm/day",
    "pvalue": 0.6792,
    "rank": 4,
+   "rank_by_magnitude": 4,
    "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Eastern US shows no statistically significant trend (p = 0.68): the estimate is +0.003 mm/day per decade (95% confidence interval −0.012 to +0.018). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": 0.003071,
+   "standardized_change": 0.1538,
    "tier": 1,
+   "total_change": 0.007574,
    "variable": "evap",
    "verdict": "no significant trend"
   },
   {
    "abs_effect_size": 0.01751,
    "cautions": [],
+   "cells_significant_fraction": 0.0,
    "ci_per_decade": [
     -0.00678,
     0.006361
    ],
    "effect_size": -0.01751,
+   "evidence_class": "none",
    "name": "Water running off the surface",
    "public_unit": "mm/day",
    "pvalue": 0.9149,
    "rank": 5,
+   "rank_by_magnitude": 5,
    "sentence": "From January 2001 to September 2025, water running off the surface in the Eastern US shows no statistically significant trend (p = 0.91): the estimate is −0.0004 mm/day per decade (95% confidence interval −0.0068 to +0.0064). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
    "significant": false,
    "slope_per_decade": -0.0004377,
+   "standardized_change": -0.04318,
    "tier": 1,
+   "total_change": -0.00108,
    "variable": "runoff_surface",
    "verdict": "no significant trend"
   }
  ],
  "region_file": "regions/eastern_us.json",
  "region_id": "eastern_us",
- "schema_version": "1.1.0"
+ "schema_version": "1.2.0"
 }
