@@ -68,3 +68,6 @@ For a grid, pass an `xarray.DataArray` with dims `(time, lat, lon)`:
 `grid_trends(da)` returns a Dataset with `slope` (per decade), `ci_low`, `ci_high`,
 `pvalue`, `qvalue`, `significant` and `n_valid` per cell, and
 `area_weighted_mean(da, (lat_min, lat_max, lon_min, lon_max))` reduces a region to one series.
+`fixed_mask_mean(da, box)` does the same over a fixed set of cells (valid in at least 95% of the
+months), which avoids spurious trends from cells entering or leaving the record; see
+docs/METHODS.md section 7.

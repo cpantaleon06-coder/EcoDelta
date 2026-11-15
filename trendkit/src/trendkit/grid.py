@@ -93,6 +93,25 @@ def grid_trends(da, deseasonalize=True, method=DEFAULT_METHOD, alpha=0.05, q=0.0
     return ds
 
 
+def _region_mask(da, region, lat, lon):
+    """Bool DataArray on (lat, lon): True inside `region` (see area_weighted_mean)."""
+    if region is None:
+        return xr.ones_like(da[lat] * da[lon], dtype=bool)
+    if isinstance(region, xr.DataArray):
+        inside = region.astype(bool)
+    else:
+        lat_min, lat_max, lon_min, lon_max = region
+        in_lat = (da[lat] >= lat_min) & (da[lat] <= lat_max)
+        if lon_min <= lon_max:
+            in_lon = (da[lon] >= lon_min) & (da[lon] <= lon_max)
+        else:
+            in_lon = (da[lon] >= lon_min) | (da[lon] <= lon_max)
+        inside = in_lat & in_lon
+    if not inside.any():
+        raise ValueError("region contains no grid cells")
+    return inside
+
+
 def area_weighted_mean(da, region=None, lat="lat", lon="lon"):
     """Reduce a gridded field to one time series, weighting cells by cos(latitude).
 
@@ -116,21 +135,65 @@ def area_weighted_mean(da, region=None, lat="lat", lon="lon"):
 
     Assumptions: regular lat-lon grid. If cells drop in and out of the record over
     time (for example sea ice or cloud gaps), the regional mean can show a spurious
-    trend from the changing sample, not from the data.
+    trend from the changing sample, not from the data. `fixed_mask_mean` avoids this.
     """
     if region is not None:
-        if isinstance(region, xr.DataArray):
-            inside = region.astype(bool)
-        else:
-            lat_min, lat_max, lon_min, lon_max = region
-            in_lat = (da[lat] >= lat_min) & (da[lat] <= lat_max)
-            if lon_min <= lon_max:
-                in_lon = (da[lon] >= lon_min) & (da[lon] <= lon_max)
-            else:
-                in_lon = (da[lon] >= lon_min) | (da[lon] <= lon_max)
-            inside = in_lat & in_lon
-        if not inside.any():
-            raise ValueError("region contains no grid cells")
-        da = da.where(inside)
+        da = da.where(_region_mask(da, region, lat, lon))
     weights = np.cos(np.deg2rad(da[lat])).clip(min=0)
     return da.weighted(weights).mean((lat, lon), skipna=True).where(da.notnull().any((lat, lon)))
+
+
+def fixed_mask_mean(da, region=None, min_valid_fraction=0.95, max_missing_weight=0.05,
+                    lat="lat", lon="lon"):
+    """Area-weighted regional mean over the SAME cells at every time step.
+
+    Rule:
+        mask     = cells in the region with a value in >= min_valid_fraction of time steps
+        share(t) = sum(w over mask cells with a value at t) / sum(w over mask)
+        mean(t)  = sum(w * x) / sum(w) over mask cells with a value at t,
+                   NaN when 1 - share(t) > max_missing_weight
+    with w = cos(latitude). Cells outside the mask are never used, so the regional
+    series cannot gain a trend from cells entering or leaving the record; the
+    remaining gaps are at most max_missing_weight of the mask's weight per time step.
+
+    Parameters
+    ----------
+    da : xarray.DataArray with a time dim plus `lat` and `lon` dims.
+    region : as in `area_weighted_mean`.
+    min_valid_fraction : float in (0, 1]. Share of time steps a cell needs to join the mask.
+    max_missing_weight : float in [0, 1). Largest missing share of the mask's weight
+        at which a time step still gets a value.
+
+    Returns
+    -------
+    series : xarray.DataArray without the lat/lon dims (NaN where the rule says missing,
+        all NaN when the mask is empty).
+    info : dict with mask (bool DataArray on lat, lon), n_cells, region_area_fraction
+        (mask weight / region weight), weight_share (ndarray per time step), n_valid
+        (time steps with a value), n_total, weight_share_min, weight_share_max (None
+        when the mask is empty).
+
+    Limit: cells with frequent gaps (for example seasonal sea ice) are left out, so the
+    result describes only the masked part of the region; report region_area_fraction.
+    """
+    inside = _region_mask(da, region, lat, lon)
+    time_dims = [d for d in da.dims if d not in (lat, lon)]
+    has = da.notnull()
+    mask = inside & (has.mean(time_dims) >= min_valid_fraction)
+    cos = np.cos(np.deg2rad(da[lat])).clip(min=0)
+    w = cos * mask
+    total = float(w.sum())
+    n_total = int(np.prod([da.sizes[d] for d in time_dims]))
+    if total == 0:
+        return (da.isel({lat: 0, lon: 0}, drop=True) * np.nan,
+                {"mask": mask, "n_cells": 0, "region_area_fraction": 0.0, "weight_share": np.zeros(n_total),
+                 "n_valid": 0, "n_total": n_total, "weight_share_min": None, "weight_share_max": None})
+    w_have = (w * has).sum((lat, lon))
+    share = w_have / total
+    mean = (da.fillna(0) * w).sum((lat, lon)) / w_have.where(w_have > 0)
+    series = mean.where(1 - share <= max_missing_weight + 1e-12)  # tolerance: float rounding of share
+    s = share.values.ravel()
+    return series, {"mask": mask, "n_cells": int(mask.sum()),
+                    "region_area_fraction": total / float((cos * inside).sum()),
+                    "weight_share": s, "n_valid": int(series.notnull().sum()), "n_total": n_total,
+                    "weight_share_min": float(s.min()), "weight_share_max": float(s.max())}

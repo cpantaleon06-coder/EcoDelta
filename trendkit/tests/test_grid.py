@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 import xarray as xr
 
-from trendkit.grid import area_weighted_mean, grid_trends
+from trendkit.grid import area_weighted_mean, fixed_mask_mean, grid_trends
 from trendkit.mannkendall import mann_kendall, sens_slope
 from trendkit.seasonal import deseasonalize_monthly
 from trendkit.timeutil import decimal_year
@@ -111,3 +111,34 @@ def test_area_weighted_mean():
 
     with pytest.raises(ValueError, match="no grid cells"):
         area_weighted_mean(da, (60, 70, 0, 10))
+
+
+def test_fixed_mask_mean_rule():
+    """Same cells every month; a month is missing when more than 5% of the mask weight is missing."""
+    n = 40
+    lat = np.array([0.0, 60.0])  # weights 1 and 0.5
+    lon = np.arange(10.0)
+    data = np.ones((n, 2, 10))
+    data[:, 1, :] = 3.0
+    data[:5, 1, 0] = np.nan  # 87.5% valid: left out of the mask at 95%, kept at 80%
+    data[7, 0, 3] = np.nan  # 1 of 20 cells, 1/15 = 6.7% of the weight: month missing
+    data[9, 1, 5] = np.nan  # 0.5/14.5 = 3.4% of the weight: month kept, mean of the rest
+    da = xr.DataArray(data, dims=("time", "lat", "lon"),
+                      coords={"time": DATES[:n], "lat": lat, "lon": lon})
+    series, info = fixed_mask_mean(da)
+    w_all = 10 * 1 + 9 * 0.5
+    assert info["n_cells"] == 19 and not bool(info["mask"].sel(lat=60, lon=0))
+    assert info["region_area_fraction"] == pytest.approx(w_all / 15)
+    assert series[0] == pytest.approx((10 * 1 + 9 * 0.5 * 3) / w_all)  # cell (60, 0) never used
+    assert np.isnan(series[7]) and info["weight_share"][7] == pytest.approx(1 - 1 / w_all)
+    assert series[9] == pytest.approx((10 * 1 + 8 * 0.5 * 3) / (10 + 8 * 0.5))
+    assert info["n_valid"] == n - 1 and info["n_total"] == n
+    assert info["weight_share_max"] == 1.0 and info["weight_share_min"] == pytest.approx(1 - 1 / w_all)
+
+    loose, info80 = fixed_mask_mean(da, min_valid_fraction=0.8, max_missing_weight=0.1)
+    assert info80["n_cells"] == 20 and loose.notnull().all()  # month 0 misses 0.5/15 = 3.3% < 10%
+
+    empty, info0 = fixed_mask_mean(da.where(da.time < DATES[1]))
+    assert info0["n_cells"] == 0 and empty.isnull().all() and info0["weight_share_min"] is None
+    with pytest.raises(ValueError, match="no grid cells"):
+        fixed_mask_mean(da, (-60, -50, 0, 10))

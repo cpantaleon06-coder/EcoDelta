@@ -236,6 +236,13 @@ the small-p-value inflation measured above at phi = 0.3.
 Limit: Benjamini-Hochberg is guaranteed for independent or positively dependent
 tests. Neighbouring grid cells are correlated, which makes the false discovery
 proportion of a single map more variable; Wilks (2016) discusses this for climate maps.
+The synthetic maps behind the table above have AR(1) noise in time but independent noise
+from cell to cell, so 0.059 +/- 0.007 does **not** measure the effect of spatial
+correlation; on real maps the false discovery proportion of one map can be further from
+0.05. The EcoDelta export states this in `meta.methods.fdr.spatial_dependence` and in
+`meta.limitations`, exports per cell `p`, `q`, slope, `significant` (q <= 0.05) and an
+evidence class, and gives for every region the share of its tested cells that are
+significant after FDR.
 
 ## 7. Regional averages
 
@@ -249,6 +256,106 @@ regional mean(t) = sum(cos(lat) * x(t)) / sum(cos(lat))   over valid cells in th
 
 Limit: if cells drop in and out of the record (sea ice, clouds), the average is taken over
 a changing set of cells, which can create a trend that is not in the data.
+
+### Fixed spatial mask (`fixed_mask_mean`)
+
+`fixed_mask_mean` averages the **same cells in every month**:
+
+```
+mask     = cells in the region with a value in at least 95% of the months
+share(t) = sum(cos(lat) over mask cells with a value in month t) / sum(cos(lat) over the mask)
+mean(t)  = cos(lat)-weighted mean of the mask cells that have a value in month t
+           missing (NaN) when 1 - share(t) > 0.05
+```
+
+Both thresholds are arguments (`min_valid_fraction=0.95`, `max_missing_weight=0.05`). Cells
+outside the mask are never used. Inside the mask, at most 5% of the mask's area weight can be
+missing in a month that still gets a value, so a changing sample can move the mean only a little.
+The function also returns the mask, the number of cells, the mask's share of the region's area,
+the weight share of every month and the number of months with a value. The EcoDelta engine uses it
+for every regional mean.
+
+**Synthetic proof** (`tests/test_fixed_mask_montecarlo.py`, 200 runs, seed 42). Every cell has no
+trend. 30 warm cells (mean 20) and 30 cold cells (mean 0). Each cold cell is missing in a month with
+probability 15% in the first month, falling linearly to 0% in the last, so it is valid in about 92.5%
+of the 297 months. Noise is a shared regional AR(1) (phi 0.5, SD 0.3) plus an independent AR(1) per
+cell (phi 0.3, SD 1), and 1% of all values are missing at random. The old method averages every cell
+that passes the 80% data rule (`area_weighted_mean`); the fixed mask keeps cells valid in at least 95%
+of the months. Then `trend_report` runs on both regional series:
+
+| regional mean | mean slope per decade (SD over runs) | share significant at p < 0.05 |
+|---|---|---|
+| old: all cells that pass the 80% rule, changing each month | -0.322 (0.052) | 1.000 |
+| fixed mask (95% rule, same cells each month) | -0.002 (0.048) | 0.070 |
+
+With the old method, early months contain fewer cold cells, so the regional mean falls by about
+0.8 over the record. That trend is not in any cell. The fixed mask removes it. The remaining false
+alarm rate, 0.070 (binomial SE 0.015), is close to the 0.05 target. In 56 of 6,000 cases, a cold
+cell reached 95% by chance and joined the mask; its small bias is included in these numbers.
+
+Limit: cells with frequent gaps, such as seasonal sea ice, are left out, so the result describes
+only the masked part of the region. Report the mask's area share next to the result.
+
+## 7b. Evidence and magnitude (EcoDelta engine)
+
+trendkit returns p-values, confidence intervals and slopes. The EcoDelta engine
+(`ecodelta_engine/screen.py`) turns them into two separate answers. **Evidence** says how sure
+we are that a trend exists. **Magnitude** says how big the estimated trend is. Neither one stands
+in for the other.
+
+**Evidence class.** `p` is the Mann-Kendall p-value (Yue-Wang). "CI excludes 0" means the 95%
+Sen confidence interval lies entirely above or entirely below 0.
+
+| class | rule |
+|---|---|
+| strong | p < 0.01 and CI excludes 0 |
+| moderate | p < 0.05 and CI excludes 0 (not strong) |
+| weak | p < 0.10 (not stronger), or p < 0.05 with a CI that includes 0 |
+| none | everything else with enough data |
+| insufficient data | fails the minimum data rule (section 8), or the region has no fixed-mask cell |
+
+- **Coverage.** When the fixed mask (section 7) covers less than 30% of the region box, strong and
+  moderate become weak, because the result describes only a small part of the region.
+- **Maps.** Grid cells use the same thresholds with the Benjamini-Hochberg q-value in place of p.
+- **Why these thresholds.**
+  - 0.05 is the test level used everywhere in trendkit.
+  - 0.01 and 0.10 are the usual stricter and looser conventions.
+  - The CI condition catches the rare case where the rank-based CI and the test disagree.
+  - The thresholds are conventions. Evidence is a scale; classes are not measured probabilities.
+
+**Magnitude.**
+
+- `slope_per_decade` and the total change over the period (slope × years / 10), both in the
+  variable's own units.
+- One unitless measure:
+
+```
+standardized_change = total change / SD( anomalies(t) - slope * t )
+```
+
+The denominator is the standard deviation of the deseasonalized monthly series after removing the
+Sen trend line: the typical size of a month's departure from the trend. Removing the trend first
+keeps a strong trend from inflating its own yardstick. The measure lets variables with different
+units be compared inside one region.
+
+Limits of the unitless measure:
+- It is not a measure of importance or impact.
+- It is smaller for noisy variables (precipitation) and larger for big regions, where averaging
+  lowers the SD. Compare variables within one region, not regions with each other.
+- Monthly values give a smaller value than annual means would.
+- It grows with the length of the period.
+- It inherits any spurious jump in the data.
+
+A percent of the mean is not used: for temperature in °C the mean is near an arbitrary zero.
+
+**Orderings.** The engine exports both:
+
+- `by_evidence`: class, then smaller p, then larger |standardized_change|, then variable id.
+- `by_magnitude`: larger |standardized_change|, then stronger class, then smaller p, then variable
+  id. Results without a magnitude come last.
+
+Tests: `ecodelta-engine/tests/test_screen.py` (thresholds, coverage cap, tie-breaks, and a small but
+certain trend that leads by evidence while a large uncertain one leads by magnitude).
 
 ## 8. Minimum data
 
