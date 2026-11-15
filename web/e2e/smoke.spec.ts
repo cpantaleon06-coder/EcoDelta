@@ -71,3 +71,17 @@ test('about: provenance table, engine commit and manifest hash', async ({ page }
   await expect(page.locator('details.prov[open] th', { hasText: 'Statistical method' })).toBeVisible();
   await expect(page.getByText(/Manifest hash \(SHA-256\):/)).toBeVisible();
 });
+
+test('map: overview basemap first, data after choosing a variable, Clear data returns to the overview', async ({ page }) => {
+  await page.goto('./#/explore');
+  await expect(page.getByText('Pick a variable or a region to see how it changed.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Clear data' })).toHaveCount(0);
+  await page.getByLabel('Variable', { exact: true }).selectOption({ label: 'Air temperature near the ground' });
+  await expect(page).toHaveURL(/var=t2m/);
+  await expect(page.getByRole('figure', { name: 'Map legend' })).toBeVisible();
+  await page.getByLabel('Region', { exact: true }).selectOption({ label: 'Mexico' });
+  await page.getByRole('button', { name: 'Clear data' }).click();
+  await expect(page).not.toHaveURL(/var=/);
+  await expect(page).toHaveURL(/region=mexico/);
+  await expect(page.getByText('Pick a variable or a region to see how it changed.')).toBeVisible();
+});

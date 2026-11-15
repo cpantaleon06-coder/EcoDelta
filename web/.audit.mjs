@@ -3,6 +3,7 @@ import { chromium } from '@playwright/test';
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const B = 'http://localhost:5173/#';
 const states = [
+  ['explore-overview', '/explore', null],
   ['explore-mexico', '/explore?region=mexico&var=t2m', null],
   ['explore-antarctica', '/explore?region=antarctica&var=evap', null],
   ['guided-1', '/guided', null],

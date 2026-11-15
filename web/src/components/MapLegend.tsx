@@ -54,7 +54,7 @@ export function MapLegend({ palette, max, unit, period, areaNote }: Props) {
         <li>
           <span aria-hidden="true">·</span>
           <span>blank</span>
-          <span>no data or too little data</span>
+          <span>no data or not applicable (the basemap shows through)</span>
         </li>
         {areaNote && (
           <li>

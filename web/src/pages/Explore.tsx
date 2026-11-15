@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { loadCatalog, loadGrid, loadMeta, loadRegions, loadScreening, type Grid } from '../dataClient';
+import { loadCatalog, loadGrid, loadMeta, loadRegions, type Grid } from '../dataClient';
+import { applyAction, mapView, readSelection, type Action } from '../mapState';
 import { useAsync } from '../useAsync';
 import { ErrorBox, Loading } from '../components/Status';
 import { TrendMap } from '../components/TrendMap';
@@ -23,21 +24,20 @@ const cachedGeo = (g: Grid, max: number) => {
 };
 
 export default function Explore() {
-  const base = useAsync(() => Promise.all([loadMeta(), loadRegions(), loadCatalog(), loadScreening('global')]), []);
+  const base = useAsync(() => Promise.all([loadMeta(), loadRegions(), loadCatalog()]), []);
   const [params, setParams] = useSearchParams();
   const [globe, setGlobe] = useState(false);
 
-  const [meta, regionList, catalog, globalRanking] = base.data ?? [];
+  const [meta, regionList, catalog] = base.data ?? [];
   const variables = useMemo(
     () => (catalog && meta ? catalog.filter((v) => meta.variables_included.includes(v.id)) : []),
     [catalog, meta],
   );
   const regions = regionList?.regions ?? [];
-  const regionId = regions.some((r) => r.id === params.get('region')) ? params.get('region')! : 'global';
-  // default: the variable with the clearest global trend (same as "Surprise me")
-  const top = globalRanking?.ranking.find((r) => variables.some((v) => v.id === r.variable));
-  const defaultVar = top?.variable ?? variables[0]?.id ?? '';
-  const varId = variables.some((v) => v.id === params.get('var')) ? params.get('var')! : defaultVar;
+  // no variable in the URL = overview: the plain world map, no data layer
+  const selection = readSelection(params, variables.map((v) => v.id), regions.map((r) => r.id));
+  const { variable: varId, region: regionId } = selection;
+  const view = mapView(selection);
   const variable = variables.find((v) => v.id === varId);
   const region = regions.find((r) => r.id === regionId);
 
@@ -46,13 +46,9 @@ export default function Explore() {
   const geo = useMemo(() => (grid.data ? cachedGeo(grid.data, max) : undefined), [grid.data, max]);
   const gridMatches = grid.data?.variable === varId;
 
-  const set = (values: { region?: string; var?: string }) =>
-    setParams((p) => {
-      for (const [k, v] of Object.entries(values)) if (v) p.set(k, v);
-      return p;
-    });
-  const open = (values: { region?: string; var?: string }) => {
-    set(values);
+  const act = (action: Action) => setParams((p) => applyAction(p, action));
+  const open = (id: string) => {
+    act({ type: 'variable', id });
     document.getElementById('detail')?.scrollIntoView({ block: 'start' });
   };
   const toMap = () => {
@@ -64,7 +60,7 @@ export default function Explore() {
   const fdrQ = typeof fdr?.q === 'number' ? fdr.q : undefined;
 
   if (base.error) return <ErrorBox error={base.error} />;
-  if (!meta || !variable || !region) return <Loading label="Loading data…" minHeight={480} />;
+  if (!meta || !region) return <Loading label="Loading data…" minHeight={480} />;
 
   return (
     <>
@@ -96,9 +92,14 @@ export default function Explore() {
                 Variable
               </label>
               {/* options cannot hold an SVG, so the selected variable's icon sits inside the closed select */}
-              <div className={varIcon(varId) ? 'field__control field__control--icon' : 'field__control'}>
-                {varIcon(varId) && <Icon name={varIcon(varId)!} className="field__icon" />}
-                <select id="f-var" value={varId} onChange={(e) => set({ var: e.target.value })}>
+              <div className={varId && varIcon(varId) ? 'field__control field__control--icon' : 'field__control'}>
+                {varId && varIcon(varId) && <Icon name={varIcon(varId)!} className="field__icon" />}
+                <select
+                  id="f-var"
+                  value={varId ?? ''}
+                  onChange={(e) => act(e.target.value ? { type: 'variable', id: e.target.value } : { type: 'clear' })}
+                >
+                  {!varId && <option value="">Choose a variable</option>}
                   {variables.map((v) => (
                     <option key={v.id} value={v.id}>
                       {v.name}
@@ -111,7 +112,7 @@ export default function Explore() {
               <label className="field__label" htmlFor="f-region">
                 Region
               </label>
-              <select id="f-region" value={regionId} onChange={(e) => set({ region: e.target.value })}>
+              <select id="f-region" value={regionId} onChange={(e) => act({ type: 'region', id: e.target.value })}>
                 {regions.map((r) => (
                   <option key={r.id} value={r.id}>
                     {r.name}
@@ -135,22 +136,33 @@ export default function Explore() {
             <TrendMap
               grid={gridMatches ? grid.data : undefined}
               geo={gridMatches ? geo : undefined}
-              unit={variable.public_unit}
+              unit={variable?.public_unit ?? ''}
               regions={regions}
               selectedRegion={regionId}
-              onSelectRegion={(id) => set({ region: id })}
+              onSelectRegion={(id) => act({ type: 'region', id })}
               globe={globe}
-              busy={grid.loading || !gridMatches}
-              label={`Map of the trend in ${variable.name.toLowerCase()} per decade, ${meta.period.start} to ${meta.period.end}. Use the region list to choose a region with the keyboard.`}
+              showData={view.showData}
+              onClear={() => act({ type: 'clear' })}
+              dimOthers={view.dimOthers}
+              busy={!!varId && (grid.loading || !gridMatches)}
+              label={
+                variable
+                  ? `Map of the trend in ${variable.name.toLowerCase()} per decade, ${meta.period.start} to ${meta.period.end}, over a world map. Use the variable and region lists to choose with the keyboard.`
+                  : 'World map with coastlines and the approximate study areas outlined. Use the variable and region lists to choose with the keyboard.'
+              }
             />
           )}
-          <MapLegend
-            palette={PALETTE}
-            max={max}
-            unit={variable.public_unit}
-            period={meta.period}
-            areaNote={region.kind === 'approximate_box' ? region.display_note : undefined}
-          />
+          {variable ? (
+            <MapLegend
+              palette={PALETTE}
+              max={max}
+              unit={variable.public_unit}
+              period={meta.period}
+              areaNote={view.highlight && region.kind === 'approximate_box' ? region.display_note : undefined}
+            />
+          ) : (
+            <p className="map-caption">Pick a variable or a region to see how it changed.</p>
+          )}
           <p className="note">{regionList!.note}</p>
           <p className="note">
             {MAP_CORRELATION_NOTE} {fdrQ !== undefined ? fmtPercent(fdrQ) : 'level'}.
@@ -162,8 +174,8 @@ export default function Explore() {
             region={region}
             period={meta.period}
             variables={variables}
-            selectedVar={varId}
-            onSelect={(id) => open({ var: id })}
+            selectedVar={varId ?? ''}
+            onSelect={open}
           />
           <div className="fill" aria-hidden="true" />
         </aside>
@@ -171,7 +183,11 @@ export default function Explore() {
           <Profile region={region} variables={variables} />
         </div>
         <section id="detail" className="explore__detail">
-          <DetailView region={region} variable={variable} meta={meta} />
+          {variable ? (
+            <DetailView region={region} variable={variable} meta={meta} />
+          ) : (
+            <p className="callout">Pick a variable in the list above the map or in the ranking to see the details for {region.phrase}.</p>
+          )}
         </section>
       </div>
     </>

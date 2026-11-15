@@ -53,8 +53,10 @@ export const cellCenter = (index: number, lat: Axis, lon: Axis) => ({
   lon: lon.first + (index % lon.n) * lon.step,
 });
 
-// shortcut: polygons are clipped at ±85° so they stay finite in Web Mercator; the polar caps above that are not drawn.
-const MAX_LAT = 85;
+// Web Mercator ends at ±85.0511° (where the world becomes a square). Cell polygons, boxes and the graticule are clipped
+// exactly there, so the row centered at ±85 reaches the map edge and the rows at ±87 and ±89 are not drawn.
+// The land polygons go to ±90 and MapLibre clamps them at the same latitude, so cells and coastlines line up.
+const MAX_LAT = 85.0511;
 const clampLat = (v: number) => Math.max(-MAX_LAT, Math.min(MAX_LAT, v));
 
 type Fc = GeoJSON.FeatureCollection;

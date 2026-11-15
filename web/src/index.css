@@ -1698,3 +1698,17 @@ td {
 .compare__caveats {
   margin: var(--s4) 0;
 }
+
+/* map overview caption, in place of the legend until a variable is chosen */
+.map-caption {
+  margin: var(--s3) 0 0;
+  color: var(--text-2);
+}
+/* "Clear data" sits in the map's free top-left corner (zoom buttons are top-right) */
+.map-clear {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--surface);
+}

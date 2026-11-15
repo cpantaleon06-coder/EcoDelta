@@ -228,8 +228,9 @@ export default function About() {
           <a href="licenses/poppins-OFL.txt">Poppins (OFL-1.1)</a>.
         </p>
         <p className="muted">
-          The decorative globe on the Explore page uses land outlines from Natural Earth 1:110m (public domain), via
-          the world-atlas package (ISC). It shows no data.
+          The land and coastlines of the map, and the decorative globe on the Explore page, use Natural Earth 1:50m land
+          (public domain, made with Natural Earth), via the world-atlas package (ISC), simplified for the web. The map
+          draws coastlines only, no country borders.
         </p>
       </section>
     </article>
