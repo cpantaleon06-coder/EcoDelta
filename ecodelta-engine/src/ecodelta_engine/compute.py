@@ -101,10 +101,14 @@ def region_result(da: xr.DataArray, valid: xr.DataArray, grid: xr.Dataset, regio
 COMPARE_METHOD = ("D(t) = A(t) - B(t), the difference of the two regions' deseasonalized fixed-mask monthly means "
                   "on the months where both have a value; Sen's slope with 95% CI and Mann-Kendall (same autocorrelation "
                   "handling as the regional trends) on D. 'trends differ' when p < alpha. P-values of the two regions are "
-                  "never compared, and overlapping confidence intervals are not used as a test.")
+                  "never compared, and overlapping confidence intervals are not used as a test. When the boxes overlap, the "
+                  "shared cells do not cancel in D: each mean is divided by its own total area weight (W_A, W_B), so a shared "
+                  "cell i enters D with weight w_i (1/W_A - 1/W_B), which is zero only when W_A = W_B.")
 COMPARE_NOTE = ("Each p-value is valid for one comparison chosen in advance. Looking through many pairs and picking those "
                 "that differ raises the chance of false positives: about 1 in 20 pairs with no real difference will show "
-                "'trends differ'. Overlapping boxes share cells, so their results are not independent.")
+                "'trends differ'. When two boxes overlap, their averages share data and the two results are not "
+                "independent. Shared cells do not fully cancel in the difference, because each average is divided by its "
+                "own area, so read such a result as a comparison of two overlapping areas.")
 Q_NOTE = ("q_across_pairs: Benjamini-Hochberg q-value across all region pairs of this variable, for scanning many pairs "
           "at once. Approximate: the pairs share regions and are not independent.")
 

@@ -1,10 +1,10 @@
 {
- "build_date": "2026-11-15T02:02:56Z",
+ "build_date": "2026-11-15T12:36:28Z",
  "data": {
   "manifest_sha256": "2d5fe2787407f749dff5e8af0a9bd259bdf2711ffcf2e160d048057ad9b38b08"
  },
  "engine": {
-  "commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
+  "commit": "f1e0bdf51673e7873be2a7a2ebec1cd8f4620533",
   "uncommitted_changes": true,
   "version": "0.1.0"
  },
@@ -67,7 +67,7 @@
    "by_magnitude": "larger |standardized_change| first, results without one last; ties: stronger evidence class, then smaller p-value, then variable id"
   },
   "ranking": "rank follows by_evidence: evidence class (strong, moderate, weak, none, insufficient data); ties: smaller regional p-value, then larger |standardized_change|, then variable id. A second ordering, by_magnitude, is exported next to it. The tier, p-value and effect_size of schema 1.1.0 are still exported.",
-  "region_comparison": "D(t) = A(t) - B(t), the difference of the two regions' deseasonalized fixed-mask monthly means on the months where both have a value; Sen's slope with 95% CI and Mann-Kendall (same autocorrelation handling as the regional trends) on D. 'trends differ' when p < alpha. P-values of the two regions are never compared, and overlapping confidence intervals are not used as a test.",
+  "region_comparison": "D(t) = A(t) - B(t), the difference of the two regions' deseasonalized fixed-mask monthly means on the months where both have a value; Sen's slope with 95% CI and Mann-Kendall (same autocorrelation handling as the regional trends) on D. 'trends differ' when p < alpha. P-values of the two regions are never compared, and overlapping confidence intervals are not used as a test. When the boxes overlap, the shared cells do not cancel in D: each mean is divided by its own total area weight (W_A, W_B), so a shared cell i enters D with weight w_i (1/W_A - 1/W_B), which is zero only when W_A = W_B.",
   "regional_mean": "cos(latitude)-weighted mean over a fixed mask: the cells inside the box with data in at least 95% of the months, the same cells every month; a month is missing when more than 5% of the mask's area weight has no data",
   "regional_mean_rule": {
    "max_missing_weight": 0.05,
@@ -168,31 +168,31 @@
  "timing": {
   "per_variable_s": {
    "evap": {
-    "grid": 77.6,
-    "total": 86.1
+    "grid": 91.3,
+    "total": 98.7
    },
    "precip": {
-    "grid": 117.0,
-    "total": 120.3
+    "grid": 133.7,
+    "total": 138.8
    },
    "runoff_surface": {
-    "grid": 80.3,
-    "total": 87.8
+    "grid": 92.5,
+    "total": 100.1
    },
    "soil_moisture_0_10cm": {
-    "grid": 77.8,
-    "total": 86.6
+    "grid": 84.5,
+    "total": 93.5
    },
    "t2m": {
-    "grid": 123.1,
-    "total": 125.4
+    "grid": 146.0,
+    "total": 150.9
    }
   },
-  "wall_s": 126.3,
+  "wall_s": 151.9,
   "workers": 5
  },
  "trendkit": {
-  "commit": "0bd7efc91a8fb75b208a10f9508f24f6477392a4",
+  "commit": "f1e0bdf51673e7873be2a7a2ebec1cd8f4620533",
   "uncommitted_changes": true,
   "version": "0.1.0"
  },

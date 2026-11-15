@@ -296,6 +296,12 @@ cell reached 95% by chance and joined the mask; its small bias is included in th
 Limit: cells with frequent gaps, such as seasonal sea ice, are left out, so the result describes
 only the masked part of the region. Report the mask's area share next to the result.
 
+**Comparing two overlapping regions.** Each regional mean is divided by its own total weight,
+`A(t) = sum_A w_i x_i(t) / W_A` and `B(t) = sum_B w_i x_i(t) / W_B`. A cell in both regions enters
+`D(t) = A(t) - B(t)` as `w_i x_i(t) (1/W_A - 1/W_B)`, so it cancels only when the two regions have the
+same total weight. For a region inside a larger one, its cells weigh more in A than in B. A test on `D`
+therefore compares two overlapping areas; it does not isolate the parts that do not overlap.
+
 ## 7b. Evidence and magnitude (EcoDelta engine)
 
 trendkit returns p-values, confidence intervals and slopes. The EcoDelta engine

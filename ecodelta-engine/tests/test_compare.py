@@ -87,3 +87,54 @@ def test_compare_regions_pairs_q_and_missing_region():
     assert by[("r1", "r4")]["trend_b"]["evidence_class"] == "insufficient data"
     tested = [p for p in out if p["pvalue"] is not None]
     assert len(tested) == 3 and all(p["q_across_pairs"] >= p["pvalue"] * (1 - 1e-12) for p in tested)  # largest p: q = 3p/3
+
+
+def test_shared_cells_do_not_cancel():
+    """Region A inside region B: a signal only in A's cells still shows up in D = A - B.
+
+    Each fixed-mask mean is divided by its own total weight, so a shared cell enters D with weight
+    w_i (1/W_A - 1/W_B). This documents why "the shared cells cancel in D" was wrong.
+    """
+    from trendkit import fixed_mask_mean
+
+    lat, lon = np.array([-10.0, -8.0, -6.0, -4.0]), np.array([0.0, 2.0, 4.0, 6.0])
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=(297, lat.size, lon.size))
+    signal = np.linspace(0, 3, 297)  # added only to the cells of A
+    in_a = np.zeros((lat.size, lon.size), bool)
+    in_a[:2, :2] = True  # A: 4 cells, all of them also in B
+    in_b = np.ones_like(in_a)  # B: all 16 cells
+    da = lambda v: xr.DataArray(v, dims=("time", "lat", "lon"), coords={"time": DATES, "lat": lat, "lon": lon})
+    mask = lambda m: xr.DataArray(m, dims=("lat", "lon"), coords={"lat": lat, "lon": lon})
+
+    def d(values):
+        a, _ = fixed_mask_mean(da(values), mask(in_a))
+        b, _ = fixed_mask_mean(da(values), mask(in_b))
+        return (a - b).values
+
+    with_signal = d(x + signal[:, None, None] * in_a)
+    w = np.cos(np.deg2rad(lat))[:, None] * np.ones(lon.size)
+    expected = signal * w[in_a].sum() * (1 / w[in_a].sum() - 1 / w[in_b].sum())  # = signal (1 - W_A / W_B)
+    np.testing.assert_allclose(with_signal - d(x), expected, atol=1e-12)
+    assert np.abs(expected).max() > 2  # about 3 * (1 - 4/16 by weight): far from zero, so no cancellation
+
+
+def test_validate_rebuilds_the_difference_series(tmp_path):
+    """validate rebuilds D from the exported region series; a changed compare record is reported."""
+    import json
+    import shutil
+
+    from ecodelta_engine import config
+    from ecodelta_engine.validate import check_difference_series
+
+    out = tmp_path / "web_data"
+    shutil.copytree(config.OUTPUT_DIRS["fixture"], out)
+    meta = json.loads((out / "meta.json").read_text())
+    n, errors = check_difference_series(out, meta)
+    assert n > 0 and errors == []
+    path = out / "compare" / "t2m.json"
+    cf = json.loads(path.read_text())
+    e = cf["pairs"][1]
+    e["difference_slope_per_decade"] += e["difference_ci_per_decade"][1] - e["difference_ci_per_decade"][0]
+    path.write_text(json.dumps(cf))
+    assert len(check_difference_series(out, meta)[1]) == 1

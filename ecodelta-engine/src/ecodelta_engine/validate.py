@@ -158,6 +158,49 @@ def golden(out: Path, root: Path, meta: dict) -> tuple[int, list[str]]:
     return n, errors
 
 
+def check_difference_series(out: Path, meta: dict) -> tuple[int, list[str]]:
+    """Rebuild D = A - B from the exported series.anomaly of the two region files, run trend_report, and
+    compare with the exported compare record. The web app draws this rebuilt D, so it must agree.
+
+    The anomalies are exported rounded to 4 significant digits, so numbers agree up to that rounding:
+    slope and CI ends within 1% of the CI width, p within 0.01, and the same verdict unless the exported
+    p is within 0.01 of alpha.
+    """
+    errors, n = [], 0
+    files = {}
+    region = lambda rid: files.setdefault(rid, json.loads((out / "regions" / f"{rid}.json").read_text()))
+    alpha = meta["methods"]["alpha"]
+    for v in meta["variables_included"]:
+        for e in json.loads((out / "compare" / f"{v}.json").read_text())["pairs"]:
+            A, B = region(e["region_a"]), region(e["region_b"])
+            sa, sb = A["variables"][v]["series"], B["variables"][v]["series"]
+            if sa is None or sb is None:
+                continue
+            n += 1
+            where = f"compare/{v}.json {e['region_a']}-{e['region_b']}"
+            values = lambda s: np.array([np.nan if x is None else x for x in s["anomaly"]], dtype=float)
+            dates = np.array([np.datetime64(f"{d}-01") for d in A["dates"]], dtype="datetime64[ns]")
+            rep = trend_report(values(sa) - values(sb), dates, method=config.TREND_METHOD, alpha=alpha,
+                               deseasonalize=False)
+            ok = rep["verdict"] != "insufficient data"
+            verdict = ("trends differ" if rep["significant"] else "no evidence that trends differ") if ok \
+                else "insufficient data"
+            if verdict != e["verdict"] and not (e["pvalue"] is not None and abs(e["pvalue"] - alpha) < 0.01):
+                errors.append(f"{where}: verdict from the exported series {verdict!r} != {e['verdict']!r}")
+                continue
+            if not ok or e["difference_slope_per_decade"] is None:
+                continue
+            lo, hi = e["difference_ci_per_decade"]
+            tol = 0.01 * (hi - lo)
+            got = (rep["slope_per_decade"], rep["ci_low_per_decade"], rep["ci_high_per_decade"])
+            if any(abs(g - w) > tol for g, w in zip(got, (e["difference_slope_per_decade"], lo, hi))) or \
+                    abs(rep["pvalue"] - e["pvalue"]) > 0.01:
+                errors.append(f"{where}: rebuilt D gives slope {got[0]:.4g} [{got[1]:.4g}, {got[2]:.4g}] "
+                              f"p {rep['pvalue']:.3g}, exported {e['difference_slope_per_decade']} [{lo}, {hi}] "
+                              f"p {e['pvalue']}")
+    return n, errors
+
+
 def validate(source: str) -> int:
     out = config.OUTPUT_DIRS[source]
     meta = json.loads((out / "meta.json").read_text())
@@ -165,8 +208,10 @@ def validate(source: str) -> int:
     print(f"schemas: {len(list(out.rglob('*.json')))} files, {len(errors)} errors")
     c = check_consistency(out, meta)
     print(f"consistency: {len(c)} errors")
+    n_d, diff = check_difference_series(out, meta)
+    print(f"difference series: {n_d} pairs rebuilt from the exported region series, {len(diff)} mismatches")
     n, gold = golden(out, source_root(source), meta)
     print(f"golden: {n} numbers recomputed with trendkit, {len(gold)} mismatches")
-    for e in errors + c + gold:
+    for e in errors + c + diff + gold:
         print("  ", e)
-    return 0 if not (errors or c or gold) else 1
+    return 0 if not (errors or c or diff or gold) else 1

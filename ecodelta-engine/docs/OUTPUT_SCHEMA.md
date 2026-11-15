@@ -273,6 +273,11 @@ correction. A trend in `D` means the two regional trends differ. Testing `D` tak
 two regions move together from month to month. Comparing the two p-values, or checking whether the two
 confidence intervals overlap, does not, and **is never used**.
 
+`D(t)` itself is not exported: it is `series.anomaly` of region A minus `series.anomaly` of region B, month
+by month (null when either is null). The exported anomalies are the arrays the test uses, rounded to 4
+significant digits, so a `D` rebuilt from them gives the same verdicts and the same slope, CI and p-value up
+to that rounding; `validate` checks this for every pair.
+
 | Key | Meaning |
 |---|---|
 | `region_a`, `region_b` | region ids; pairs appear once, in the order of `regions.json` (`region_a` first) |
@@ -283,7 +288,7 @@ confidence intervals overlap, does not, and **is never used**.
 | `n_common_months` | months where both regions have a value |
 | `trend_a`, `trend_b` | each region's own trend: `{slope_per_decade, ci_per_decade, pvalue, evidence_class}` (null values when the region has no report) |
 | `overlap_fraction` | share of the smaller box's area that lies inside the other box (cells by center, 0 to 1) |
-| `independent` | `false` when the boxes overlap (`overlap_fraction > 0`). The shared cells then cancel in `D`, so the test compares only the parts that do not overlap, and the two regional results are not independent. |
+| `independent` | `false` when the boxes overlap (`overlap_fraction > 0`). The two averages then share data and the two regional results are not independent. The shared cells do **not** cancel in `D`: each mean is divided by its own total area weight, `A(t) = sum_A w_i x_i(t) / W_A` and `B(t) = sum_B w_i x_i(t) / W_B`, so a shared cell enters `D` as `w_i x_i(t) (1/W_A - 1/W_B)`, which is zero only when `W_A = W_B`. Read such a result as a comparison of two overlapping areas (`tests/test_compare.py::test_shared_cells_do_not_cancel`). |
 
 Values are null when the verdict is `insufficient data`. Show `note` with every comparison. Each
 p-value is valid for **one** comparison chosen in advance. Looking through many pairs and picking the
