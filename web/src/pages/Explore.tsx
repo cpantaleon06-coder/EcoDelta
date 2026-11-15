@@ -163,6 +163,10 @@ export default function Explore() {
           ) : (
             <p className="map-caption">Pick a variable or a region to see how it changed.</p>
           )}
+          <p className="note">
+            The map omits grid cells above about 85 degrees latitude, which Web Mercator cannot show. The Arctic and
+            Antarctica results are in the region list, the ranking and the detail panels.
+          </p>
           <p className="note">{regionList!.note}</p>
           <p className="note">
             {MAP_CORRELATION_NOTE} {fdrQ !== undefined ? fmtPercent(fdrQ) : 'level'}.
