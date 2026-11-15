@@ -5,13 +5,13 @@
 | What | Where it is used | License |
 |---|---|---|
 | Poppins font (The Poppins Project Authors, github.com/itfoundry/Poppins), via @fontsource/poppins | The only typeface of the site, including chart labels and the hero globe characters; Latin subset, weights 400, 600 and 700, woff2, self-hosted | OFL-1.1 |
-| Natural Earth 1:110m land (naturalearthdata.com), via world-atlas 2.0.2 (Michael Bostock) | `src/hero/landMask.ts`: the land mask of the decorative hero globe, 360 x 180 cells of 1 degree, generated once by `scripts/build-landmask.mjs` | Data: public domain. Package: ISC |
+| Natural Earth 1:50m land (naturalearthdata.com), via world-atlas 2.0.2 (Michael Bostock) | `src/assets/land-50m.json`: land and coastlines of the map basemap, simplified to 0.04 degree and rounded to 0.01 degree by `scripts/build-land.mjs` (373 KB, 122 KB gzipped). `src/hero/landMask.ts`, the 1 degree land mask of the decorative hero globe, is made from the same file by `scripts/build-landmask.mjs` | Data: public domain. Package: ISC |
 
-The land mask is the only thing taken from Natural Earth. Only the generated mask ships with the site; world-atlas and topojson-client (ISC) are development dependencies used to build it.
+Only the generated files ship with the site; world-atlas and topojson-client (ISC) are development dependencies used to build them. No country borders are drawn: the app's regions are approximate boxes, and borders would suggest a precision they do not have. Credit: "Made with Natural Earth".
 
 The font is OFL-1.1, not MIT or Apache-2.0. The design brief asked for it by name, which overrides the MIT/Apache-2.0 rule for it.
 The map palette in `src/mapScale.ts` is our own set of hex values; the earlier ColorBrewer palettes are no longer used.
-There are no NASA logos or insignia. If `public/data/coastlines.geojson` is added from Natural Earth, it is public domain; credit "Made with Natural Earth".
+There are no NASA logos or insignia.
 
 ## License texts shipped with the site
 
