@@ -1,0 +1,279 @@
+{
+ "note": "Regions are approximate latitude/longitude boxes, not political borders; some boxes overlap.",
+ "regions": [
+  {
+   "box": [
+    -90,
+    90,
+    -180,
+    180
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "global",
+   "kind": "approximate_box",
+   "name": "Global",
+   "phrase": "the whole globe"
+  },
+  {
+   "box": [
+    14.5,
+    32.7,
+    -117.5,
+    -86.5
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "mexico",
+   "kind": "approximate_box",
+   "name": "Mexico",
+   "phrase": "Mexico"
+  },
+  {
+   "box": [
+    7,
+    23,
+    -92,
+    -59
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "central_america_caribbean",
+   "kind": "approximate_box",
+   "name": "Central America and Caribbean",
+   "phrase": "Central America and the Caribbean"
+  },
+  {
+   "box": [
+    -16,
+    5,
+    -80,
+    -45
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "amazon_basin",
+   "kind": "approximate_box",
+   "name": "Amazon basin",
+   "phrase": "the Amazon basin"
+  },
+  {
+   "box": [
+    -56,
+    -20,
+    -76,
+    -48
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "southern_south_america",
+   "kind": "approximate_box",
+   "name": "Southern South America",
+   "phrase": "Southern South America"
+  },
+  {
+   "box": [
+    31,
+    49,
+    -125,
+    -102
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "western_us",
+   "kind": "approximate_box",
+   "name": "Western US",
+   "phrase": "the Western US"
+  },
+  {
+   "box": [
+    25,
+    49,
+    -102,
+    -67
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "eastern_us",
+   "kind": "approximate_box",
+   "name": "Eastern US",
+   "phrase": "the Eastern US"
+  },
+  {
+   "box": [
+    42,
+    60,
+    -10,
+    15
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "western_europe",
+   "kind": "approximate_box",
+   "name": "Western Europe",
+   "phrase": "Western Europe"
+  },
+  {
+   "box": [
+    30,
+    46,
+    -10,
+    37
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "mediterranean",
+   "kind": "approximate_box",
+   "name": "Mediterranean",
+   "phrase": "the Mediterranean"
+  },
+  {
+   "box": [
+    10,
+    20,
+    -18,
+    40
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "sahel",
+   "kind": "approximate_box",
+   "name": "Sahel",
+   "phrase": "the Sahel"
+  },
+  {
+   "box": [
+    -10,
+    10,
+    8,
+    32
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "central_africa",
+   "kind": "approximate_box",
+   "name": "Central Africa",
+   "phrase": "Central Africa"
+  },
+  {
+   "box": [
+    -12,
+    15,
+    32,
+    52
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "east_africa",
+   "kind": "approximate_box",
+   "name": "East Africa",
+   "phrase": "East Africa"
+  },
+  {
+   "box": [
+    -35,
+    -12,
+    10,
+    41
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "southern_africa",
+   "kind": "approximate_box",
+   "name": "Southern Africa",
+   "phrase": "Southern Africa"
+  },
+  {
+   "box": [
+    12,
+    42,
+    34,
+    63
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "middle_east",
+   "kind": "approximate_box",
+   "name": "Middle East",
+   "phrase": "the Middle East"
+  },
+  {
+   "box": [
+    6,
+    35,
+    66,
+    92
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "indian_subcontinent",
+   "kind": "approximate_box",
+   "name": "Indian subcontinent",
+   "phrase": "the Indian subcontinent"
+  },
+  {
+   "box": [
+    -11,
+    28,
+    92,
+    141
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "southeast_asia",
+   "kind": "approximate_box",
+   "name": "Southeast Asia",
+   "phrase": "Southeast Asia"
+  },
+  {
+   "box": [
+    20,
+    42,
+    105,
+    123
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "east_china",
+   "kind": "approximate_box",
+   "name": "East China",
+   "phrase": "East China"
+  },
+  {
+   "box": [
+    50,
+    75,
+    60,
+    180
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "siberia",
+   "kind": "approximate_box",
+   "name": "Siberia",
+   "phrase": "Siberia"
+  },
+  {
+   "box": [
+    66.5,
+    90,
+    -180,
+    180
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "arctic",
+   "kind": "approximate_box",
+   "name": "Arctic (north of 66.5N)",
+   "phrase": "the Arctic (north of 66.5N)"
+  },
+  {
+   "box": [
+    -44,
+    -10,
+    112,
+    154
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "australia",
+   "kind": "approximate_box",
+   "name": "Australia",
+   "phrase": "Australia"
+  },
+  {
+   "box": [
+    -90,
+    -60,
+    -180,
+    180
+   ],
+   "display_note": "approximate study area, not a political border",
+   "id": "antarctica",
+   "kind": "approximate_box",
+   "name": "Antarctica",
+   "phrase": "Antarctica"
+  }
+ ],
+ "schema_version": "1.3.0"
+}

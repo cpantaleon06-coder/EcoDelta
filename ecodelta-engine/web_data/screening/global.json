@@ -1,0 +1,67 @@
+{
+ "by_evidence": [
+  "precip",
+  "evap"
+ ],
+ "by_magnitude": [
+  "evap",
+  "precip"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.4244,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.2422,
+   "ci_per_decade": [
+    0.01385,
+    0.04638
+   ],
+   "effect_size": 0.4244,
+   "evidence_class": "strong",
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.0004371,
+   "rank": 1,
+   "rank_by_magnitude": 2,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the whole globe changed by +0.030 mm/day per decade (95% confidence interval +0.014 to +0.046), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.074 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.03011,
+   "standardized_change": 1.095,
+   "tier": 0,
+   "total_change": 0.07427,
+   "variable": "precip",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.833,
+   "cautions": [
+    "Only 26% of this region's area has land cells with data in at least 95% of the months, so the result describes only that part."
+   ],
+   "cells_significant_fraction": 0.4846,
+   "ci_per_decade": [
+    0.03345,
+    0.08157
+   ],
+   "effect_size": 0.833,
+   "evidence_class": "weak",
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 1.395e-05,
+   "rank": 2,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the whole globe changed by +0.057 mm/day per decade (95% confidence interval +0.033 to +0.082), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.141 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.05711,
+   "standardized_change": 2.611,
+   "tier": 0,
+   "total_change": 0.1409,
+   "variable": "evap",
+   "verdict": "increasing"
+  }
+ ],
+ "region_file": "regions/global.json",
+ "region_id": "global",
+ "schema_version": "1.3.0"
+}

@@ -1,0 +1,95 @@
+{
+ "by_evidence": [
+  "runoff_surface",
+  "evap",
+  "precip"
+ ],
+ "by_magnitude": [
+  "evap",
+  "runoff_surface",
+  "precip"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.3383,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain.",
+    "Only 24% of this region's area has land cells with data in at least 95% of the months, so the result describes only that part."
+   ],
+   "cells_significant_fraction": 0.3889,
+   "ci_per_decade": [
+    0.0131,
+    0.0645
+   ],
+   "effect_size": 0.3383,
+   "evidence_class": "weak",
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.002605,
+   "rank": 1,
+   "rank_by_magnitude": 2,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Central America and the Caribbean changed by +0.038 mm/day per decade (95% confidence interval +0.013 to +0.064), which is statistically significant (p = 0.0026). Over the whole 24.7-year period that is an increase of about 0.095 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.03843,
+   "standardized_change": 0.87,
+   "tier": 0,
+   "total_change": 0.0948,
+   "variable": "runoff_surface",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.4401,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain.",
+    "Only 24% of this region's area has land cells with data in at least 95% of the months, so the result describes only that part."
+   ],
+   "cells_significant_fraction": 0.2778,
+   "ci_per_decade": [
+    0.007872,
+    0.2182
+   ],
+   "effect_size": 0.4401,
+   "evidence_class": "weak",
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.03682,
+   "rank": 2,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Central America and the Caribbean changed by +0.11 mm/day per decade (95% confidence interval +0.01 to +0.22), which is statistically significant (p = 0.04). Over the whole 24.7-year period that is an increase of about 0.27 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.1114,
+   "standardized_change": 1.145,
+   "tier": 0,
+   "total_change": 0.2747,
+   "variable": "evap",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.0528,
+   "cautions": [],
+   "cells_significant_fraction": 0.09804,
+   "ci_per_decade": [
+    -0.2052,
+    0.1089
+   ],
+   "effect_size": -0.0528,
+   "evidence_class": "none",
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.5916,
+   "rank": 3,
+   "rank_by_magnitude": 3,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Central America and the Caribbean shows no statistically significant trend (p = 0.59): the estimate is −0.04 mm/day per decade (95% confidence interval −0.21 to +0.11). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.04328,
+   "standardized_change": -0.1304,
+   "tier": 1,
+   "total_change": -0.1067,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/central_america_caribbean.json",
+ "region_id": "central_america_caribbean",
+ "schema_version": "1.3.0"
+}

@@ -1,0 +1,65 @@
+{
+ "by_evidence": [
+  "runoff_surface",
+  "evap"
+ ],
+ "by_magnitude": [
+  "evap",
+  "runoff_surface"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.3599,
+   "cautions": [],
+   "cells_significant_fraction": 0.578,
+   "ci_per_decade": [
+    0.0101,
+    0.0273
+   ],
+   "effect_size": 0.3599,
+   "evidence_class": "strong",
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 5.283e-05,
+   "rank": 1,
+   "rank_by_magnitude": 2,
+   "sentence": "From January 2001 to September 2025, water running off the surface in Central Africa changed by +0.0186 mm/day per decade (95% confidence interval +0.0101 to +0.0273), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.0459 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.01861,
+   "standardized_change": 0.9211,
+   "tier": 0,
+   "total_change": 0.04591,
+   "variable": "runoff_surface",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.7501,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.6697,
+   "ci_per_decade": [
+    0.06521,
+    0.2118
+   ],
+   "effect_size": 0.7501,
+   "evidence_class": "strong",
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.0002718,
+   "rank": 2,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in Central Africa changed by +0.138 mm/day per decade (95% confidence interval +0.065 to +0.212), which is statistically significant (p < 0.001). Over the whole 24.7-year period that is an increase of about 0.340 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.1377,
+   "standardized_change": 2.191,
+   "tier": 0,
+   "total_change": 0.3396,
+   "variable": "evap",
+   "verdict": "increasing"
+  }
+ ],
+ "region_file": "regions/central_africa.json",
+ "region_id": "central_africa",
+ "schema_version": "1.3.0"
+}

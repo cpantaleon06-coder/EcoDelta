@@ -1,0 +1,93 @@
+{
+ "by_evidence": [
+  "runoff_surface",
+  "evap",
+  "precip"
+ ],
+ "by_magnitude": [
+  "evap",
+  "runoff_surface",
+  "precip"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.2241,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.2209,
+   "ci_per_decade": [
+    0.0004494,
+    0.01085
+   ],
+   "effect_size": 0.2241,
+   "evidence_class": "moderate",
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.0318,
+   "rank": 1,
+   "rank_by_magnitude": 2,
+   "sentence": "From January 2001 to September 2025, water running off the surface in East Africa changed by +0.0056 mm/day per decade (95% confidence interval +0.0004 to +0.0109), which is statistically significant (p = 0.03). Over the whole 24.7-year period that is an increase of about 0.0139 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.005626,
+   "standardized_change": 0.5642,
+   "tier": 0,
+   "total_change": 0.01388,
+   "variable": "runoff_surface",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.2785,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.2326,
+   "ci_per_decade": [
+    0.0005556,
+    0.1117
+   ],
+   "effect_size": 0.2785,
+   "evidence_class": "moderate",
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.04841,
+   "rank": 2,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in East Africa changed by +0.055 mm/day per decade (95% confidence interval +0.001 to +0.112), which is statistically significant (p = 0.05). Over the whole 24.7-year period that is an increase of about 0.134 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.0545,
+   "standardized_change": 0.7033,
+   "tier": 0,
+   "total_change": 0.1344,
+   "variable": "evap",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.07712,
+   "cautions": [],
+   "cells_significant_fraction": 0.04286,
+   "ci_per_decade": [
+    -0.07374,
+    0.1726
+   ],
+   "effect_size": 0.07712,
+   "evidence_class": "none",
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.4601,
+   "rank": 3,
+   "rank_by_magnitude": 3,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in East Africa shows no statistically significant trend (p = 0.46): the estimate is +0.05 mm/day per decade (95% confidence interval −0.07 to +0.17). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": 0.04548,
+   "standardized_change": 0.1913,
+   "tier": 1,
+   "total_change": 0.1122,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/east_africa.json",
+ "region_id": "east_africa",
+ "schema_version": "1.3.0"
+}
