@@ -18,7 +18,7 @@ const counts = (list) =>
     .map(([l, n]) => `${l}: ${n}`)
     .join(', ');
 const top = (name) => installed.find((p) => p.name === name && !p.name.includes('/node_modules/'));
-const roles = { 'maplibre-gl': 'Map rendering', react: 'UI', 'react-dom': 'UI', 'react-router-dom': 'Page routing', recharts: 'Charts', '@fontsource/space-grotesk': 'The one font (self-hosted)', 'world-atlas': 'Land data for the hero globe mask (build time only)', 'topojson-client': 'Decodes world-atlas when building the mask (build time only)' };
+const roles = { 'maplibre-gl': 'Map rendering', react: 'UI', 'react-dom': 'UI', 'react-router-dom': 'Page routing', recharts: 'Charts', '@fontsource/poppins': 'The one font (self-hosted)', 'world-atlas': 'Land data for the hero globe mask (build time only)', 'topojson-client': 'Decodes world-atlas when building the mask (build time only)' };
 const direct = [...Object.keys(pkg.dependencies), ...Object.keys(pkg.devDependencies)].map((n) => {
   const p = top(n);
   return `| ${n} | ${p.version} | ${p.license} | ${roles[n] ?? 'Development only'} |`;

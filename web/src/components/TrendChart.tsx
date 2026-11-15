@@ -17,7 +17,7 @@ interface Props {
 
 // SVG attributes cannot read CSS variables reliably, so the chart keeps its own copy of the tokens.
 const INK = { rule: '#1b2f3a', axis: '#2b4655', muted: '#87a5ab', text: '#e4f1ef', panel: '#172c37' };
-const FONT = "'Space Grotesk', system-ui, sans-serif";
+const FONT = "'Poppins', Arial, Helvetica, sans-serif";
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const monthLabel = (d: string) => `${MONTHS[Number(d.slice(5, 7)) - 1]} ${d.slice(0, 4)}`;
 const NAMES: Record<string, string> = { a: 'Monthly anomaly', m: '12-month mean', t: 'Trend line' };

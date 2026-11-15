@@ -85,7 +85,7 @@ export default function Explore() {
       <div className="explore">
         <section id="map" className="explore__map" aria-label="Trend map">
           <div className="controls">
-            <div className="field">
+            <div className="field field--wide">
               <label className="field__label" htmlFor="f-var">
                 Variable
               </label>

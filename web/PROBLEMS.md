@@ -3,7 +3,7 @@
 - `meta.json` has no `is_mock`. The DEMO DATA banner shows unless `synthetic` is `false` AND `source` is `"real"`.
 - Real data (`ecodelta-engine/web_data/`) does not exist yet. The app has only been checked with the synthetic fixture.
 - The fixture's `products` entry is a placeholder (`"not found"`). Real product names, versions and DOIs have not been seen yet.
-- Fonts: Space Grotesk and JetBrains Mono (OFL-1.1), self-hosted, as the design brief asked. Only Latin subsets are loaded; block and box-drawing characters (sparklines, corner marks, loading meter) fall back to the system monospace font.
+- Font: Poppins (OFL-1.1) is the only typeface, self-hosted (Latin subset, weights 400, 600 and 700). Characters outside the Latin subset fall back to Arial or Helvetica.
 - `maplibre-gl` is BSD-3-Clause, not MIT/Apache-2.0. It is part of the fixed stack, so it stays; listed in THIRD_PARTY.md.
 - The Claude desktop app's built-in browser has WebGL turned off, so the map was checked in headless Chromium (Playwright, SwiftShader) instead. Browsers without WebGL now see a message in place of the map.
 - Cell details on the map appear on mouse hover or tap only. Keyboard and screen reader users choose regions with the region list, and they cannot read single cells yet.

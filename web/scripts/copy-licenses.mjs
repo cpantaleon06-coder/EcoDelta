@@ -8,7 +8,7 @@ const web = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dest = `${web}/public/licenses`;
 const files = {
   'maplibre-gl.txt': 'node_modules/maplibre-gl/LICENSE.txt',
-  'space-grotesk-OFL.txt': 'node_modules/@fontsource/space-grotesk/LICENSE',
+  'poppins-OFL.txt': 'node_modules/@fontsource/poppins/LICENSE',
 };
 mkdirSync(dest, { recursive: true });
 for (const [name, src] of Object.entries(files)) copyFileSync(`${web}/${src}`, `${dest}/${name}`);

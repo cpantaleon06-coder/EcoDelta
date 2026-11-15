@@ -4,7 +4,7 @@
 
 | What | Where it is used | License |
 |---|---|---|
-| Space Grotesk font (Florian Karsten and contributors), via @fontsource/space-grotesk | The only typeface of the site, including chart labels and the hero globe characters, self-hosted | OFL-1.1 |
+| Poppins font (The Poppins Project Authors, github.com/itfoundry/Poppins), via @fontsource/poppins | The only typeface of the site, including chart labels and the hero globe characters; Latin subset, weights 400, 600 and 700, woff2, self-hosted | OFL-1.1 |
 | Natural Earth 1:110m land (naturalearthdata.com), via world-atlas 2.0.2 (Michael Bostock) | `src/hero/landMask.ts`: the land mask of the decorative hero globe, 360 x 180 cells of 1 degree, generated once by `scripts/build-landmask.mjs` | Data: public domain. Package: ISC |
 
 The land mask is the only thing taken from Natural Earth. Only the generated mask ships with the site; world-atlas and topojson-client (ISC) are development dependencies used to build it.
@@ -16,7 +16,7 @@ There are no NASA logos or insignia. If `public/data/coastlines.geojson` is adde
 ## License texts shipped with the site
 
 The minified bundle drops license comments (checked: none of MapLibre's survive in `dist/`).
-So `scripts/copy-licenses.mjs` runs before every build and copies the MapLibre BSD-3-Clause text and the Space Grotesk OFL text into `public/licenses/`, which ends up in `dist/licenses/`. The About page links to them.
+So `scripts/copy-licenses.mjs` runs before every build and copies the MapLibre BSD-3-Clause text and the Poppins OFL text into `public/licenses/`, which ends up in `dist/licenses/`. The About page links to them.
 
 ## Note on MapLibre GL JS
 
@@ -27,7 +27,7 @@ BSD-3-Clause is permissive: it asks to keep its copyright notice and not to use 
 
 | Package | Version | License | Role |
 |---|---|---|---|
-| @fontsource/space-grotesk | 5.3.0 | OFL-1.1 | The one font (self-hosted) |
+| @fontsource/poppins | 5.3.0 | OFL-1.1 | The one font (self-hosted) |
 | maplibre-gl | 5.24.1 | BSD-3-Clause | Map rendering |
 | react | 19.3.1 | MIT | UI |
 | react-dom | 19.3.1 | MIT | UI |
@@ -56,7 +56,7 @@ License count: MIT: 43, ISC: 20, BSD-3-Clause: 6, BSD-2-Clause: 3, OFL-1.1: 1, (
 | Package | Version | License |
 |---|---|---|
 | @babel/runtime | 7.29.14 | MIT |
-| @fontsource/space-grotesk | 5.3.0 | OFL-1.1 |
+| @fontsource/poppins | 5.3.0 | OFL-1.1 |
 | @mapbox/jsonlint-lines-primitives | 2.0.3 | MIT |
 | @mapbox/point-geometry | 1.1.0 | ISC |
 | @mapbox/tiny-sdf | 2.3.0 | BSD-2-Clause |

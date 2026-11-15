@@ -136,7 +136,7 @@ export default function About() {
         </p>
         <p className="muted">
           Open-source licenses shipped with this site: <a href="licenses/maplibre-gl.txt">MapLibre GL JS (BSD-3-Clause)</a>,{' '}
-          <a href="licenses/space-grotesk-OFL.txt">Space Grotesk (OFL-1.1)</a>.
+          <a href="licenses/poppins-OFL.txt">Poppins (OFL-1.1)</a>.
         </p>
         <p className="muted">
           The decorative globe on the Explore page uses land outlines from Natural Earth 1:110m (public domain), via

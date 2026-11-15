@@ -351,8 +351,11 @@ li + li {
 .field {
   display: flex;
   flex-direction: column;
-  flex: 1 1 220px;
+  flex: 1 1 200px;
   min-width: 0;
+}
+.field--wide {
+  flex: 3 1 300px; /* the longest variable name has to fit in the closed select */
 }
 .field__label {
   margin-bottom: 6px;
@@ -433,7 +436,7 @@ select option {
 .hero h1 {
   font-size: var(--fs-hero);
   line-height: 1.1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   max-width: 21ch;
   margin-bottom: var(--s3);
 }
@@ -612,7 +615,7 @@ select option {
 .legend__bar,
 .legend__ticks,
 .legend__ends {
-  max-width: 520px;
+  max-width: 640px;
 }
 .legend__bar {
   display: flex;

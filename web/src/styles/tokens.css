@@ -1,8 +1,7 @@
 /* EcoDelta design tokens (v4): one font, a cool blue-to-green palette. Every color, size and radius lives here. */
-@import '@fontsource/space-grotesk/latin-400.css';
-@import '@fontsource/space-grotesk/latin-500.css';
-@import '@fontsource/space-grotesk/latin-600.css';
-@import '@fontsource/space-grotesk/latin-700.css';
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/poppins/latin-700.css';
 
 :root {
   color-scheme: dark;
@@ -40,7 +39,7 @@
   --var-soil_moisture_0_10cm: var(--green);
 
   /* type: one family; hierarchy comes from size and weight only */
-  --font: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Poppins', Arial, Helvetica, sans-serif;
   --fs-xs: 0.75rem; /* the smallest size anywhere: 12px */
   --fs-sm: 0.875rem;
   --fs-base: 1rem;
