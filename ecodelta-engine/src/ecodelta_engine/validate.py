@@ -52,8 +52,12 @@ def check_consistency(out: Path, meta: dict) -> list[str]:
                 errors.append(f"grids/{v}.json: significant flag disagrees with q")
                 break
         cf = json.loads((out / "compare" / f"{v}.json").read_text())
-        if len(cf["pairs"]) != len(regions) * (len(regions) - 1) // 2:
-            errors.append(f"compare/{v}.json: {len(cf['pairs'])} pairs for {len(regions)} regions")
+        if len(cf["pairs"]) + len(cf["held_pairs"]) != len(regions) * (len(regions) - 1) // 2:
+            errors.append(f"compare/{v}.json: {len(cf['pairs'])} + {len(cf['held_pairs'])} held pairs "
+                          f"for {len(regions)} regions")
+        held = {h["region"] for h in meta["quality_gate"]["held"] if h["variable"] == v}
+        if any(e["region_a"] in held or e["region_b"] in held for e in cf["pairs"]):
+            errors.append(f"compare/{v}.json: a pair with a held region is exported as a result")
         for e in cf["pairs"]:
             if (e["verdict"] == "trends differ") != (e["pvalue"] is not None and e["pvalue"] < meta["methods"]["alpha"]):
                 errors.append(f"compare/{v}.json {e['region_a']}-{e['region_b']}: verdict disagrees with p")
@@ -74,6 +78,9 @@ def check_consistency(out: Path, meta: dict) -> list[str]:
                                                           rep["ci_high_per_decade"]))]
                 if want != d["evidence"]["class"]:
                     errors.append(f"regions/{r['id']}.json {v}: evidence class {d['evidence']['class']} != {want}")
+        held = {h["variable"] for h in meta["quality_gate"]["held"] if h["region"] == r["id"]}
+        if set(rf["held"]) != held or held & set(rf["variables"]):
+            errors.append(f"regions/{r['id']}.json: held {sorted(rf['held'])} != meta {sorted(held)} or exported")
         for v, d in rf["variables"].items():
             if d["series"] and len(d["series"]["anomaly"]) != len(rf["dates"]):
                 errors.append(f"regions/{r['id']}.json: {v} series length != number of dates")
@@ -113,7 +120,9 @@ def golden(out: Path, root: Path, meta: dict) -> tuple[int, list[str]]:
         for rid in GOLDEN_REGIONS:
             if rid not in regions:
                 continue
-            exported = json.loads((out / "regions" / f"{rid}.json").read_text())["variables"][v]
+            exported = json.loads((out / "regions" / f"{rid}.json").read_text())["variables"].get(v)
+            if exported is None:  # held by the quality gate; check_consistency checks the held list
+                continue
             box = box_mask(regions[rid]["box"], da.lat.values, da.lon.values)
             if rule["mode"] == "fixed_mask":
                 series, fm = fixed_mask_mean(da, box, rule["min_valid_fraction"], rule["max_missing_weight"])

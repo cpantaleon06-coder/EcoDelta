@@ -1,0 +1,887 @@
+{
+ "alpha": 0.05,
+ "decision": "approved by the owner 2026-11-15, G4 on",
+ "independence_cap": true,
+ "min_checked_share": 0.5,
+ "pairs": {
+  "evap": {
+   "amazon_basin": {
+    "difference_p": 0.0003354668791965396,
+    "difference_per_decade": 0.36905958357745267,
+    "product_verdict": "increasing",
+    "reason": "disagrees with MERRA-2 land EVLAND: product increasing, reference decreasing; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "antarctica": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": null,
+    "reason": "no data in this region",
+    "reference_verdict": null,
+    "status": "held"
+   },
+   "arctic": {
+    "difference_p": 0.006054256373801651,
+    "difference_per_decade": 0.022380778052506177,
+    "product_verdict": "increasing",
+    "reason": "disagrees with MERRA-2 land EVLAND: product increasing, reference no clear trend; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "australia": {
+    "difference_p": 6.119613161432414e-07,
+    "difference_per_decade": 0.12142269925041294,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with MERRA-2 land EVLAND (no clear trend); size differs by +0.121/decade; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "central_africa": {
+    "difference_p": 0.5407526033453993,
+    "difference_per_decade": 0.038729943169540273,
+    "product_verdict": "increasing",
+    "reason": "verdict differs from MERRA-2 land EVLAND (increasing vs no clear trend), difference not significant; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "central_america_caribbean": {
+    "difference_p": 0.9941920056427788,
+    "difference_per_decade": -0.00027277474377173256,
+    "product_verdict": "increasing",
+    "reason": "verdict differs from MERRA-2 land EVLAND (increasing vs no clear trend), difference not significant; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "east_africa": {
+    "difference_p": 4.2614327514487066e-08,
+    "difference_per_decade": -0.22243218819511246,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land EVLAND (increasing); size differs by -0.222/decade; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "east_china": {
+    "difference_p": 0.27726468846718466,
+    "difference_per_decade": -0.02074347714221861,
+    "product_verdict": "increasing",
+    "reason": "agrees with MERRA-2 land EVLAND (increasing); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "eastern_us": {
+    "difference_p": 0.005753337627898454,
+    "difference_per_decade": 0.060111553057888276,
+    "product_verdict": "increasing",
+    "reason": "disagrees with MERRA-2 land EVLAND: product increasing, reference no clear trend; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "global": {
+    "difference_p": 0.11900705501325867,
+    "difference_per_decade": 0.023726279876979513,
+    "product_verdict": "increasing",
+    "reason": "agrees with MERRA-2 land EVLAND (increasing); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "indian_subcontinent": {
+    "difference_p": 0.03709489760213116,
+    "difference_per_decade": -0.052524787843916884,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land EVLAND (increasing); size differs by -0.053/decade; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "mediterranean": {
+    "difference_p": 0.42107494775052334,
+    "difference_per_decade": -0.009485889455579571,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with MERRA-2 land EVLAND (no clear trend); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "mexico": {
+    "difference_p": 0.38107583809452295,
+    "difference_per_decade": -0.016754565759198252,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with MERRA-2 land EVLAND (no clear trend); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "middle_east": {
+    "difference_p": 2.437536373886692e-13,
+    "difference_per_decade": -0.07006042981313389,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land EVLAND: product no clear trend, reference increasing; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "sahel": {
+    "difference_p": 4.7005594369269515e-05,
+    "difference_per_decade": -0.11626467737281404,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land EVLAND (increasing); size differs by -0.116/decade; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "siberia": {
+    "difference_p": 0.0026031832885511715,
+    "difference_per_decade": 0.0386404852999743,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land EVLAND (increasing); size differs by +0.039/decade; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southeast_asia": {
+    "difference_p": 0.7713546270059106,
+    "difference_per_decade": -0.011168974593580783,
+    "product_verdict": "increasing",
+    "reason": "agrees with MERRA-2 land EVLAND (increasing); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southern_africa": {
+    "difference_p": 0.02426603703804111,
+    "difference_per_decade": -0.0946626032831045,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land EVLAND: product decreasing, reference no clear trend; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "southern_south_america": {
+    "difference_p": 2.2303391926075388e-05,
+    "difference_per_decade": 0.07598641273964121,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land EVLAND: product no clear trend, reference decreasing; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "western_europe": {
+    "difference_p": 0.24593849195224382,
+    "difference_per_decade": 0.01896314522584555,
+    "product_verdict": "increasing",
+    "reason": "agrees with MERRA-2 land EVLAND (increasing); MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "western_us": {
+    "difference_p": 0.11081003472342942,
+    "difference_per_decade": 0.021394584147938923,
+    "product_verdict": "increasing",
+    "reason": "verdict differs from MERRA-2 land EVLAND (increasing vs no clear trend), difference not significant; MERRA-2 land EVLAND is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   }
+  },
+  "precip": {
+   "amazon_basin": {
+    "difference_p": 0.8112267949974609,
+    "difference_per_decade": 0.0014367505956488732,
+    "product_verdict": "decreasing",
+    "reason": "agrees with GPCP v3.3 (decreasing); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "limited"
+   },
+   "antarctica": {
+    "difference_p": 7.627577509719569e-12,
+    "difference_per_decade": 0.18215921177908329,
+    "product_verdict": "increasing",
+    "reason": "disagrees with GPCP v3.3: product increasing, reference no clear trend; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "arctic": {
+    "difference_p": 0.3264307320486465,
+    "difference_per_decade": -0.012269265151558515,
+    "product_verdict": "increasing",
+    "reason": "agrees with GPCP v3.3 (increasing); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "australia": {
+    "difference_p": 0.9936050225241337,
+    "difference_per_decade": 6.362236084754281e-05,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with GPCP v3.3 (no clear trend); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "central_africa": {
+    "difference_p": 0.0001305894169074111,
+    "difference_per_decade": 0.03117795925257475,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GPCP v3.3: product no clear trend, reference decreasing; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "central_america_caribbean": {
+    "difference_p": 0.003528522651096847,
+    "difference_per_decade": -0.0738421867094077,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with GPCP v3.3 (no clear trend); size differs by -0.074/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "east_africa": {
+    "difference_p": 2.919134732918534e-07,
+    "difference_per_decade": -0.04284449372276908,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with GPCP v3.3 (no clear trend); size differs by -0.043/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "east_china": {
+    "difference_p": 0.003731525145730203,
+    "difference_per_decade": 0.032961306583943396,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GPCP v3.3 (increasing); size differs by +0.033/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "eastern_us": {
+    "difference_p": 0.49229145803118135,
+    "difference_per_decade": 0.01227483910800361,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with GPCP v3.3 (no clear trend); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "global": {
+    "difference_p": 0.4076171491637114,
+    "difference_per_decade": 0.009907792998243396,
+    "product_verdict": "increasing",
+    "reason": "verdict differs from GPCP v3.3 (increasing vs no clear trend), difference not significant; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "indian_subcontinent": {
+    "difference_p": 0.01802543563652261,
+    "difference_per_decade": -0.034960057562071496,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GPCP v3.3 (increasing); size differs by -0.035/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "mediterranean": {
+    "difference_p": 0.014711827642479443,
+    "difference_per_decade": 0.017021358815311603,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GPCP v3.3: product no clear trend, reference decreasing; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "mexico": {
+    "difference_p": 0.4132147937649786,
+    "difference_per_decade": 0.011469244179889771,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with GPCP v3.3 (no clear trend); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "middle_east": {
+    "difference_p": 0.009765356398348336,
+    "difference_per_decade": -0.00562271972511408,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with GPCP v3.3 (no clear trend); size differs by -0.006/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "sahel": {
+    "difference_p": 0.03827839756443757,
+    "difference_per_decade": 0.00385455545485016,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with GPCP v3.3 (no clear trend); size differs by +0.004/decade; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "siberia": {
+    "difference_p": 0.9941431242420581,
+    "difference_per_decade": 4.045754542237314e-05,
+    "product_verdict": "increasing",
+    "reason": "agrees with GPCP v3.3 (increasing); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southeast_asia": {
+    "difference_p": 0.06965076283430219,
+    "difference_per_decade": 0.04123686414333834,
+    "product_verdict": "increasing",
+    "reason": "agrees with GPCP v3.3 (increasing); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southern_africa": {
+    "difference_p": 0.15636038701000027,
+    "difference_per_decade": -0.0122363104844018,
+    "product_verdict": "decreasing",
+    "reason": "agrees with GPCP v3.3 (decreasing); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "limited"
+   },
+   "southern_south_america": {
+    "difference_p": 5.292541235037615e-12,
+    "difference_per_decade": 0.0755076902664316,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GPCP v3.3: product no clear trend, reference decreasing; GPCP v3.3 is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "western_europe": {
+    "difference_p": 0.9460259924760743,
+    "difference_per_decade": 0.0013537697449570992,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with GPCP v3.3 (no clear trend); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "western_us": {
+    "difference_p": 0.06324129720168259,
+    "difference_per_decade": -0.006907827825939197,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with GPCP v3.3 (no clear trend); GPCP v3.3 is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   }
+  },
+  "runoff_surface": {
+   "amazon_basin": {
+    "difference_p": 0.006584961271784756,
+    "difference_per_decade": 0.14900272566117032,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference decreasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "antarctica": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": null,
+    "reason": "no data in this region",
+    "reference_verdict": null,
+    "status": "held"
+   },
+   "arctic": {
+    "difference_p": 0.953040350200785,
+    "difference_per_decade": -0.0004188634181045605,
+    "product_verdict": "no clear trend",
+    "reason": "verdict differs from MERRA-2 land RUNOFF (no clear trend vs increasing), difference not significant; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "australia": {
+    "difference_p": 0.009718521748196362,
+    "difference_per_decade": 0.02048706871567869,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference decreasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "central_africa": {
+    "difference_p": 7.136752944099206e-05,
+    "difference_per_decade": -0.11954485102614845,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.120/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "central_america_caribbean": {
+    "difference_p": 2.332678225713719e-09,
+    "difference_per_decade": -0.2506845715910937,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.251/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "east_africa": {
+    "difference_p": 2.7909438866225696e-17,
+    "difference_per_decade": -0.18665288235877206,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.187/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "east_china": {
+    "difference_p": 0.0017553343393816828,
+    "difference_per_decade": -0.07705602005976449,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.077/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "eastern_us": {
+    "difference_p": 0.4788114624816535,
+    "difference_per_decade": -0.009469368429216063,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with MERRA-2 land RUNOFF (no clear trend); MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "global": {
+    "difference_p": 9.542941018794193e-05,
+    "difference_per_decade": -0.06640322912763622,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "indian_subcontinent": {
+    "difference_p": 2.259951331512113e-08,
+    "difference_per_decade": -0.11957117051685132,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "mediterranean": {
+    "difference_p": 0.24472575574613542,
+    "difference_per_decade": -0.008111457839683861,
+    "product_verdict": "decreasing",
+    "reason": "verdict differs from MERRA-2 land RUNOFF (decreasing vs no clear trend), difference not significant; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "mexico": {
+    "difference_p": 0.0019220925599147012,
+    "difference_per_decade": -0.052090667412672716,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "middle_east": {
+    "difference_p": 1.3787337979600585e-15,
+    "difference_per_decade": -0.02213588480953085,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "sahel": {
+    "difference_p": 3.5964756065727777e-06,
+    "difference_per_decade": -0.08149135506357236,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.081/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "siberia": {
+    "difference_p": 0.003331219735142747,
+    "difference_per_decade": -0.016284026604297504,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "southeast_asia": {
+    "difference_p": 0.0008508508320967101,
+    "difference_per_decade": -0.3721199909212132,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with MERRA-2 land RUNOFF (increasing); size differs by -0.372/decade; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southern_africa": {
+    "difference_p": 6.925156788983029e-05,
+    "difference_per_decade": -0.030073983028192877,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product decreasing, reference increasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "southern_south_america": {
+    "difference_p": 5.126718508756289e-06,
+    "difference_per_decade": 0.05649042452408801,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land RUNOFF: product no clear trend, reference decreasing; MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "held"
+   },
+   "western_europe": {
+    "difference_p": 0.052569368202237864,
+    "difference_per_decade": -0.03817177171631765,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with MERRA-2 land RUNOFF (no clear trend); MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "western_us": {
+    "difference_p": 0.643997689301397,
+    "difference_per_decade": -0.003253126480138295,
+    "product_verdict": "no clear trend",
+    "reason": "agrees with MERRA-2 land RUNOFF (no clear trend); MERRA-2 land RUNOFF is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   }
+  },
+  "soil_moisture_0_10cm": {
+   "amazon_basin": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "antarctica": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": null,
+    "reason": "no data in this region",
+    "reference_verdict": null,
+    "status": "held"
+   },
+   "arctic": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "australia": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with MERRA-2 land SFMC (no clear trend); size not checkable (other units); MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "central_africa": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "central_america_caribbean": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "east_africa": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "east_china": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land SFMC: product no clear trend, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "eastern_us": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "global": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "indian_subcontinent": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land SFMC: product no clear trend, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "mediterranean": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "mexico": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "middle_east": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land SFMC: product no clear trend, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "sahel": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with MERRA-2 land SFMC: product no clear trend, reference increasing; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "siberia": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with MERRA-2 land SFMC (no clear trend); size not checkable (other units); MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "southeast_asia": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with MERRA-2 land SFMC (no clear trend); size not checkable (other units); MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "southern_africa": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "southern_south_america": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "direction agrees with MERRA-2 land SFMC (decreasing); size not checkable (other units); MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "decreasing",
+    "status": "limited"
+   },
+   "western_europe": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "decreasing",
+    "reason": "disagrees with MERRA-2 land SFMC: product decreasing, reference no clear trend; MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "held"
+   },
+   "western_us": {
+    "difference_p": null,
+    "difference_per_decade": null,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with MERRA-2 land SFMC (no clear trend); size not checkable (other units); MERRA-2 land SFMC is not independent of the product",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   }
+  },
+  "t2m": {
+   "amazon_basin": {
+    "difference_p": 0.13742020516857337,
+    "difference_per_decade": 0.07226595334456679,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "antarctica": {
+    "difference_p": 0.03832650788560675,
+    "difference_per_decade": -0.24799883072908757,
+    "product_verdict": "no clear trend",
+    "reason": "direction agrees with GISTEMP v4 250 km land (no clear trend); size differs by -0.248/decade; checked on 23% of the region",
+    "reference_verdict": "no clear trend",
+    "status": "limited"
+   },
+   "arctic": {
+    "difference_p": 5.5083183256951715e-06,
+    "difference_per_decade": -0.3268261722450312,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.327/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "australia": {
+    "difference_p": 0.22564034440325687,
+    "difference_per_decade": 0.04054044559884133,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "central_africa": {
+    "difference_p": 1.4480784062047122e-05,
+    "difference_per_decade": -0.4006798424812153,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GISTEMP v4 250 km land: product no clear trend, reference increasing; checked on 32% of the region",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "central_america_caribbean": {
+    "difference_p": 0.20863321520127964,
+    "difference_per_decade": -0.040408002597114134,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "east_africa": {
+    "difference_p": 3.1693888792784727e-16,
+    "difference_per_decade": -0.27943944114043784,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GISTEMP v4 250 km land: product no clear trend, reference increasing; checked on 38% of the region",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "east_china": {
+    "difference_p": 0.002126212923620996,
+    "difference_per_decade": -0.08123576159053886,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.081/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "eastern_us": {
+    "difference_p": 0.23074777408169145,
+    "difference_per_decade": 0.022335721052319055,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "global": {
+    "difference_p": 2.4025632121978623e-06,
+    "difference_per_decade": -0.12423452286036452,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.124/decade; checked on 37% of the region",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "indian_subcontinent": {
+    "difference_p": 3.245337632753535e-11,
+    "difference_per_decade": -0.1528025821222956,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GISTEMP v4 250 km land: product no clear trend, reference increasing",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "mediterranean": {
+    "difference_p": 0.2775373852769072,
+    "difference_per_decade": 0.016206952840023683,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "mexico": {
+    "difference_p": 0.8214966796666195,
+    "difference_per_decade": -0.0038183727643593453,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "middle_east": {
+    "difference_p": 3.073490166481876e-11,
+    "difference_per_decade": -0.16317617023823527,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.163/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "sahel": {
+    "difference_p": 6.922555839122833e-07,
+    "difference_per_decade": -0.3788487998321585,
+    "product_verdict": "no clear trend",
+    "reason": "disagrees with GISTEMP v4 250 km land: product no clear trend, reference increasing",
+    "reference_verdict": "increasing",
+    "status": "held"
+   },
+   "siberia": {
+    "difference_p": 4.485465483824116e-14,
+    "difference_per_decade": -0.28993331652398646,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.290/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southeast_asia": {
+    "difference_p": 6.248631488553835e-11,
+    "difference_per_decade": -0.16430227807512165,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.164/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southern_africa": {
+    "difference_p": 0.2774418071717589,
+    "difference_per_decade": -0.02805268594481447,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing); checked on 44% of the region",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "southern_south_america": {
+    "difference_p": 0.0019417641764962186,
+    "difference_per_decade": -0.08008888260290199,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by -0.080/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   },
+   "western_europe": {
+    "difference_p": 0.8148306988706531,
+    "difference_per_decade": -0.0035211074522629765,
+    "product_verdict": "increasing",
+    "reason": "agrees with GISTEMP v4 250 km land (increasing)",
+    "reference_verdict": "increasing",
+    "status": "published"
+   },
+   "western_us": {
+    "difference_p": 1.5781492500160368e-05,
+    "difference_per_decade": 0.10877697417987899,
+    "product_verdict": "increasing",
+    "reason": "direction agrees with GISTEMP v4 250 km land (increasing); size differs by +0.109/decade",
+    "reference_verdict": "increasing",
+    "status": "limited"
+   }
+  }
+ },
+ "references": {
+  "evap": {
+   "file": "data/quality/evap_vs_m2lnd.json",
+   "independent": false,
+   "reference": "MERRA-2 land EVLAND"
+  },
+  "precip": {
+   "file": "data/quality/precip_vs_gpcp.json",
+   "independent": false,
+   "reference": "GPCP v3.3"
+  },
+  "runoff_surface": {
+   "file": "data/quality/runoff_vs_m2lnd.json",
+   "independent": false,
+   "reference": "MERRA-2 land RUNOFF"
+  },
+  "soil_moisture_0_10cm": {
+   "file": "data/quality/soil_vs_m2lnd.json",
+   "independent": false,
+   "reference": "MERRA-2 land SFMC"
+  },
+  "t2m": {
+   "file": "data/quality/t2m_vs_gistemp.json",
+   "independent": true,
+   "reference": "GISTEMP v4 250 km land"
+  }
+ },
+ "rule": "QUALITY GATE v1, unit = one (variable, region) pair, status = published | limited | held\nG0 pipeline: a variable failing any step-1 check (source units, 297 consecutive months, NaN pattern,\n   raw-vs-regridded, validate --source real) -> all its pairs held.\nG1 data: fixed mask with 0 cells, or valid months < 95% of months -> held (\"no data\").\nG2 reference trend check, fixed primary reference per variable (same cells, common months, anomalies,\n   trendkit trend_report on each, D = product - reference via compare_pair, alpha 0.05;\n   verdict = increasing / decreasing when p < 0.05, else no clear trend):\n     verdicts differ and D significant        -> held     (\"disagrees with <ref>\")\n     verdicts differ, D not significant       -> limited  (\"verdict differs from <ref>, difference not significant\")\n     verdicts equal, D significant            -> limited  (\"direction agrees with <ref>, size differs\")\n     verdicts equal, D not significant        -> published\n   soil moisture (reference in other units, no D): verdicts differ -> held; equal -> limited.\n   no reference cells in the region         -> limited  (\"not checked against a reference\")\nG3 coverage of the check: reference cells cover < 50% of the product's cells in the region (area)\n   -> at most limited (\"checked on X% of the region\").\nG4 independence: reference not independent of the product -> at most limited (owner: on, 2026-11-15).\nG5 t2m: nothing published without explicit owner approval (standing rule), whatever the gate says.\nG6 region comparisons (compare/<variable>.json): a pair A-B gets the worse status of A and B.\nPrimary references: t2m GISTEMP v4 250 km land-only (independent, stations);\n   precip GPCP v3.3 (related: IMERG Final is calibrated to GPCP); evap, runoff_surface, soil moisture\n   MERRA-2 land M2TMNXLND EVLAND / RUNOFF / SFMC (other model and forcing; RUNOFF includes throughflow;\n   SFMC is volumetric surface layer).",
+ "version": "1"
+}

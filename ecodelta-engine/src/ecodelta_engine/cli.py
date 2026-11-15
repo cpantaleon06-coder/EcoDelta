@@ -10,6 +10,7 @@ from .compute import compare_regions, compute_all, sanity_checks
 from .export import export
 from .fixtures import write_fixture
 from .load import available, manifest_sha256, read_manifest
+from .quality import load_gate, statuses
 from .regions import load_regions
 from .screen import period_info, screen_region
 
@@ -54,6 +55,7 @@ def build(source: str, allow_missing: bool = False, workers: int | None = None) 
         print("no variable files found; nothing to build")
         return 1
     regions = load_regions()
+    gate = load_gate(source, have, regions)  # fail before the slow part
     ranges = {k: v["plausible_range"] for k, v in plain.items()}
     results, timing = compute_all(root, manifest, have, regions, ranges, workers)
     print("timing:", json.dumps(timing))
@@ -63,12 +65,17 @@ def build(source: str, allow_missing: bool = False, workers: int | None = None) 
         print("BLOCKERS, nothing exported:\n  " + "\n  ".join(blockers))
         return 2
     period = period_info(next(iter(results.values()))["dates"])
-    ranked = {r["id"]: screen_region(r, {v: results[v]["regions"][r["id"]] for v in results}, catalog, period)
+    quality = statuses(gate, results, regions)
+    held_pairs = [(v, r) for v in quality for r, s in quality[v].items() if s["status"] == "held"]
+    if held_pairs:
+        print(f"quality gate: {len(held_pairs)} (variable, region) pairs held, not exported as results")
+    ranked = {r["id"]: screen_region(r, {v: results[v]["regions"][r["id"]] for v in results
+                                         if quality[v][r["id"]]["status"] != "held"}, catalog, period)
               for r in regions}
     compare = {v: compare_regions(results[v], regions) for v in results}
     out = config.OUTPUT_DIRS[source]
     info = export(out, source, catalog, regions, results, ranked, period, missing, timing, sanity,
-                  manifest_sha256(root), compare)
+                  manifest_sha256(root), compare, quality, gate)
     print(f"wrote {info['n_files']} files, {info['total_bytes'] / 1024**2:.2f} MB to {out}")
     print("largest:", info["largest"])
     print(f"compare/: {info['compare_bytes'] / 1024**2:.2f} MB")

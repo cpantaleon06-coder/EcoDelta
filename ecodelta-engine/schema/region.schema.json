@@ -10,6 +10,13 @@
    },
    "type": "array"
   },
+  "held": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "variables held by the quality gate in this region: reason",
+   "type": "object"
+  },
   "region": {
    "additionalProperties": false,
    "properties": {
@@ -467,6 +474,26 @@
       ],
       "type": "object"
      },
+     "quality": {
+      "additionalProperties": false,
+      "properties": {
+       "reason": {
+        "type": "string"
+       },
+       "status": {
+        "enum": [
+         "published",
+         "limited",
+         "held"
+        ]
+       }
+      },
+      "required": [
+       "reason",
+       "status"
+      ],
+      "type": "object"
+     },
      "rank": {
       "minimum": 1,
       "type": "integer"
@@ -584,6 +611,7 @@
      "evidence",
      "magnitude",
      "map_cells",
+     "quality",
      "rank",
      "rank_by_magnitude",
      "report",
@@ -598,6 +626,7 @@
  },
  "required": [
   "dates",
+  "held",
   "region",
   "schema_version",
   "variables"

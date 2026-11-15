@@ -16,11 +16,12 @@ import pandas as pd
 import trendkit
 
 from . import __version__, config
+from .quality import meta_block, pair_quality
 from .compute import COMPARE_METHOD, COMPARE_NOTE, Q_NOTE
 from .screen import (EVIDENCE_CLASSES, EVIDENCE_DEFINITION, MAGNITUDE_DEFINITION, ORDERINGS, SCORE_DEFINITION,
                      evidence_code)
 
-SCHEMA_VERSION = "1.2.0"
+SCHEMA_VERSION = "1.3.0"
 SIG_DIGITS = 4
 AUTOCORR_NOTES = {"yue_wang": "Yue and Wang (2004) variance correction with an AR(1) model, floored at 1; "
                               "recommended in trendkit docs/METHODS.md"}
@@ -117,19 +118,21 @@ def grid_file(var: str, res: dict) -> dict:
     }
 
 
-def region_file(region: dict, entries: list[dict], results: dict, dates: list[str]) -> dict:
+def region_file(region: dict, entries: list[dict], results: dict, dates: list[str], quality: dict) -> dict:
     variables = {}
     for e in entries:
         rr = results[e["variable"]]["regions"][region["id"]]
         variables[e["variable"]] = {
             "rank": e["rank"], "rank_by_magnitude": e["rank_by_magnitude"], "score": e["score"],
             "evidence": e["evidence"], "magnitude": e["magnitude"], "map_cells": rr["map_cells"],
-            "answers": e["answers"], "sentence": e["sentence"],
+            "answers": e["answers"], "sentence": e["sentence"], "quality": quality[e["variable"]][region["id"]],
             "cautions": e["cautions"], "report": rr["report"],
             "series": None if rr["anomalies"] is None else
             {"anomaly": rr["anomalies"], "running_mean_12": rr["running_mean"]},
         }
-    return {"schema_version": SCHEMA_VERSION, "region": region, "dates": dates, "variables": variables}
+    held = {v: q[region["id"]]["reason"] for v, q in sorted(quality.items()) if q[region["id"]]["status"] == "held"}
+    return {"schema_version": SCHEMA_VERSION, "region": region, "dates": dates, "variables": variables,
+            "held": held}
 
 
 def screening_file(region: dict, entries: list[dict]) -> dict:
@@ -154,10 +157,18 @@ def screening_file(region: dict, entries: list[dict]) -> dict:
     }
 
 
-def compare_file(var: dict, pairs: list[dict], period: dict) -> dict:
+def compare_file(var: dict, pairs: list[dict], period: dict, quality: dict) -> dict:
+    """Pairs with a held region go to held_pairs (G6); q_across_pairs stays computed over all pairs."""
+    shown, held = [], []
+    for e in pairs:
+        q = pair_quality(quality[e["region_a"]], quality[e["region_b"]], e["region_a"], e["region_b"])
+        if q["status"] == "held":
+            held.append({"region_a": e["region_a"], "region_b": e["region_b"], "reason": q["reason"]})
+        else:
+            shown.append(e | {"quality": q})
     return {"schema_version": SCHEMA_VERSION, "variable": var["id"], "units": var["units"],
             "public_unit": var["public_unit"], "period": [period["start"], period["end"]],
-            "method": COMPARE_METHOD, "note": COMPARE_NOTE, "q_note": Q_NOTE, "pairs": pairs}
+            "method": COMPARE_METHOD, "note": COMPARE_NOTE, "q_note": Q_NOTE, "pairs": shown, "held_pairs": held}
 
 
 def meta_file(source: str, catalog: dict, period: dict, n_months: int, missing: list[str],
@@ -235,7 +246,7 @@ def run_provenance(meta: dict) -> dict:
 
 def export(out: Path, source: str, catalog: dict, regions: list[dict], results: dict, ranked: dict,
            period: dict, missing: list[str], timing: dict, sanity: dict, manifest_sha256: str | None,
-           compare: dict) -> dict:
+           compare: dict, quality: dict, gate: dict | None) -> dict:
     """Write every file into a temporary folder, then swap it in place of `out`. Returns size info."""
     tmp = out.with_name(out.name + ".tmp")
     shutil.rmtree(tmp, ignore_errors=True)
@@ -243,7 +254,7 @@ def export(out: Path, source: str, catalog: dict, regions: list[dict], results: 
     dates = list(pd.DatetimeIndex(any_res["dates"]).strftime("%Y-%m"))
     included = {v: catalog[v] for v in results}
     meta = meta_file(source, included, period, len(dates), missing, timing, sanity) | {
-        "data": {"manifest_sha256": manifest_sha256}}
+        "data": {"manifest_sha256": manifest_sha256}, "quality_gate": meta_block(gate, quality)}
     included = {v: dict(c, provenance=c["provenance"] | run_provenance(meta)) for v, c in included.items()}
     write_json(tmp / "meta.json", meta)
     write_json(tmp / "catalog.json", {"schema_version": SCHEMA_VERSION,
@@ -252,10 +263,10 @@ def export(out: Path, source: str, catalog: dict, regions: list[dict], results: 
                                       "regions": regions})
     for var, res in sorted(results.items()):
         write_json(tmp / "grids" / f"{var}.json", grid_file(var, res), compact=True)
-        write_json(tmp / "compare" / f"{var}.json", compare_file(included[var], compare[var], period), compact=True)
+        write_json(tmp / "compare" / f"{var}.json", compare_file(included[var], compare[var], period, quality[var]), compact=True)
     for region in regions:
         entries = ranked[region["id"]]
-        write_json(tmp / "regions" / f"{region['id']}.json", region_file(region, entries, results, dates), compact=True)
+        write_json(tmp / "regions" / f"{region['id']}.json", region_file(region, entries, results, dates, quality), compact=True)
         write_json(tmp / "screening" / f"{region['id']}.json", screening_file(region, entries))
     shutil.rmtree(out, ignore_errors=True)
     tmp.rename(out)

@@ -289,6 +289,70 @@
    },
    "type": "array"
   },
+  "quality_gate": {
+   "additionalProperties": false,
+   "properties": {
+    "counts": {
+     "additionalProperties": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object"
+     },
+     "type": "object"
+    },
+    "decision": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "held": {
+     "items": {
+      "additionalProperties": false,
+      "properties": {
+       "reason": {
+        "type": "string"
+       },
+       "region": {
+        "type": "string"
+       },
+       "variable": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "reason",
+       "region",
+       "variable"
+      ],
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "references": {
+     "type": "object"
+    },
+    "rule": {
+     "type": "string"
+    },
+    "version": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   },
+   "required": [
+    "counts",
+    "decision",
+    "held",
+    "references",
+    "rule",
+    "version"
+   ],
+   "type": "object"
+  },
   "sanity_checks": {
    "type": "object"
   },
@@ -353,6 +417,7 @@
   "methods",
   "period",
   "products",
+  "quality_gate",
   "sanity_checks",
   "schema_version",
   "source",

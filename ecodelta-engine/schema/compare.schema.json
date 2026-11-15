@@ -3,6 +3,29 @@
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "additionalProperties": false,
  "properties": {
+  "held_pairs": {
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "reason": {
+      "type": "string"
+     },
+     "region_a": {
+      "type": "string"
+     },
+     "region_b": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "reason",
+     "region_a",
+     "region_b"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  },
   "method": {
    "type": "string"
   },
@@ -53,6 +76,26 @@
        "number",
        "null"
       ]
+     },
+     "quality": {
+      "additionalProperties": false,
+      "properties": {
+       "reason": {
+        "type": "string"
+       },
+       "status": {
+        "enum": [
+         "published",
+         "limited",
+         "held"
+        ]
+       }
+      },
+      "required": [
+       "reason",
+       "status"
+      ],
+      "type": "object"
      },
      "region_a": {
       "type": "string"
@@ -164,6 +207,7 @@
      "overlap_fraction",
      "pvalue",
      "q_across_pairs",
+     "quality",
      "region_a",
      "region_b",
      "trend_a",
@@ -201,6 +245,7 @@
   }
  },
  "required": [
+  "held_pairs",
   "method",
   "note",
   "pairs",

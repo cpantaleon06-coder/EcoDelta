@@ -86,6 +86,11 @@ export ECODELTA_DATA_DIR=/path/to/nasa-data
 .venv/bin/python -m ecodelta_engine validate --source real
 ```
 
+- **Quality gate.** A real build needs `data/catalog/quality_gate.json` with a status for every
+  (variable, region); the build stops otherwise. To regenerate it: fetch the references with
+  `nasa-data/scripts/fetch_reference.py` (GLDAS Tair, GPCP, MERRA-2 land) and the GISTEMP gridded files
+  into `nasa-data/data/reference/gistemp/`, run the comparison scripts in `scripts/quality/` (commands
+  in `docs/VALIDATION.md` sections 4 to 7), then `.venv/bin/python -I scripts/quality/gate.py --write`.
 - **Holds.** A variable whose `data/catalog/variables.yaml` entry has `hold:` is never exported in the
   real build, even when its data is complete. `t2m` is held since 2026-11-14 (see `docs/VALIDATION.md`).
   With every complete variable held, the build exports nothing and exits with code 1.

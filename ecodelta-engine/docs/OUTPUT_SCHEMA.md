@@ -1,4 +1,21 @@
-# web_data output format (schema version 1.2.0)
+# web_data output format (schema version 1.3.0)
+
+Changes in 1.3.0 (additive; 1.2.0 readers keep working, but must not show held items as results):
+* Quality gate (rule in `meta.quality_gate.rule`, approved by the owner on 2026-11-15; evidence in
+  docs/VALIDATION.md section 7). Status values: `published` (agrees with an independent reference),
+  `limited` (show with the reason as a caution), `held` (not a result; list it with its reason).
+* `regions/<id>.json`: every variable entry has `quality: {status, reason}` (`published` or `limited`);
+  new top-level `held: {variable: reason}`. Held variables are not in `variables` and not in the
+  screening ranking of that region.
+* `compare/<variable>.json`: every pair has `quality: {status, reason}`, the worse status of its two
+  regions; pairs with a held region are in `held_pairs: [{region_a, region_b, reason}]` instead of
+  `pairs`. `q_across_pairs` is still computed over all pairs, held ones included.
+* `meta.json`: `quality_gate: {version, rule, decision, references, counts, held}`; `held` lists every
+  held (variable, region) with its reason; `counts` has published/limited/held per variable.
+* The fixture is synthetic: every pair is `limited` with the reason "synthetic fixture data; not
+  checked against a reference", and `quality_gate.version` is null.
+* `grids/` is not gated: maps cover every cell.
+
 
 Changes in 1.2.0 (additive; 1.1.0 readers keep working):
 * Regional means use a **fixed spatial mask** (the same cells every month); its diagnostics are in
