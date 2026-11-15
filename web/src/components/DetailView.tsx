@@ -144,23 +144,27 @@ export function DetailView({ region, variable, meta }: Props) {
           <Icon name="info" size={18} className="title-icon" />
           About this variable
         </h3>
-        <p>{variable.definition}</p>
-        <p>{variable.increase_means}</p>
-        <ul>
-          {variable.caveats.map((c) => (
-            <li key={c}>{c}</li>
-          ))}
-        </ul>
-        {warnings.length > 0 && (
-          <>
-            <h4>Technical warnings for this result</h4>
-            <ul className="cautions">
-              {warnings.map((w) => (
-                <li key={w}>{w}</li>
-              ))}
-            </ul>
-          </>
-        )}
+        <div>
+          <p>{variable.definition}</p>
+          <p>{variable.increase_means}</p>
+        </div>
+        <div>
+          <ul>
+            {variable.caveats.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+          {warnings.length > 0 && (
+            <>
+              <h4>Technical warnings for this result</h4>
+              <ul className="cautions">
+                {warnings.map((w) => (
+                  <li key={w}>{w}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </section>
 
       <details className="how">

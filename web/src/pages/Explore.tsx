@@ -140,6 +140,7 @@ export default function Explore() {
           )}
           <MapLegend palette={PALETTE} max={max} unit={variable.public_unit} period={meta.period} />
           <p className="note">{regionList!.note}</p>
+          <div className="fill" aria-hidden="true" />
         </section>
         <aside className="explore__panel" aria-label="Ranking for the selected region">
           <RankingPanel
@@ -148,6 +149,7 @@ export default function Explore() {
             selectedVar={varId}
             onSelect={(id) => open({ var: id })}
           />
+          <div className="fill" aria-hidden="true" />
         </aside>
         <section id="detail" className="explore__detail">
           <DetailView region={region} variable={variable} meta={meta} />
