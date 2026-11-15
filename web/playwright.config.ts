@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-// Smoke test against the production build (run "npm run sync-data" first so the data is in the build).
+// Smoke test against the production build. Run "npm run sync-data -- fixture" first; ALLOW_FIXTURE=1 lets the build use it.
 export default defineConfig({
   testDir: 'e2e',
   timeout: 60_000,
@@ -10,7 +10,7 @@ export default defineConfig({
     launchOptions: { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] },
   },
   webServer: {
-    command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+    command: 'ALLOW_FIXTURE=1 npm run build && npm run preview -- --port 4173 --strictPort',
     url: 'http://localhost:4173',
     reuseExistingServer: true,
     timeout: 120_000,

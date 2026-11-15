@@ -1,54 +1,46 @@
-# React + TypeScript + Vite
+# EcoDelta web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Static, display-only website for EcoDelta (NASA Space Apps 2026). It reads precomputed JSON from the EcoDelta
+engine (`public/web_data/`) and computes no statistics in the browser. Vite, React, TypeScript, MapLibre GL JS and
+Recharts.
 
-Currently, two official plugins are available:
+## Data
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm run sync-data            # copies ../ecodelta-engine/web_data (real data, the default)
+npm run sync-data -- fixture # copies ../ecodelta-engine/web_data_fixture (synthetic demo data)
+npm run sync-data -- <path>  # any folder that holds engine output
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The data contract is `../ecodelta-engine/docs/OUTPUT_SCHEMA.md`. Every read goes through `src/dataClient.ts`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Build guard
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+`npm run build` first runs `scripts/data-guard.mjs`. It stops the build when `public/web_data/meta.json` is
+missing or holds demo data (`synthetic` is not `false`, or `source` is not `"real"`, the same rule as the DEMO
+DATA banner). To build on the fixture on purpose, for a local preview or the end-to-end tests:
+
+```bash
+ALLOW_FIXTURE=1 npm run build
 ```
+
+## Develop and test
+
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm test           # unit tests (Vitest), including the build guard
+npm run test:e2e   # Playwright smoke tests against the production build (uses ALLOW_FIXTURE=1)
+npm run lint
+```
+
+`design/shoot-v8.mjs` takes the review screenshots (dev server running), and `.audit.mjs` checks text contrast,
+sideways overflow, keyboard focus and reduced motion.
+
+## Deploy (Vercel)
+
+`vercel.json` runs `npm run sync-data -- ${ECODELTA_DATA_SOURCE:-real} && npm run build`. With no variable set it
+uses the real data, and the build fails if that data is missing or synthetic. A demo deployment needs both
+`ECODELTA_DATA_SOURCE=fixture` and `ALLOW_FIXTURE=1`; it then shows the DEMO DATA banner and header badge.
+
+Open problems and unverified points are listed in `PROBLEMS.md`; third-party licenses in `THIRD_PARTY.md`.

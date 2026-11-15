@@ -1,12 +1,12 @@
 // Copy engine output into public/web_data/.
-// Usage: npm run sync-data -- fixture | real | <path to a web_data folder>
+// Usage: npm run sync-data [-- real | fixture | <path to a web_data folder>]   (default: real)
 import { cpSync, existsSync, rmSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const engine = resolve(here, '../../ecodelta-engine');
-const arg = process.argv[2] ?? 'fixture';
+const arg = process.argv[2] ?? 'real';
 const src = { fixture: `${engine}/web_data_fixture`, real: `${engine}/web_data` }[arg] ?? resolve(arg);
 const dest = resolve(here, '../public/web_data');
 
