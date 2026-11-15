@@ -51,9 +51,13 @@ src/ecodelta_engine/
   cli.py        build / validate commands
 data/catalog/   variables.yaml (plain-language definitions), regions.yaml (region boxes)
 schema/         JSON Schema for every exported file
-docs/           OUTPUT_SCHEMA.md (for the web developer), ENGINE.md, TRENDKIT_ISSUES.md
+docs/           OUTPUT_SCHEMA.md (for the web developer), ENGINE.md, TRENDKIT_ISSUES.md,
+                VALIDATION.md (sanity checks, POWER comparison), REPRODUCE.md (credentials to web_data)
+scripts/        validate_power.py (compare one regional trend with NASA POWER)
 web_data_fixture/  export from synthetic data (do not show as real results)
 web_data/          export from real data
 ```
 
-See also `PROBLEMS.md` (what went wrong, what is not verified) and `THIRD_PARTY.md`.
+See also `PROBLEMS.md` (what went wrong, what is not verified), `THIRD_PARTY.md`, `docs/VALIDATION.md`
+and `docs/REPRODUCE.md`. There is no real export yet: `t2m` is complete but held back (`hold:` in
+`data/catalog/variables.yaml`), and the other four variables are still downloading.

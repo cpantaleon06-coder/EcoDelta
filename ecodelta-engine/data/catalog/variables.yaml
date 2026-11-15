@@ -5,8 +5,11 @@
 # stop the build (it catches unit mistakes). These are our own loose bounds, not published limits.
 # public_unit is only a display label for the same numbers (no conversion happens here).
 # Product, version and DOI are NOT written here: they are read from nasa-data/docs/DATASETS.md.
+# hold: <reason> keeps a variable out of the REAL export (owner decision; the fixture keeps it).
+#   A held variable is listed in meta.variables_missing. Remove the line to publish it.
 
 t2m:
+  hold: "Owner decision 2026-11-14: held back. MERRA-2 global trend 2001-01..2025-09 is +0.163 degC/decade vs +0.245 in GISTEMP v4 (polar bands, known MERRA-2 issue), and the Sahel shows an unverified cooling. See docs/VALIDATION.md."
   plausible_range: [-90, 60]
   name: Air temperature near the ground
   definition: How warm the air is about 2 meters above the ground or the sea, averaged over each month.

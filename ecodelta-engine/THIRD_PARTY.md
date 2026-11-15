@@ -21,6 +21,29 @@ License values as reported by each package's installed metadata on 2026-11-14.
 
 ## Data
 
-The processed NetCDF files are made by the data session (`nasa-data`) from NASA GES DISC products;
-product names, versions, DOIs and citations are exported in `web_data/meta.json` (read from
-`nasa-data/docs/DATASETS.md`).
+The processed NetCDF files are made by the data session (`nasa-data`) from NASA GES DISC products.
+Product names, versions, DOIs and citations are exported in `web_data/meta.json`, read from
+`nasa-data/docs/DATASETS.md`. That file copies the CMR `CollectionCitations` fields. Since schema 1.1.0,
+each variable in `web_data/catalog.json` also carries a `provenance` block (collection id, version,
+DOI, source units, resolution, retrieval dates, processing and statistics), read from the data build's
+`manifest.json`.
+
+No real export is published yet (2026-11-14). `t2m` has complete data but is held back by the owner
+(see `docs/VALIDATION.md`). Its source, recorded for when it is released:
+
+| Variable | Product | Collection id (CMR) | Version | DOI | Citation (from CMR metadata) |
+|---|---|---|---|---|---|
+| `t2m` | MERRA-2 tavgM_2d_slv_Nx (M2TMNXSLV) | C1276812859-GES_DISC | 5.12.4 | 10.5067/AP1B0BA5PD2K | Global Modeling and Assimilation Office (GMAO) (2015), MERRA-2 tavgM_2d_slv_Nx: 2d,Monthly mean,Time-Averaged,Single-Level,Assimilation,Single-Level Diagnostics V5.12.4, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), doi:10.5067/AP1B0BA5PD2K |
+
+IMERG (GPM_3IMERGM v07) and GLDAS (GLDAS_NOAH025_M v2.1) will be listed here once their data is
+complete; their DOIs and citations are already in `nasa-data/docs/DATASETS.md`.
+
+Datasets used **only for validation**. They are not redistributed, and none of their numbers appear
+in `web_data/` (see `docs/VALIDATION.md`):
+
+- GISTEMP Team, 2026: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for
+  Space Studies. Dataset accessed 2026-11-14 at https://data.giss.nasa.gov/gistemp/. Lenssen, N., et al.,
+  2024: A GISTEMPv4 observational uncertainty ensemble. J. Geophys. Res. Atmos., 129, e2023JD040179,
+  doi:10.1029/2023JD040179.
+- NASA POWER Monthly and Annual API v2.10.0 (https://power.larc.nasa.gov/), accessed 2026-11-14. Its API
+  header names its source as MERRA-2.
