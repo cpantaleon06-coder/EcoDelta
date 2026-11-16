@@ -1,4 +1,4 @@
-// Copy engine output into public/web_data/.
+// Copy engine output into public/web_data/. That folder is committed: the deployed site is built from it.
 // Usage: npm run sync-data [-- real | fixture | <path to a web_data folder>]   (default: real)
 import { cpSync, existsSync, rmSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';

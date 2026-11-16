@@ -19,7 +19,7 @@
 - The "approximate study area" tag is shown for every region with `kind: "approximate_box"`, including Global, because the data marks Global as a box too.
 - The Earth system profile and "signals found together" line use the fixture's synthetic results. The rule is fixed: variables with moderate or strong evidence and a direction, in catalog order.
 - The ranking's magnitude bar shows each variable's own trend per decade and CI on its own scale (bars are not comparable across variables; the effect size number is the comparable measure within one region).
-- The Playwright web server builds with `ALLOW_FIXTURE=1`; a plain `npm run build` stops on demo data.
+- The Playwright web server builds on the committed real data and then swaps the fixture into `dist/web_data` before serving; a plain `npm run build` stops on demo data.
 
 ## World basemap (Natural Earth land, coastlines only)
 

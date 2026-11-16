@@ -92,7 +92,7 @@ Other limits shown in the app:
 | [docs/](docs/) | Submission documents: description, pitch, demo plan |
 
 The raw NASA download and regridding step lives outside this repository. The engine reads its processed files
-from the folder set in `ECODELTA_DATA_DIR`, and the resulting export is committed in `ecodelta-engine/web_data/`.
+from the folder set in `ECODELTA_DATA_DIR`, and the resulting export is committed in `ecodelta-engine/web_data/` and copied to `web/public/web_data/`, which the deployed site is built from.
 
 ## Run it
 
@@ -110,7 +110,6 @@ python -m venv .venv
 # 2. Web app on the committed real export
 cd ../web
 npm install
-npm run sync-data        # copies ../ecodelta-engine/web_data
 npm run dev              # http://localhost:5173
 ```
 

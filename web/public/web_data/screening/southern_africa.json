@@ -1,0 +1,39 @@
+{
+ "by_evidence": [
+  "precip"
+ ],
+ "by_magnitude": [
+  "precip"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.2216,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.1771,
+   "ci_per_decade": [
+    -0.1661,
+    -0.01861
+   ],
+   "effect_size": -0.2216,
+   "evidence_class": "moderate",
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.01359,
+   "rank": 1,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in Southern Africa changed by −0.091 mm/day per decade (95% confidence interval −0.166 to −0.019), which is statistically significant (p = 0.01). Over the whole 24.7-year period that is a decrease of about 0.224 mm/day.",
+   "significant": true,
+   "slope_per_decade": -0.09072,
+   "standardized_change": -0.5546,
+   "tier": 0,
+   "total_change": -0.2238,
+   "variable": "precip",
+   "verdict": "decreasing"
+  }
+ ],
+ "region_file": "regions/southern_africa.json",
+ "region_id": "southern_africa",
+ "schema_version": "1.3.0"
+}

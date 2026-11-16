@@ -1,0 +1,117 @@
+{
+ "by_evidence": [
+  "evap",
+  "soil_moisture_0_10cm",
+  "precip",
+  "runoff_surface"
+ ],
+ "by_magnitude": [
+  "evap",
+  "soil_moisture_0_10cm",
+  "precip",
+  "runoff_surface"
+ ],
+ "ranking": [
+  {
+   "abs_effect_size": 0.2897,
+   "cautions": [
+    "The confidence interval is wide compared with the trend, so the size of the change is uncertain."
+   ],
+   "cells_significant_fraction": 0.297,
+   "ci_per_decade": [
+    0.0005856,
+    0.06929
+   ],
+   "effect_size": 0.2897,
+   "evidence_class": "moderate",
+   "name": "Water leaving the land (evapotranspiration)",
+   "public_unit": "mm/day",
+   "pvalue": 0.04627,
+   "rank": 1,
+   "rank_by_magnitude": 1,
+   "sentence": "From January 2001 to September 2025, water leaving the land (evapotranspiration) in the Western US changed by +0.036 mm/day per decade (95% confidence interval +0.001 to +0.069), which is statistically significant (p = 0.05). Over the whole 24.7-year period that is an increase of about 0.089 mm/day.",
+   "significant": true,
+   "slope_per_decade": 0.03591,
+   "standardized_change": 0.7257,
+   "tier": 0,
+   "total_change": 0.08859,
+   "variable": "evap",
+   "verdict": "increasing"
+  },
+  {
+   "abs_effect_size": 0.2652,
+   "cautions": [],
+   "cells_significant_fraction": 0.06931,
+   "ci_per_decade": [
+    -0.8932,
+    0.06769
+   ],
+   "effect_size": -0.2652,
+   "evidence_class": "weak",
+   "name": "Water in the topsoil",
+   "public_unit": "kg/m²",
+   "pvalue": 0.09414,
+   "rank": 2,
+   "rank_by_magnitude": 2,
+   "sentence": "From January 2001 to September 2025, water in the topsoil in the Western US shows no statistically significant trend (p = 0.09): the estimate is −0.41 kg/m² per decade (95% confidence interval −0.89 to +0.07). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.4058,
+   "standardized_change": -0.669,
+   "tier": 1,
+   "total_change": -1.001,
+   "variable": "soil_moisture_0_10cm",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.03716,
+   "cautions": [],
+   "cells_significant_fraction": 0.0,
+   "ci_per_decade": [
+    -0.07145,
+    0.04597
+   ],
+   "effect_size": -0.03716,
+   "evidence_class": "none",
+   "name": "Rain and snow (precipitation)",
+   "public_unit": "mm/day",
+   "pvalue": 0.6684,
+   "rank": 3,
+   "rank_by_magnitude": 3,
+   "sentence": "From January 2001 to September 2025, rain and snow (precipitation) in the Western US shows no statistically significant trend (p = 0.67): the estimate is −0.013 mm/day per decade (95% confidence interval −0.071 to +0.046). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.01266,
+   "standardized_change": -0.09167,
+   "tier": 1,
+   "total_change": -0.03122,
+   "variable": "precip",
+   "verdict": "no significant trend"
+  },
+  {
+   "abs_effect_size": 0.02125,
+   "cautions": [],
+   "cells_significant_fraction": 0.0198,
+   "ci_per_decade": [
+    -0.002871,
+    0.001875
+   ],
+   "effect_size": -0.02125,
+   "evidence_class": "none",
+   "name": "Water running off the surface",
+   "public_unit": "mm/day",
+   "pvalue": 0.6747,
+   "rank": 4,
+   "rank_by_magnitude": 4,
+   "sentence": "From January 2001 to September 2025, water running off the surface in the Western US shows no statistically significant trend (p = 0.67): the estimate is −0.0005 mm/day per decade (95% confidence interval −0.0029 to +0.0019). This does not mean nothing changed; the data cannot tell a trend this small apart from natural ups and downs.",
+   "significant": false,
+   "slope_per_decade": -0.0004798,
+   "standardized_change": -0.05239,
+   "tier": 1,
+   "total_change": -0.001184,
+   "variable": "runoff_surface",
+   "verdict": "no significant trend"
+  }
+ ],
+ "region_file": "regions/western_us.json",
+ "region_id": "western_us",
+ "schema_version": "1.3.0"
+}

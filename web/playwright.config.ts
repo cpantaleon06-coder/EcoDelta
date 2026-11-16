@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
-// Smoke test against the production build. Run "npm run sync-data -- fixture" first; ALLOW_FIXTURE=1 lets the build use it.
+// Smoke test against the production build, served with the fixture swapped in for the committed real data
+// (the tests expect the fixture's regions and values; public/web_data is left untouched).
 export default defineConfig({
   testDir: 'e2e',
   timeout: 60_000,
@@ -10,7 +11,7 @@ export default defineConfig({
     launchOptions: { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] },
   },
   webServer: {
-    command: 'ALLOW_FIXTURE=1 npm run build && npm run preview -- --port 4173 --strictPort',
+    command: 'npm run build && rm -rf dist/web_data && cp -r ../ecodelta-engine/web_data_fixture dist/web_data && npm run preview -- --port 4173 --strictPort',
     url: 'http://localhost:4173',
     reuseExistingServer: true,
     timeout: 120_000,

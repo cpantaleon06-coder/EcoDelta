@@ -6,9 +6,12 @@ Recharts.
 
 ## Data
 
+The real export is committed in `public/web_data/`, so the build needs nothing outside `web/`. After a new
+engine export, refresh it and commit the result:
+
 ```bash
 npm run sync-data            # copies ../ecodelta-engine/web_data (real data, the default)
-npm run sync-data -- fixture # copies ../ecodelta-engine/web_data_fixture (synthetic demo data)
+npm run sync-data -- fixture # copies ../ecodelta-engine/web_data_fixture (synthetic demo data; do not commit)
 npm run sync-data -- <path>  # any folder that holds engine output
 ```
 
@@ -18,7 +21,7 @@ The data contract is `../ecodelta-engine/docs/OUTPUT_SCHEMA.md`. Every read goes
 
 `npm run build` first runs `scripts/data-guard.mjs`. It stops the build when `public/web_data/meta.json` is
 missing or holds demo data (`synthetic` is not `false`, or `source` is not `"real"`, the same rule as the DEMO
-DATA banner). To build on the fixture on purpose, for a local preview or the end-to-end tests:
+DATA banner). To build on the fixture on purpose, for a local preview:
 
 ```bash
 ALLOW_FIXTURE=1 npm run build
@@ -30,7 +33,7 @@ ALLOW_FIXTURE=1 npm run build
 npm install
 npm run dev        # http://localhost:5173
 npm test           # unit tests (Vitest), including the build guard
-npm run test:e2e   # Playwright smoke tests against the production build (uses ALLOW_FIXTURE=1)
+npm run test:e2e   # Playwright smoke tests: production build, served with the fixture in dist/web_data
 npm run lint
 ```
 
@@ -39,8 +42,7 @@ sideways overflow, keyboard focus and reduced motion.
 
 ## Deploy (Vercel)
 
-`vercel.json` runs `npm run sync-data -- ${ECODELTA_DATA_SOURCE:-real} && npm run build`. With no variable set it
-uses the real data, and the build fails if that data is missing or synthetic. A demo deployment needs both
-`ECODELTA_DATA_SOURCE=fixture` and `ALLOW_FIXTURE=1`; it then shows the DEMO DATA banner and header badge.
+`vercel.json` runs `npm run build` on the committed `public/web_data/`, so the build reads nothing outside `web/`
+and works with the Vercel Root Directory set to `web`. The build fails if that data is missing or synthetic.
 
 Open problems and unverified points are listed in `PROBLEMS.md`; third-party licenses in `THIRD_PARTY.md`.
