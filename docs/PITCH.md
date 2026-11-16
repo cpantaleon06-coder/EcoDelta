@@ -17,15 +17,17 @@ Our proudest result is one we did not publish. EcoDelta checks its own output. F
 it reproduced a NASA POWER regional trend to within about 1%, but POWER is built on the same MERRA-2
 data, so that only proves our pipeline. Against an independent record, NASA GISTEMP, the MERRA-2
 global warming trend came out about one third lower, and one region, the Sahel, showed a cooling we
-could not confirm. So we held temperature back. EcoDelta shows what it can defend, and tells you what
-it cannot.
+could not confirm. So we held temperature back. For the water variables, every regional result is
+compared with a second record, and the ones that disagree are held back too. EcoDelta shows what it
+can defend, and tells you what it cannot.
 
 [TODO: closing line with the protagonist question once it is chosen, see docs/DEMO.md.]
 
 ---
 
 Do not say in the pitch:
-- that any variable is validated (the water variables have pipeline checks only);
+- that any variable is validated (the water variables were compared only with references that are not
+  independent of them, so their shown results are "limited");
 - that Compare isolates the parts of two regions that do not overlap;
 - anything about whole countries (regions are approximate boxes);
 - that a trend has a cause.

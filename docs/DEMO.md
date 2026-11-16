@@ -29,7 +29,11 @@ Rules:
 - Say that the other regions are one click away in the same profile.
 - Say what the trends do not show: no causes, and no claims about a whole country (regions are
   approximate boxes).
-- Avoid regions where a result is missing or capped by coverage, or show that limitation on screen:
-  Antarctica has no evaporation, runoff or soil moisture; evidence is capped in Central America and
-  Caribbean, Southeast Asia and Global for some land variables (see `docs/DESCRIPTION.md`).
+- Check which results the quality gate held back for the region (they are absent from its ranking;
+  the list is in `docs/DESCRIPTION.md`, section "Quality gate"), and say on screen that the shown
+  results are "limited" because their reference records are not independent. The app does not show
+  that label yet.
+- Avoid regions where evidence is capped by coverage, or show that limitation on screen: evaporation in
+  Central America and Caribbean, Global and Southeast Asia; surface runoff in Central America and
+  Caribbean and Southeast Asia.
 - Numbers in the script come from the deployed export, read off the screen, not typed from memory.

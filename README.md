@@ -8,8 +8,8 @@ variable: *what changed, where, by how much, and can we trust it?* Every result 
 with a 95% confidence interval, an evidence class kept separate from the size of the change, the share of the
 region that has data, and the NASA product it comes from.
 
-EcoDelta also checks its own output against independent records, and when a result disagrees with them and we
-cannot explain why, we hold it back instead of publishing it.
+EcoDelta also checks its own output against other records, and when a result disagrees with them and we cannot
+explain why, we hold it back instead of publishing it.
 
 | Link | |
 |---|---|
@@ -66,8 +66,11 @@ the NASA POWER API (https://power.larc.nasa.gov/). Full citations are in `ecodel
 ## What is real, and what EcoDelta held back
 
 The real export (built 2026-11-15) has four water variables: rain and snow, evaporation, surface runoff and soil
-moisture. They have passed pipeline checks only, not an independent check against another record. Please read their
-results with that in mind.
+moisture. A quality gate compares every region result with a reference record on the same cells: GPCP v3.3 for rain
+and snow, MERRA-2 land for the three GLDAS variables. These references are not independent of the products, so no
+result is called validated: the results that are shown are "limited", and the 37 results that disagree with their
+reference (or have no data) are held back and not exported. The rule and the held list are in
+[docs/DESCRIPTION.md](docs/DESCRIPTION.md).
 
 **Air temperature (MERRA-2) is held back.** Our pipeline reproduces NASA POWER to about 1% (+0.528 against +0.534
 degrees C per decade for Western Europe), but POWER is built on MERRA-2, so that check is not independent. Against
